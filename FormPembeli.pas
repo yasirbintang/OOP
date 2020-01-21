@@ -7,7 +7,7 @@ uses
   Dialogs, Menus, StdCtrls, ClassPembeli;
 
 type
-  TForm1 = class(TForm)
+  TfrmPembeli = class(TForm)
     Label1: TLabel;
     Label2: TLabel;
     Label3: TLabel;
@@ -27,12 +27,12 @@ type
   end;
 
 var
-  Form1: TForm1;
+  frmPembeli: TfrmPembeli;
 implementation
 
 {$R *.dfm}
 
-procedure TForm1.Button1Click(Sender: TObject);
+procedure TfrmPembeli.Button1Click(Sender: TObject);
 var
   lPembeli: TPembeli;
 begin
@@ -56,7 +56,7 @@ begin
   end;
 end;
 
-function TForm1.IsDataValid: Boolean;
+function TfrmPembeli.IsDataValid: Boolean;
 begin
   Result := False;
 

@@ -81,8 +81,8 @@ end;
 
 procedure TSDIAppForm.Pembeli1Click(Sender: TObject);
 begin
-  Form1 := TForm1.Create(Self);
-  Form1.Show;
+  frmPembeli := TfrmPembeli.Create(Self);
+  frmPembeli.Show;
 end;
 
 end.
