@@ -8,16 +8,14 @@ uses
 
 type
   TForm1 = class(TForm)
-    Label1: TLabel;
     Label2: TLabel;
     Label3: TLabel;
     Label4: TLabel;
-    edID: TEdit;
     edKode: TEdit;
     edNama: TEdit;
-    edAlamat: TEdit;
     Button1: TButton;
     Button2: TButton;
+    edAlamat: TMemo;
     procedure Button1Click(Sender: TObject);
   private
     function IsDataValid: Boolean;
@@ -43,6 +41,7 @@ begin
   try
     lPembeli.Kode := edKode.Text;
     lPembeli.Nama := edNama.Text;
+//    lPembeli.Alamat := edAlamat.Text;
 
     if lPembeli.Simpan then
     begin

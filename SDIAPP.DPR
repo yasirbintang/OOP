@@ -11,7 +11,6 @@ uses
 
 begin
   Application.Initialize;
-  Application.CreateForm(TForm1, Form1);
   Application.CreateForm(TSDIAppForm, SDIAppForm);
   Application.CreateForm(TAboutBox, AboutBox);
   Application.Run;
