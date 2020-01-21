@@ -2,8 +2,8 @@ object SDIAppForm: TSDIAppForm
   Left = 197
   Top = 111
   Caption = 'SDI Application'
-  ClientHeight = 196
-  ClientWidth = 352
+  ClientHeight = 389
+  ClientWidth = 716
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -16,8 +16,8 @@ object SDIAppForm: TSDIAppForm
   TextHeight = 16
   object StatusBar: TStatusBar
     Left = 0
-    Top = 177
-    Width = 352
+    Top = 370
+    Width = 716
     Height = 19
     Margins.Left = 2
     Margins.Top = 2
@@ -26,59 +26,8 @@ object SDIAppForm: TSDIAppForm
     AutoHint = True
     Panels = <>
     SimplePanel = True
-  end
-  object ToolBar1: TToolBar
-    Left = 0
-    Top = 0
-    Width = 352
-    Height = 30
-    BorderWidth = 1
-    Color = clBtnFace
-    Images = ImageList1
-    Indent = 5
-    ParentColor = False
-    ParentShowHint = False
-    ShowHint = True
-    TabOrder = 1
-    Wrapable = False
-    object ToolButton9: TToolButton
-      Left = 5
-      Top = 0
-      Action = FileNew1
-    end
-    object ToolButton1: TToolButton
-      Left = 28
-      Top = 0
-      Action = FileOpen1
-    end
-    object ToolButton2: TToolButton
-      Left = 51
-      Top = 0
-      Action = FileSave1
-    end
-    object ToolButton3: TToolButton
-      Left = 74
-      Top = 0
-      Width = 8
-      Caption = 'ToolButton3'
-      ImageIndex = 2
-      Style = tbsSeparator
-    end
-    object ToolButton4: TToolButton
-      Left = 82
-      Top = 0
-      Action = EditCut1
-    end
-    object ToolButton5: TToolButton
-      Left = 105
-      Top = 0
-      Action = EditCopy1
-    end
-    object ToolButton6: TToolButton
-      Left = 128
-      Top = 0
-      Action = EditPaste1
-    end
+    ExplicitTop = 177
+    ExplicitWidth = 352
   end
   object MainMenu1: TMainMenu
     Images = ImageList1
@@ -87,18 +36,6 @@ object SDIAppForm: TSDIAppForm
     object File1: TMenuItem
       Caption = '&File'
       Hint = 'File related commands'
-      object FileNewItem: TMenuItem
-        Action = FileNew1
-      end
-      object FileOpenItem: TMenuItem
-        Action = FileOpen1
-      end
-      object FileSaveItem: TMenuItem
-        Action = FileSave1
-      end
-      object FileSaveAsItem: TMenuItem
-        Action = FileSaveAs1
-      end
       object N1: TMenuItem
         Caption = '-'
       end
@@ -107,16 +44,20 @@ object SDIAppForm: TSDIAppForm
       end
     end
     object Edit1: TMenuItem
-      Caption = '&Edit'
+      Caption = 'Master Data'
       Hint = 'Edit commands'
-      object CutItem: TMenuItem
-        Action = EditCut1
+      object Pembeli1: TMenuItem
+        Caption = 'Pembeli'
+        OnClick = Pembeli1Click
       end
-      object CopyItem: TMenuItem
-        Action = EditCopy1
+      object Barang1: TMenuItem
+        Caption = 'Barang'
       end
-      object PasteItem: TMenuItem
-        Action = EditPaste1
+    end
+    object ransaksi1: TMenuItem
+      Caption = 'Transaksi'
+      object Pembelian1: TMenuItem
+        Caption = 'Pembelian'
       end
     end
     object Help1: TMenuItem
@@ -201,7 +142,7 @@ object SDIAppForm: TSDIAppForm
     Left = 72
     Top = 152
     Bitmap = {
-      494C01010F001300080010001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C01010F0013000C0010001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000400000004000000001002000000000000040
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000

@@ -4,20 +4,12 @@ interface
 
 uses Windows, Classes, Graphics, Forms, Controls, Menus,
   Dialogs, StdCtrls, Buttons, ExtCtrls, ComCtrls, ImgList, StdActns,
-  ActnList, ToolWin;
+  ActnList, ToolWin, FormPembeli;
 
 type
   TSDIAppForm = class(TForm)
     OpenDialog: TOpenDialog;
     SaveDialog: TSaveDialog;
-    ToolBar1: TToolBar;
-    ToolButton9: TToolButton;
-    ToolButton1: TToolButton;
-    ToolButton2: TToolButton;
-    ToolButton3: TToolButton;
-    ToolButton4: TToolButton;
-    ToolButton5: TToolButton;
-    ToolButton6: TToolButton;
     ActionList1: TActionList;
     FileNew1: TAction;
     FileOpen1: TAction;
@@ -32,23 +24,21 @@ type
     ImageList1: TImageList;
     MainMenu1: TMainMenu;
     File1: TMenuItem;
-    FileNewItem: TMenuItem;
-    FileOpenItem: TMenuItem;
-    FileSaveItem: TMenuItem;
-    FileSaveAsItem: TMenuItem;
     N1: TMenuItem;
     FileExitItem: TMenuItem;
     Edit1: TMenuItem;
-    CutItem: TMenuItem;
-    CopyItem: TMenuItem;
-    PasteItem: TMenuItem;
     Help1: TMenuItem;
     HelpAboutItem: TMenuItem;
+    Pembeli1: TMenuItem;
+    Barang1: TMenuItem;
+    ransaksi1: TMenuItem;
+    Pembelian1: TMenuItem;
     procedure FileNew1Execute(Sender: TObject);
     procedure FileOpen1Execute(Sender: TObject);
     procedure FileSave1Execute(Sender: TObject);
     procedure FileExit1Execute(Sender: TObject);
     procedure HelpAbout1Execute(Sender: TObject);
+    procedure Pembeli1Click(Sender: TObject);
   private
     { Private declarations }
   public
@@ -87,6 +77,12 @@ end;
 procedure TSDIAppForm.HelpAbout1Execute(Sender: TObject);
 begin
   AboutBox.ShowModal;
+end;
+
+procedure TSDIAppForm.Pembeli1Click(Sender: TObject);
+begin
+  Form1 := TForm1.Create(Self);
+  Form1.Show;
 end;
 
 end.
