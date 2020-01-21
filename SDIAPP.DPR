@@ -4,8 +4,8 @@ uses
   Forms,
   SDIMAIN in 'SDIMAIN.PAS' {SDIAppForm},
   ABOUT in 'ABOUT.PAS' {AboutBox},
-  Unit1 in 'Unit1.pas' {Form1},
-  classbrg in 'classbrg.pas';
+  ClassPembeli in 'ClassPembeli.pas',
+  FormPembeli in 'FormPembeli.pas' {Form1};
 
 {$R *.RES}
 
