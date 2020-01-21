@@ -7,15 +7,17 @@ uses
   Dialogs, Menus, StdCtrls, ClassPembeli;
 
 type
-  TForm1 = class(TForm)
+  TfrmPembeli = class(TForm)
+    Label1: TLabel;
     Label2: TLabel;
     Label3: TLabel;
     Label4: TLabel;
+    edID: TEdit;
     edKode: TEdit;
     edNama: TEdit;
+    edAlamat: TEdit;
     Button1: TButton;
     Button2: TButton;
-    edAlamat: TMemo;
     procedure Button1Click(Sender: TObject);
   private
     function IsDataValid: Boolean;
@@ -25,12 +27,12 @@ type
   end;
 
 var
-  Form1: TForm1;
+  frmPembeli: TfrmPembeli;
 implementation
 
 {$R *.dfm}
 
-procedure TForm1.Button1Click(Sender: TObject);
+procedure TfrmPembeli.Button1Click(Sender: TObject);
 var
   lPembeli: TPembeli;
 begin
@@ -41,7 +43,6 @@ begin
   try
     lPembeli.Kode := edKode.Text;
     lPembeli.Nama := edNama.Text;
-//    lPembeli.Alamat := edAlamat.Text;
 
     if lPembeli.Simpan then
     begin
@@ -55,7 +56,7 @@ begin
   end;
 end;
 
-function TForm1.IsDataValid: Boolean;
+function TfrmPembeli.IsDataValid: Boolean;
 begin
   Result := False;
 
