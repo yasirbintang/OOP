@@ -46,7 +46,18 @@ object Form1: TForm1
     Top = 46
     Width = 169
     Height = 21
+<<<<<<< HEAD
     TabOrder = 1
+=======
+    TabOrder = 2
+  end
+  object edAlamat: TEdit
+    Left = 88
+    Top = 112
+    Width = 169
+    Height = 21
+    TabOrder = 3
+// >>>>>>> 7a181d3d696de49d2ccaee68b52c9d40b4d59e8e
   end
   object Button1: TButton
     Left = 48
