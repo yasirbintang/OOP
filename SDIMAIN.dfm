@@ -2,8 +2,8 @@ object SDIAppForm: TSDIAppForm
   Left = 197
   Top = 111
   Caption = 'SDI Application'
-  ClientHeight = 196
-  ClientWidth = 352
+  ClientHeight = 408
+  ClientWidth = 632
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -16,8 +16,8 @@ object SDIAppForm: TSDIAppForm
   TextHeight = 16
   object StatusBar: TStatusBar
     Left = 0
-    Top = 177
-    Width = 352
+    Top = 389
+    Width = 632
     Height = 19
     Margins.Left = 2
     Margins.Top = 2
@@ -30,7 +30,7 @@ object SDIAppForm: TSDIAppForm
   object ToolBar1: TToolBar
     Left = 0
     Top = 0
-    Width = 352
+    Width = 632
     Height = 30
     BorderWidth = 1
     Color = clBtnFace
@@ -82,8 +82,7 @@ object SDIAppForm: TSDIAppForm
   end
   object MainMenu1: TMainMenu
     Images = ImageList1
-    Left = 8
-    Top = 152
+    Top = 360
     object File1: TMenuItem
       Caption = '&File'
       Hint = 'File related commands'
@@ -129,8 +128,8 @@ object SDIAppForm: TSDIAppForm
   end
   object ActionList1: TActionList
     Images = ImageList1
-    Left = 40
-    Top = 152
+    Left = 32
+    Top = 360
     object FileNew1: TAction
       Category = 'File'
       Caption = '&New'
@@ -198,10 +197,10 @@ object SDIAppForm: TSDIAppForm
     end
   end
   object ImageList1: TImageList
-    Left = 72
-    Top = 152
+    Left = 64
+    Top = 360
     Bitmap = {
-      494C01010F001300080010001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C01010F001300100010001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000400000004000000001002000000000000040
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000
@@ -738,12 +737,12 @@ object SDIAppForm: TSDIAppForm
   end
   object OpenDialog: TOpenDialog
     Filter = 'All Files (*.*)|*.*'
-    Left = 104
-    Top = 152
+    Left = 96
+    Top = 360
   end
   object SaveDialog: TSaveDialog
     Filter = 'All Files (*.*)|*.*'
-    Left = 136
-    Top = 152
+    Left = 128
+    Top = 360
   end
 end
