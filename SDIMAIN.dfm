@@ -26,8 +26,6 @@ object SDIAppForm: TSDIAppForm
     AutoHint = True
     Panels = <>
     SimplePanel = True
-    ExplicitTop = 177
-    ExplicitWidth = 352
   end
   object MainMenu1: TMainMenu
     Images = ImageList1
@@ -52,6 +50,7 @@ object SDIAppForm: TSDIAppForm
       end
       object Barang1: TMenuItem
         Caption = 'Barang'
+        OnClick = Barang1Click
       end
     end
     object ransaksi1: TMenuItem
@@ -142,7 +141,7 @@ object SDIAppForm: TSDIAppForm
     Left = 72
     Top = 152
     Bitmap = {
-      494C01010F0013000C0010001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C01010F001300100010001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000400000004000000001002000000000000040
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000

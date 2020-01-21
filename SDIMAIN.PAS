@@ -4,7 +4,7 @@ interface
 
 uses Windows, Classes, Graphics, Forms, Controls, Menus,
   Dialogs, StdCtrls, Buttons, ExtCtrls, ComCtrls, ImgList, StdActns,
-  ActnList, ToolWin, FormPembeli;
+  ActnList, ToolWin, FormPembeli, ufrmBarang;
 
 type
   TSDIAppForm = class(TForm)
@@ -33,6 +33,7 @@ type
     Barang1: TMenuItem;
     ransaksi1: TMenuItem;
     Pembelian1: TMenuItem;
+    procedure Barang1Click(Sender: TObject);
     procedure FileNew1Execute(Sender: TObject);
     procedure FileOpen1Execute(Sender: TObject);
     procedure FileSave1Execute(Sender: TObject);
@@ -53,6 +54,12 @@ implementation
 uses about;
 
 {$R *.dfm}
+
+procedure TSDIAppForm.Barang1Click(Sender: TObject);
+begin
+  frmBarang := TfrmBarang.Create(Self);
+  frmBarang.Show;
+end;
 
 procedure TSDIAppForm.FileNew1Execute(Sender: TObject);
 begin
@@ -80,9 +87,14 @@ begin
 end;
 
 procedure TSDIAppForm.Pembeli1Click(Sender: TObject);
+//var
+//  xxxx: TfrmPembeli;
 begin
   frmPembeli := TfrmPembeli.Create(Self);
   frmPembeli.Show;
+
+//  xxxx := TfrmPembeli.Create(Self);
+//  xxxx.Show;
 end;
 
 end.

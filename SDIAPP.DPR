@@ -5,7 +5,8 @@ uses
   SDIMAIN in 'SDIMAIN.PAS' {SDIAppForm},
   ABOUT in 'ABOUT.PAS' {AboutBox},
   ClassPembeli in 'ClassPembeli.pas',
-  FormPembeli in 'FormPembeli.pas' {frmPembeli};
+  FormPembeli in 'FormPembeli.pas' {frmPembeli},
+  ufrmBarang in 'ufrmBarang.pas' {frmBarang};
 
 {$R *.RES}
 
