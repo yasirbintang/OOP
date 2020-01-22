@@ -20,7 +20,6 @@ type
     EditCopy1: TEditCopy;
     EditPaste1: TEditPaste;
     HelpAbout1: TAction;
-    StatusBar: TStatusBar;
     ImageList1: TImageList;
     MainMenu1: TMainMenu;
     File1: TMenuItem;

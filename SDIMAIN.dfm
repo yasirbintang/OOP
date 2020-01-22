@@ -14,19 +14,6 @@ object SDIAppForm: TSDIAppForm
   OldCreateOrder = False
   PixelsPerInch = 96
   TextHeight = 16
-  object StatusBar: TStatusBar
-    Left = 0
-    Top = 370
-    Width = 716
-    Height = 19
-    Margins.Left = 2
-    Margins.Top = 2
-    Margins.Right = 2
-    Margins.Bottom = 2
-    AutoHint = True
-    Panels = <>
-    SimplePanel = True
-  end
   object MainMenu1: TMainMenu
     Images = ImageList1
     Left = 8
@@ -141,7 +128,7 @@ object SDIAppForm: TSDIAppForm
     Left = 72
     Top = 152
     Bitmap = {
-      494C01010F001300100010001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C01010F001300180010001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000400000004000000001002000000000000040
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000

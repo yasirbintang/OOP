@@ -43,6 +43,7 @@ begin
   try
     lPembeli.Kode := edKode.Text;
     lPembeli.Nama := edNama.Text;
+    lPembeli.Alamat := edAlamat.Text;
 
     if lPembeli.Simpan then
     begin
