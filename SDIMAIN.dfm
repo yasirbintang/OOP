@@ -12,6 +12,7 @@ object SDIAppForm: TSDIAppForm
   Font.Style = []
   Menu = MainMenu1
   OldCreateOrder = False
+  OnCreate = FormCreate
   PixelsPerInch = 96
   TextHeight = 16
   object StatusBar: TStatusBar

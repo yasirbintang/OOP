@@ -5,7 +5,7 @@ interface
 uses Windows, Classes, Graphics, Forms, Controls, Menus,
   Dialogs, StdCtrls, Buttons, ExtCtrls, ComCtrls, ImgList, StdActns,
   ActnList, ToolWin, FormPembeli, uADGUIxIntf, uADGUIxFormsWait, uADStanIntf,
-  uADCompGUIx;
+  uADCompGUIx, uConnection;
 
 type
   TSDIAppForm = class(TForm)
@@ -35,6 +35,7 @@ type
     ransaksi1: TMenuItem;
     Pembelian1: TMenuItem;
     ADGUIxWaitCursor1: TADGUIxWaitCursor;
+    procedure FormCreate(Sender: TObject);
     procedure FileNew1Execute(Sender: TObject);
     procedure FileOpen1Execute(Sender: TObject);
     procedure FileSave1Execute(Sender: TObject);
@@ -55,6 +56,17 @@ implementation
 uses about;
 
 {$R *.dfm}
+
+procedure TSDIAppForm.FormCreate(Sender: TObject);
+begin
+  if TConnection.ConnectDB('belajar', 'MSSQL', '192.168.0.62','belajar_oop', 'sa', 'it@3Serangkai', '1433') then
+  begin
+    // tampilkan status di status bar
+  end else begin
+    // tampilkan form utk setting koneksi
+  end;
+
+end;
 
 procedure TSDIAppForm.FileNew1Execute(Sender: TObject);
 begin
