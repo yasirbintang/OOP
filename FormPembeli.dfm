@@ -108,4 +108,12 @@ object frmPembeli: TfrmPembeli
     Left = 304
     Top = 16
   end
+  object con1: TADConnection
+    Left = 136
+    Top = 128
+  end
+  object con2: TADConnection
+    Left = 280
+    Top = 120
+  end
 end
