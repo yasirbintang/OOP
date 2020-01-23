@@ -2,8 +2,8 @@ object frmPembeli: TfrmPembeli
   Left = 0
   Top = 0
   Caption = 'Pembeli Baru'
-  ClientHeight = 350
-  ClientWidth = 488
+  ClientHeight = 360
+  ClientWidth = 400
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -17,11 +17,14 @@ object frmPembeli: TfrmPembeli
   object Panel1: TPanel
     Left = 0
     Top = 0
-    Width = 488
+    Width = 400
     Height = 211
     Align = alTop
     TabOrder = 0
     ExplicitWidth = 379
+    DesignSize = (
+      400
+      211)
     object Label2: TLabel
       Left = 17
       Top = 30
@@ -48,6 +51,7 @@ object frmPembeli: TfrmPembeli
       Top = 27
       Width = 185
       Height = 21
+      Anchors = [akLeft, akTop, akRight]
       TabOrder = 0
     end
     object edNama: TEdit
@@ -55,6 +59,7 @@ object frmPembeli: TfrmPembeli
       Top = 56
       Width = 185
       Height = 21
+      Anchors = [akLeft, akTop, akRight]
       TabOrder = 1
     end
     object memAlamat: TMemo
@@ -62,6 +67,7 @@ object frmPembeli: TfrmPembeli
       Top = 91
       Width = 185
       Height = 89
+      Anchors = [akLeft, akTop, akRight]
       TabOrder = 2
     end
     object Button4: TButton
@@ -69,8 +75,9 @@ object frmPembeli: TfrmPembeli
       Top = 155
       Width = 75
       Height = 25
+      Anchors = [akRight, akBottom]
       Caption = 'Lihat Pembeli'
-      TabOrder = 3
+      TabOrder = 5
       OnClick = Button4Click
     end
     object Button1: TButton
@@ -78,8 +85,9 @@ object frmPembeli: TfrmPembeli
       Top = 186
       Width = 60
       Height = 20
+      Anchors = [akLeft, akBottom]
       Caption = 'OK'
-      TabOrder = 4
+      TabOrder = 3
       OnClick = Button1Click
     end
     object Button5: TButton
@@ -87,8 +95,9 @@ object frmPembeli: TfrmPembeli
       Top = 124
       Width = 75
       Height = 25
+      Anchors = [akRight, akBottom]
       Caption = 'Baru'
-      TabOrder = 5
+      TabOrder = 6
       OnClick = Button5Click
     end
     object Button2: TButton
@@ -96,8 +105,9 @@ object frmPembeli: TfrmPembeli
       Top = 186
       Width = 60
       Height = 20
+      Anchors = [akLeft, akBottom]
       Caption = 'Cancel'
-      TabOrder = 6
+      TabOrder = 4
       OnClick = Button2Click
     end
     object Button6: TButton
@@ -105,6 +115,7 @@ object frmPembeli: TfrmPembeli
       Top = 186
       Width = 75
       Height = 25
+      Anchors = [akRight, akBottom]
       Caption = 'Hapus'
       TabOrder = 7
       OnClick = Button6Click
@@ -113,8 +124,8 @@ object frmPembeli: TfrmPembeli
   object DBGridPembeli: TDBGrid
     Left = 0
     Top = 211
-    Width = 488
-    Height = 139
+    Width = 400
+    Height = 149
     Align = alClient
     DataSource = DSPembeli
     TabOrder = 1
@@ -125,20 +136,20 @@ object frmPembeli: TfrmPembeli
     TitleFont.Style = []
   end
   object ADPhysMSSQLDriverLink1: TADPhysMSSQLDriverLink
-    Left = 168
-    Top = 112
+    Left = 304
+    Top = 72
   end
   object ADConnection1: TADConnection
-    Left = 272
+    Left = 336
     Top = 8
   end
   object con1: TADConnection
-    Left = 368
-    Top = 16
+    Left = 344
+    Top = 56
   end
   object con2: TADConnection
-    Left = 376
-    Top = 88
+    Left = 352
+    Top = 104
   end
   object DSPembeli: TDataSource
     Left = 96
