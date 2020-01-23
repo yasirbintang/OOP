@@ -14,9 +14,6 @@ begin
   Application.Initialize;
   Application.CreateForm(TSDIAppForm, SDIAppForm);
   Application.CreateForm(TAboutBox, AboutBox);
-  Application.CreateForm(TfrmPembeli, frmPembeli);
-  Application.CreateForm(TForm2, Form2);
-  Application.CreateForm(TForm3, Form3);
   Application.Run;
 end.
  
