@@ -17,6 +17,7 @@ type
     procedure LoadByID(AID : Integer);
     function Simpan: Boolean;
     function ToString: string;
+
     property ID: Integer read FID write FID;
     property Kode: String read FKode write FKode;
     property Nama: String read FNama write FNama;
@@ -91,7 +92,18 @@ begin
 
   if ID = 0 then // data baru
   begin
-    // generate id baru select max(id) AS ID_TERAKHIR from tpembeli;
+    sSQL := 'select max(id) AS ID_TERAKHIR from tpembeli';
+    with TConnection.OpenQuery(sSQL, nil) do
+    begin
+      try
+        if not IsEmpty then
+          ID := FieldByName('ID_TERAKHIR').AsInteger + 1
+        else
+          ID := 1;
+      finally
+        Free;
+      end;
+    end;
     // id berikutnya = id teraKHIR + 1;
     // ID := LCDS.fIELDBBYNAME('ID_TERAKHIR').AsInteger + 1;
 

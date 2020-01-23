@@ -8,26 +8,25 @@ uses
   uADStanError, uADGUIxIntf, uADPhysIntf, uADStanDef, uADStanPool, uADStanAsync,
   uADPhysManager, uADCompClient, DB, uConnection, uADPhysODBCBase, uADPhysMSSQL,
   DBClient, Provider, uADStanParam, uADDatSManager, uADDAptIntf, uADDAptManager,
-  uADCompDataSet;
+  uADCompDataSet, ExtCtrls;
 
 type
   TfrmPembeli = class(TForm)
-    Label2: TLabel;
+    ADPhysMSSQLDriverLink1: TADPhysMSSQLDriverLink;
     Label3: TLabel;
     Label4: TLabel;
-    edKode: TEdit;
+    Label2: TLabel;
     edNama: TEdit;
-    edAlamat: TEdit;
-    Button1: TButton;
-    Button2: TButton;
-    Button3: TButton;
-    ADPhysMSSQLDriverLink1: TADPhysMSSQLDriverLink;
+    edKode: TEdit;
     Button4: TButton;
-    edID: TEdit;
     Button5: TButton;
     Button6: TButton;
+    Button1: TButton;
+    Button2: TButton;
+    memAlamat: TMemo;
+    ADConnection1: TADConnection;
     procedure Button1Click(Sender: TObject);
-    procedure Button3Click(Sender: TObject);
+    procedure Button2Click(Sender: TObject);
     procedure Button4Click(Sender: TObject);
     procedure Button5Click(Sender: TObject);
     procedure Button6Click(Sender: TObject);
@@ -56,7 +55,7 @@ begin
   try
     lPembeli.Kode     := edKode.Text;
     lPembeli.Nama     := edNama.Text;
-    lPembeli.Alamat   := edAlamat.Text;
+    lPembeli.Alamat   := memAlamat.Text;
     lPembeli.ID       := FID;
 
     if lPembeli.Simpan then
@@ -75,12 +74,9 @@ begin
 
 end;
 
-procedure TfrmPembeli.Button3Click(Sender: TObject);
+procedure TfrmPembeli.Button2Click(Sender: TObject);
 begin
-  if TConnection.ConnectDB('belajar', 'MSSQL', '192.168.0.62','belajar_oop', 'sa', 'it@3Serangkai', '1433') then
-  begin
-    ShowMessage('Berhasil Membuat koneksi DB');
-  end;
+  Self.Close;
 end;
 
 procedure TfrmPembeli.Button4Click(Sender: TObject);
@@ -100,7 +96,7 @@ begin
 
       edKode.Text     := lPembeli.Kode;
       edNama.Text     := lPembeli.Nama;
-      edAlamat.Text   := lPembeli.Alamat;
+      memAlamat.Text   := lPembeli.Alamat;
     end;
 
   finally
@@ -108,14 +104,14 @@ begin
   end;
 
 end;
-
+// Tombol Baru diklik
 procedure TfrmPembeli.Button5Click(Sender: TObject);
 begin
   FID           := 0;
 
   edKode.Text   := '';
   edNama.Text   := '';
-  edAlamat.Text := '';
+  memAlamat.Text := '';
 end;
 
 procedure TfrmPembeli.Button6Click(Sender: TObject);
@@ -149,10 +145,10 @@ begin
     str := str + 'Nama belum diisi.' + sLineBreak;
     edNama.SetFocus;
   end;
-  if (edAlamat.Text = '') then
+  if (memAlamat.Text = '') then
   begin
     str := str + 'Alamat belum diisi.';
-    edAlamat.SetFocus;
+    memAlamat.SetFocus;
   end;
   str := StringReplace(StringReplace(str, '', ' ', [rfReplaceAll]), #13, ' ', [rfReplaceAll]);
 

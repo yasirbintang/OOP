@@ -48,20 +48,13 @@ object frmPembeli: TfrmPembeli
     Height = 21
     TabOrder = 1
   end
-  object edAlamat: TEdit
-    Left = 104
-    Top = 99
-    Width = 169
-    Height = 21
-    TabOrder = 2
-  end
   object Button1: TButton
     Left = 64
     Top = 248
     Width = 60
     Height = 20
     Caption = 'OK'
-    TabOrder = 3
+    TabOrder = 2
     OnClick = Button1Click
   end
   object Button2: TButton
@@ -70,53 +63,49 @@ object frmPembeli: TfrmPembeli
     Width = 60
     Height = 20
     Caption = 'Cancel'
-    TabOrder = 4
-  end
-  object Button3: TButton
-    Left = 8
-    Top = 160
-    Width = 75
-    Height = 25
-    Caption = 'Tes Koneksi'
-    TabOrder = 5
-    OnClick = Button3Click
+    TabOrder = 3
+    OnClick = Button2Click
   end
   object Button4: TButton
     Left = 89
-    Top = 160
+    Top = 217
     Width = 75
     Height = 25
     Caption = 'Lihat Pembeli'
-    TabOrder = 6
+    TabOrder = 4
     OnClick = Button4Click
-  end
-  object edID: TEdit
-    Left = 104
-    Top = 8
-    Width = 169
-    Height = 21
-    TabOrder = 7
   end
   object Button5: TButton
     Left = 170
-    Top = 160
+    Top = 217
     Width = 75
     Height = 25
     Caption = 'Baru'
-    TabOrder = 8
+    TabOrder = 5
     OnClick = Button5Click
   end
   object Button6: TButton
     Left = 251
-    Top = 160
+    Top = 217
     Width = 75
     Height = 25
     Caption = 'Hapus'
-    TabOrder = 9
+    TabOrder = 6
     OnClick = Button6Click
   end
+  object memAlamat: TMemo
+    Left = 104
+    Top = 99
+    Width = 185
+    Height = 89
+    TabOrder = 7
+  end
   object ADPhysMSSQLDriverLink1: TADPhysMSSQLDriverLink
-    Left = 80
-    Top = 192
+    Left = 304
+    Top = 248
+  end
+  object ADConnection1: TADConnection
+    Left = 304
+    Top = 16
   end
 end
