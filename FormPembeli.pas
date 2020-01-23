@@ -63,8 +63,14 @@ begin
     lPembeli.Alamat   := memAlamat.Text;
     lPembeli.ID       := FID;
 
-    if lPembeli.Simpan then
+    if lPembeli.IsKodeSudahAda(edKode.Text, FID) = FID then
     begin
+      // warning kode sudah ada
+      ShowMessage('Kode sudah Ada');
+      edKode.Focused;
+    end else
+
+    if lPembeli.Simpan then begin
       LoadDataPembeli;
       ShowMessage('Berhasil Simpan')
     end else begin
@@ -74,9 +80,6 @@ begin
   finally
     lPembeli.Free;
   end;
-
-
-
 
 end;
 
@@ -126,14 +129,15 @@ var
 begin
   lpembeli := TPembeli.Create;
   lpembeli.LoadByID(FID);
-
-  if lpembeli.Hapus then
-  begin
-    LoadDataPembeli;
-    ShowMessage('Berhasil Hapus');
-    Button5.Click;
-  end;
-
+  if Dialogs.MessageDlg('Hapus?',mtConfirmation,
+      [mbYes, mbNo], 0, mbYes) = mrYes then begin
+        lpembeli.Hapus;
+        LoadDataPembeli;
+        if lpembeli.ID > 0 then begin
+          ShowMessage(lpembeli.Nama + ' Berhasil dihapus'); end
+        else begin
+          ShowMessage(lpembeli.Nama + ' Gagal dihapus'); end;
+  end
 end;
 
 procedure TfrmPembeli.FormShow(Sender: TObject);
@@ -147,28 +151,20 @@ var
 begin
   Result := False;
   str := '';
-  if (edKode.Text = '') then
-  begin
+  if (edKode.Text = '') then begin
     str := 'Kode belum diisi.' + sLineBreak;
-    edKode.SetFocus;
-  end;
-  if (edNama.Text = '') then
-  begin
+    edKode.SetFocus; end;
+  if (edNama.Text = '') then begin
     str := str + 'Nama belum diisi.' + sLineBreak;
-    edNama.SetFocus;
-  end;
-  if (memAlamat.Text = '') then
-  begin
+    edNama.SetFocus; end;
+  if (memAlamat.Text = '') then begin
     str := str + 'Alamat belum diisi.';
-    memAlamat.SetFocus;
-  end;
+    memAlamat.SetFocus; end;
   str := StringReplace(StringReplace(str, '', ' ', [rfReplaceAll]), #13, ' ', [rfReplaceAll]);
 
-  if str <> '' then
-  begin
+  if str <> '' then begin
     showMessage(str);
-    exit;
-  end;
+    exit; end;
 
   Result := True;
 end;

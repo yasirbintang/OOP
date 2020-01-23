@@ -2,8 +2,8 @@ object frmPembeli: TfrmPembeli
   Left = 0
   Top = 0
   Caption = 'Pembeli Baru'
-  ClientHeight = 300
-  ClientWidth = 379
+  ClientHeight = 360
+  ClientWidth = 400
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -17,11 +17,11 @@ object frmPembeli: TfrmPembeli
   object Panel1: TPanel
     Left = 0
     Top = 0
-    Width = 379
+    Width = 400
     Height = 211
     Align = alTop
     TabOrder = 0
-    ExplicitWidth = 377
+    ExplicitWidth = 379
     object Label2: TLabel
       Left = 17
       Top = 30
@@ -113,8 +113,8 @@ object frmPembeli: TfrmPembeli
   object DBGridPembeli: TDBGrid
     Left = 0
     Top = 211
-    Width = 379
-    Height = 89
+    Width = 400
+    Height = 149
     Align = alClient
     DataSource = DSPembeli
     TabOrder = 1
