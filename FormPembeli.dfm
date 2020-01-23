@@ -22,6 +22,9 @@ object frmPembeli: TfrmPembeli
     Align = alTop
     TabOrder = 0
     ExplicitWidth = 379
+    DesignSize = (
+      400
+      211)
     object Label2: TLabel
       Left = 17
       Top = 30
@@ -48,6 +51,7 @@ object frmPembeli: TfrmPembeli
       Top = 27
       Width = 185
       Height = 21
+      Anchors = [akLeft, akTop, akRight]
       TabOrder = 0
     end
     object edNama: TEdit
@@ -55,6 +59,7 @@ object frmPembeli: TfrmPembeli
       Top = 56
       Width = 185
       Height = 21
+      Anchors = [akLeft, akTop, akRight]
       TabOrder = 1
     end
     object memAlamat: TMemo
@@ -62,6 +67,7 @@ object frmPembeli: TfrmPembeli
       Top = 91
       Width = 185
       Height = 89
+      Anchors = [akLeft, akTop, akRight]
       TabOrder = 2
     end
     object Button4: TButton
@@ -69,6 +75,7 @@ object frmPembeli: TfrmPembeli
       Top = 155
       Width = 75
       Height = 25
+      Anchors = [akRight, akBottom]
       Caption = 'Lihat Pembeli'
       TabOrder = 5
       OnClick = Button4Click
@@ -78,6 +85,7 @@ object frmPembeli: TfrmPembeli
       Top = 186
       Width = 60
       Height = 20
+      Anchors = [akLeft, akBottom]
       Caption = 'OK'
       TabOrder = 3
       OnClick = Button1Click
@@ -87,6 +95,7 @@ object frmPembeli: TfrmPembeli
       Top = 124
       Width = 75
       Height = 25
+      Anchors = [akRight, akBottom]
       Caption = 'Baru'
       TabOrder = 6
       OnClick = Button5Click
@@ -96,6 +105,7 @@ object frmPembeli: TfrmPembeli
       Top = 186
       Width = 60
       Height = 20
+      Anchors = [akLeft, akBottom]
       Caption = 'Cancel'
       TabOrder = 4
       OnClick = Button2Click
@@ -105,6 +115,7 @@ object frmPembeli: TfrmPembeli
       Top = 186
       Width = 75
       Height = 25
+      Anchors = [akRight, akBottom]
       Caption = 'Hapus'
       TabOrder = 7
       OnClick = Button6Click
