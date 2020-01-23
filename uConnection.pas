@@ -25,6 +25,7 @@ implementation
 
 class function TConnection.ConnectDB(AAppName ,ADBEngine, AServer, ADatabase,
     AUser , APassword, APort : String): Boolean;
+
 begin
   Result := False;
 
@@ -36,10 +37,17 @@ begin
   FDConnection.DriverName := ADBEngine;
   FDConnection.LoginPrompt:= False;
 
-  FDConnection.Params.Add('Server=' + AServer);
-  FDConnection.Params.Add('Database=' + ADatabase);
-  FDConnection.Params.Add('User_Name=' + AUser);
-  FDConnection.Params.Add('Password=' + APassword);
+  //FDConnection.Params.Add('Server=' + AServer);
+//  FDConnection.Params.Add('Database=' + ADatabase);
+//  FDConnection.Params.Add('User_Name=' + AUser);
+//  FDConnection.Params.Add('Password=' + APassword);
+
+    FDConnection.Params.Add('Server=' + AServer);
+    FDConnection.Params.Add('Database=' + ADatabase);
+    FDConnection.Params.Add('User_Name=' + AUser);
+    FDConnection.Params.Add('Password=' + APassword);
+
+
 
   if APort <> '' then
     FDConnection.Params.Add('Port=' + APort);
