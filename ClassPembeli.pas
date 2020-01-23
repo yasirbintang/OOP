@@ -17,7 +17,6 @@ type
     procedure LoadByID(AID : Integer);
     function Simpan: Boolean;
     function ToString: string;
-
     property ID: Integer read FID write FID;
     property Kode: String read FKode write FKode;
     property Nama: String read FNama write FNama;

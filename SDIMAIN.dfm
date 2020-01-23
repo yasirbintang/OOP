@@ -15,6 +15,20 @@ object SDIAppForm: TSDIAppForm
   OnCreate = FormCreate
   PixelsPerInch = 96
   TextHeight = 16
+  object Label1: TLabel
+    Left = 464
+    Top = 349
+    Width = 49
+    Height = 16
+    Caption = 'Status :'
+  end
+  object Label2: TLabel
+    Left = 568
+    Top = 349
+    Width = 4
+    Height = 16
+    Caption = '-'
+  end
   object StatusBar: TStatusBar
     Left = 0
     Top = 370
@@ -25,7 +39,11 @@ object SDIAppForm: TSDIAppForm
     Margins.Right = 2
     Margins.Bottom = 2
     AutoHint = True
-    Panels = <>
+    Panels = <
+      item
+        Text = 'Database : '
+        Width = 100
+      end>
     SimplePanel = True
   end
   object MainMenu1: TMainMenu
@@ -51,6 +69,7 @@ object SDIAppForm: TSDIAppForm
       end
       object Barang1: TMenuItem
         Caption = 'Barang'
+        OnClick = Barang1Click
       end
     end
     object ransaksi1: TMenuItem
@@ -141,7 +160,7 @@ object SDIAppForm: TSDIAppForm
     Left = 72
     Top = 152
     Bitmap = {
-      494C01010F001300100010001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C01010F001300140010001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000400000004000000001002000000000000040
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000

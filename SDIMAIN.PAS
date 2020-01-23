@@ -5,7 +5,7 @@ interface
 uses Windows, Classes, Graphics, Forms, Controls, Menus,
   Dialogs, StdCtrls, Buttons, ExtCtrls, ComCtrls, ImgList, StdActns,
   ActnList, ToolWin, FormPembeli, uADGUIxIntf, uADGUIxFormsWait, uADStanIntf,
-  uADCompGUIx, uConnection;
+  uADCompGUIx, uConnection, FrmSetKoneksi, FormBarang;
 
 type
   TSDIAppForm = class(TForm)
@@ -35,6 +35,9 @@ type
     ransaksi1: TMenuItem;
     Pembelian1: TMenuItem;
     ADGUIxWaitCursor1: TADGUIxWaitCursor;
+    Label1: TLabel;
+    Label2: TLabel;
+    procedure Barang1Click(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure FileNew1Execute(Sender: TObject);
     procedure FileOpen1Execute(Sender: TObject);
@@ -51,19 +54,27 @@ type
 var
   SDIAppForm: TSDIAppForm;
 
+
 implementation
 
 uses about;
 
 {$R *.dfm}
 
+procedure TSDIAppForm.Barang1Click(Sender: TObject);
+begin
+    Form3 := TForm3.Create(Self);
+    Form3.Show
+end;
+
 procedure TSDIAppForm.FormCreate(Sender: TObject);
 begin
   if TConnection.ConnectDB('belajar', 'MSSQL', '192.168.0.62','belajar_oop', 'sa', 'it@3Serangkai', '1433') then
   begin
-    // tampilkan status di status bar
+    label2.Caption := 'Koneksi berhasil'
   end else begin
-    // tampilkan form utk setting koneksi
+    Form2 := TForm2.Create(Self);
+    Form2.Show;
   end;
 
 end;
