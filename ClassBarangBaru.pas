@@ -90,7 +90,20 @@ begin
 
   if ID = 0 then // data baru
   begin
-    // generate id baru select max(id) AS ID_TERAKHIR from tpembeli;
+
+     //generate id baru select max(id) AS ID_TERAKHIR from tpembeli;
+    sSQL := 'select max(id) AS ID_TERAKHIR from tbarang';
+    with TConnection.OpenQuery(sSQL, nil) do
+    begin
+      try
+        if not IsEmpty then
+          ID := FieldByName('ID_TERAKHIR').AsInteger + 1
+        else
+          ID := 1;
+      finally
+        Free;
+      end;
+    end;
     // id berikutnya = id teraKHIR + 1;
     // ID := LCDS.fIELDBBYNAME('ID_TERAKHIR').AsInteger + 1;
 

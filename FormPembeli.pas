@@ -138,6 +138,8 @@ end;
 
 procedure TfrmPembeli.FormShow(Sender: TObject);
 begin
+
+
   LoadDataPembeli;
 end;
 

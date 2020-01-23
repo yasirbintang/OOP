@@ -63,8 +63,8 @@ uses about;
 
 procedure TSDIAppForm.Barang1Click(Sender: TObject);
 begin
-    Form3 := TForm3.Create(Self);
-    Form3.Show
+    frmBarang := Tfrmbarang.Create(Self);
+    frmbarang.Show;
 end;
 
 procedure TSDIAppForm.FormCreate(Sender: TObject);

@@ -6,7 +6,9 @@ uses
   ABOUT in 'ABOUT.PAS' {AboutBox},
   ClassPembeli in 'ClassPembeli.pas',
   FormPembeli in 'FormPembeli.pas' {frmPembeli},
-  uConnection in 'uConnection.pas';
+  uConnection in 'uConnection.pas',
+  FormBarang in 'FormBarang.pas' {frmBarang},
+  ClassBarangBaru in 'ClassBarangBaru.pas';
 
 {$R *.RES}
 
