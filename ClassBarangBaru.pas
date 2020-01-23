@@ -1,0 +1,150 @@
+unit ClassBarangBaru;
+
+interface
+uses
+  uConnection,  sysutils;
+
+type
+  TBarang = class
+  private
+    FID: Integer;
+    FKode: String;
+    FNama: String;
+    FHarga: String;
+  public
+    constructor Create; reintroduce;
+    function Hapus: Boolean;
+    procedure LoadByID(AID : Integer);
+    function Simpan: Boolean;
+    function ToString: string;
+    property ID: Integer read FID write FID;
+    property Kode: String read FKode write FKode;
+    property Nama: String read FNama write FNama;
+    property Harga: String read FHarga write FHarga;
+  end;
+
+
+
+implementation
+
+uses
+  DBClient;
+
+constructor TBarang.Create;
+begin
+  inherited;
+  Self.ID := 0;
+end;
+
+function TBarang.Hapus: Boolean;
+var
+  sSQL: string;
+begin
+  Result := False;
+
+  sSQL := 'delete tbarang where id = ' + IntToStr(id);
+
+  FDConnection.StartTransaction;
+  try
+    if TConnection.ExecuteSQL(sSQL) then
+    begin
+      FDConnection.Commit;
+      Result := True;
+    end;
+  except
+    FDConnection.Rollback;
+  end;
+end;
+
+procedure TBarang.LoadByID(AID : Integer);
+var
+  lcds: TClientDataSet;
+  sSQL: string;
+begin
+  sSQL := ' select * from tbarang ' +
+          ' where id = ' + IntToStr(AID);
+
+  lcds := TConnection.OpenQuery(sSQL);
+  try
+    while not lcds.Eof do
+    begin
+      id      := lcds.FieldByName('id').AsInteger;
+      kode    := lcds.FieldByName('kode').AsString;
+      nama    := lcds.FieldByName('nama').AsString;
+      harga  := lcds.FieldByName('harga').AsString;
+
+      lcds.Next;
+    end;
+  finally
+    lcds.Free;
+  end;
+
+
+end;
+
+function TBarang.Simpan: Boolean;
+var
+  sSQL: string;
+begin
+  Result := False;
+
+  if ID = 0 then // data baru
+  begin
+    // generate id baru select max(id) AS ID_TERAKHIR from tpembeli;
+    // id berikutnya = id teraKHIR + 1;
+    // ID := LCDS.fIELDBBYNAME('ID_TERAKHIR').AsInteger + 1;
+
+    sSQL := 'insert into tbarang (id,kode,nama,harga) values (' +
+          IntToStr(ID) + ',' +
+          QuotedStr(Kode) + ',' +
+          QuotedStr(Nama) + ',' +
+          QuotedStr(Harga) + ')';
+  end else begin // update
+    sSQL:= 'update tbarang set ' +
+           ' kode = ' + QuotedStr(Kode) + ',' +
+           ' nama = ' + QuotedStr(Nama) + ',' +
+           ' harga = ' + QuotedStr(Harga) +
+           ' where id = ' + IntToStr(id);
+  end;
+
+
+
+  FDConnection.StartTransaction;
+  try
+    if TConnection.ExecuteSQL(sSQL) then
+    begin
+      FDConnection.Commit;
+
+      Result := True;
+    end;
+  except
+    FDConnection.Rollback;
+  end;
+
+end;
+
+function TBarang.ToString: string;
+begin
+  Result := 'Data Pembeli' + #13 +
+            '---------------------' + #13 +
+            ' Kode : ' + Self.Kode;
+end;
+
+//function getIDAutoGenerate(TBarang:string):string;
+//
+//var
+//  lcds  : TclientDataSet;
+//  sSQl: string;
+//  idakhir : string;
+//  AID : integer;
+//
+//begin
+// with idakhir do
+//  begin
+//
+//    sSQL := ' select * from tbarang ' +
+//          ' where id = max(id)';
+//  end;
+//
+// end;
+end.
