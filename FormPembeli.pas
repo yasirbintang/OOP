@@ -63,10 +63,10 @@ begin
     lPembeli.Alamat   := memAlamat.Text;
     lPembeli.ID       := FID;
 
-    if lPembeli.IsKodeSudahAda(edKode.Text, FID) = FID then
+    if (lPembeli.IsKodeSudahAda(edKode.Text)) <> FID then
     begin
       // warning kode sudah ada
-      ShowMessage('Kode sudah Ada');
+      ShowMessage(IntToStr(FID));
       edKode.Focused;
     end else
 

@@ -70,7 +70,7 @@ object frmPembeli: TfrmPembeli
       Width = 75
       Height = 25
       Caption = 'Lihat Pembeli'
-      TabOrder = 3
+      TabOrder = 5
       OnClick = Button4Click
     end
     object Button1: TButton
@@ -79,7 +79,7 @@ object frmPembeli: TfrmPembeli
       Width = 60
       Height = 20
       Caption = 'OK'
-      TabOrder = 4
+      TabOrder = 3
       OnClick = Button1Click
     end
     object Button5: TButton
@@ -88,7 +88,7 @@ object frmPembeli: TfrmPembeli
       Width = 75
       Height = 25
       Caption = 'Baru'
-      TabOrder = 5
+      TabOrder = 6
       OnClick = Button5Click
     end
     object Button2: TButton
@@ -97,7 +97,7 @@ object frmPembeli: TfrmPembeli
       Width = 60
       Height = 20
       Caption = 'Cancel'
-      TabOrder = 6
+      TabOrder = 4
       OnClick = Button2Click
     end
     object Button6: TButton

@@ -40,6 +40,7 @@ var
   sSQL: string;
   lcds: TClientDataSet;
 begin
+  Result := 0;
   sSQL := 'select id from tpembeli where kode = ' + QuotedStr(AKode);
 
   lcds := TConnection.OpenQuery(sSQL);
