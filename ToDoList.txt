@@ -1,4 +1,11 @@
+Adim
+
 1. Tambahkan konfirmasi delete
 2. Cek kode apakah sudah ada pada saat simpan (baik baru maupun ubah)
 3. Pelajari soal anchor
 4. Set taborder agar urut
+5. Push git without login < dicari caranya
+
+Yasir : 
+1. Selesaikan class barang
+2. Selesaikan form barang

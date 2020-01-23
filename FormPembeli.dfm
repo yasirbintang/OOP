@@ -11,109 +11,137 @@ object frmPembeli: TfrmPembeli
   Font.Name = 'Tahoma'
   Font.Style = []
   OldCreateOrder = False
+  OnShow = FormShow
   PixelsPerInch = 96
   TextHeight = 13
-  object Label2: TLabel
-    Left = 32
-    Top = 38
-    Width = 24
-    Height = 13
-    Caption = 'Kode'
-  end
-  object Label3: TLabel
-    Left = 32
-    Top = 67
-    Width = 27
-    Height = 13
-    Caption = 'Nama'
-  end
-  object Label4: TLabel
-    Left = 32
-    Top = 99
-    Width = 33
-    Height = 13
-    Caption = 'Alamat'
-  end
-  object edKode: TEdit
-    Left = 104
-    Top = 35
-    Width = 169
-    Height = 21
+  object Panel1: TPanel
+    Left = 0
+    Top = 0
+    Width = 379
+    Height = 211
+    Align = alTop
     TabOrder = 0
+    ExplicitWidth = 377
+    object Label2: TLabel
+      Left = 17
+      Top = 30
+      Width = 24
+      Height = 13
+      Caption = 'Kode'
+    end
+    object Label3: TLabel
+      Left = 17
+      Top = 59
+      Width = 27
+      Height = 13
+      Caption = 'Nama'
+    end
+    object Label4: TLabel
+      Left = 17
+      Top = 91
+      Width = 33
+      Height = 13
+      Caption = 'Alamat'
+    end
+    object edKode: TEdit
+      Left = 89
+      Top = 27
+      Width = 185
+      Height = 21
+      TabOrder = 0
+    end
+    object edNama: TEdit
+      Left = 89
+      Top = 56
+      Width = 185
+      Height = 21
+      TabOrder = 1
+    end
+    object memAlamat: TMemo
+      Left = 89
+      Top = 91
+      Width = 185
+      Height = 89
+      TabOrder = 2
+    end
+    object Button4: TButton
+      Left = 302
+      Top = 155
+      Width = 75
+      Height = 25
+      Caption = 'Lihat Pembeli'
+      TabOrder = 3
+      OnClick = Button4Click
+    end
+    object Button1: TButton
+      Left = 6
+      Top = 186
+      Width = 60
+      Height = 20
+      Caption = 'OK'
+      TabOrder = 4
+      OnClick = Button1Click
+    end
+    object Button5: TButton
+      Left = 302
+      Top = 124
+      Width = 75
+      Height = 25
+      Caption = 'Baru'
+      TabOrder = 5
+      OnClick = Button5Click
+    end
+    object Button2: TButton
+      Left = 72
+      Top = 186
+      Width = 60
+      Height = 20
+      Caption = 'Cancel'
+      TabOrder = 6
+      OnClick = Button2Click
+    end
+    object Button6: TButton
+      Left = 302
+      Top = 186
+      Width = 75
+      Height = 25
+      Caption = 'Hapus'
+      TabOrder = 7
+      OnClick = Button6Click
+    end
   end
-  object edNama: TEdit
-    Left = 104
-    Top = 64
-    Width = 169
-    Height = 21
-    TabOrder = 1
-  end
-  object Button1: TButton
-    Left = 64
-    Top = 248
-    Width = 60
-    Height = 20
-    Caption = 'OK'
-    TabOrder = 2
-    OnClick = Button1Click
-  end
-  object Button2: TButton
-    Left = 182
-    Top = 248
-    Width = 60
-    Height = 20
-    Caption = 'Cancel'
-    TabOrder = 3
-    OnClick = Button2Click
-  end
-  object Button4: TButton
-    Left = 89
-    Top = 217
-    Width = 75
-    Height = 25
-    Caption = 'Lihat Pembeli'
-    TabOrder = 4
-    OnClick = Button4Click
-  end
-  object Button5: TButton
-    Left = 170
-    Top = 217
-    Width = 75
-    Height = 25
-    Caption = 'Baru'
-    TabOrder = 5
-    OnClick = Button5Click
-  end
-  object Button6: TButton
-    Left = 251
-    Top = 217
-    Width = 75
-    Height = 25
-    Caption = 'Hapus'
-    TabOrder = 6
-    OnClick = Button6Click
-  end
-  object memAlamat: TMemo
-    Left = 104
-    Top = 99
-    Width = 185
+  object DBGridPembeli: TDBGrid
+    Left = 0
+    Top = 211
+    Width = 379
     Height = 89
-    TabOrder = 7
+    Align = alClient
+    DataSource = DSPembeli
+    TabOrder = 1
+    TitleFont.Charset = DEFAULT_CHARSET
+    TitleFont.Color = clWindowText
+    TitleFont.Height = -11
+    TitleFont.Name = 'Tahoma'
+    TitleFont.Style = []
   end
   object ADPhysMSSQLDriverLink1: TADPhysMSSQLDriverLink
     Left = 304
-    Top = 248
+    Top = 72
   end
   object ADConnection1: TADConnection
-    Left = 304
-    Top = 16
+    Left = 336
+    Top = 8
   end
   object con1: TADConnection
-    Left = 136
-    Top = 128
+    Left = 344
+    Top = 56
   end
   object con2: TADConnection
-    Left = 280
-    Top = 120
+    Left = 352
+    Top = 104
+  end
+  object DSPembeli: TDataSource
+    Left = 96
+    Top = 216
   end
 end

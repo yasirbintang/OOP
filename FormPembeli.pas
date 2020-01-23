@@ -8,31 +8,36 @@ uses
   uADStanError, uADGUIxIntf, uADPhysIntf, uADStanDef, uADStanPool, uADStanAsync,
   uADPhysManager, uADCompClient, DB, uConnection, uADPhysODBCBase, uADPhysMSSQL,
   DBClient, Provider, uADStanParam, uADDatSManager, uADDAptIntf, uADDAptManager,
-  uADCompDataSet, ExtCtrls;
+  uADCompDataSet, ExtCtrls, Grids, DBGrids;
 
 type
   TfrmPembeli = class(TForm)
     ADPhysMSSQLDriverLink1: TADPhysMSSQLDriverLink;
-    Label3: TLabel;
-    Label4: TLabel;
-    Label2: TLabel;
-    edNama: TEdit;
-    edKode: TEdit;
-    Button4: TButton;
-    Button5: TButton;
-    Button6: TButton;
-    Button1: TButton;
-    Button2: TButton;
-    memAlamat: TMemo;
     ADConnection1: TADConnection;
+    Panel1: TPanel;
+    Label2: TLabel;
+    edKode: TEdit;
+    Label3: TLabel;
+    edNama: TEdit;
+    Label4: TLabel;
+    memAlamat: TMemo;
+    Button4: TButton;
+    Button1: TButton;
+    Button5: TButton;
+    Button2: TButton;
+    Button6: TButton;
+    DBGridPembeli: TDBGrid;
+    DSPembeli: TDataSource;
     procedure Button1Click(Sender: TObject);
     procedure Button2Click(Sender: TObject);
     procedure Button4Click(Sender: TObject);
     procedure Button5Click(Sender: TObject);
     procedure Button6Click(Sender: TObject);
+    procedure FormShow(Sender: TObject);
   private
     FID: Integer;
     function IsDataValid: Boolean;
+    procedure LoadDataPembeli;
     { Private declarations }
   public
     { Public declarations }
@@ -60,6 +65,7 @@ begin
 
     if lPembeli.Simpan then
     begin
+      LoadDataPembeli;
       ShowMessage('Berhasil Simpan')
     end else begin
       ShowMessage('Gagal Simpan');
@@ -123,10 +129,16 @@ begin
 
   if lpembeli.Hapus then
   begin
+    LoadDataPembeli;
     ShowMessage('Berhasil Hapus');
     Button5.Click;
   end;
 
+end;
+
+procedure TfrmPembeli.FormShow(Sender: TObject);
+begin
+  LoadDataPembeli;
 end;
 
 function TfrmPembeli.IsDataValid: Boolean;
@@ -159,6 +171,18 @@ begin
   end;
 
   Result := True;
+end;
+
+procedure TfrmPembeli.LoadDataPembeli;
+var
+  lcds: TClientDataSet;
+  sSQL: string;
+begin
+  sSQL := 'select * from tpembeli order by kode';
+  lcds := TConnection.OpenQuery(sSQL, Self);
+
+  DSPembeli.DataSet := lcds;
+//  DBGridPembeli
 end;
 
 end.
