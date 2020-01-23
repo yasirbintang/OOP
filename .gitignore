@@ -30,6 +30,7 @@
 *.exe
 *.dll
 *.bpl
+*.dproj
 *.bpi
 *.dcp
 *.so
