@@ -11,7 +11,6 @@ type
     FKode: String;
     FNama: String;
     FAlamat: String;
-
   public
     constructor Create; reintroduce;
     function Hapus: Boolean;
@@ -22,7 +21,6 @@ type
     property Kode: String read FKode write FKode;
     property Nama: String read FNama write FNama;
     property Alamat: String read FAlamat write FAlamat;
-    function autonumber: string;
   end;
 
 
@@ -38,22 +36,6 @@ begin
   Self.ID := 0;
 end;
 
-function TPembeli.autonumber: string;
-var
-  sSQL: string;
-  lcds: TClientDataSet;
-begin
-
-  sSQL := 'select max(id) from tpembeli' + intToStr(ID);
-  lcds := TConnection.OpenQuery(sSQL);
-
-
-
-
-
-  // TODO -cMM: TPembeli.autonumber default body inserted
-end;
-
 function TPembeli.Hapus: Boolean;
 var
   sSQL: string;
@@ -67,6 +49,7 @@ begin
     if TConnection.ExecuteSQL(sSQL) then
     begin
       FDConnection.Commit;
+
       Result := True;
     end;
   except
@@ -108,7 +91,18 @@ begin
 
   if ID = 0 then // data baru
   begin
-     //generate id baru select max(id) AS ID_TERAKHIR from tpembeli;
+    sSQL := 'select max(id) AS ID_TERAKHIR from tpembeli';
+    with TConnection.OpenQuery(sSQL, nil) do
+    begin
+      try
+        if not IsEmpty then
+          ID := FieldByName('ID_TERAKHIR').AsInteger + 1
+        else
+          ID := 1;
+      finally
+        Free;
+      end;
+    end;
     // id berikutnya = id teraKHIR + 1;
     // ID := LCDS.fIELDBBYNAME('ID_TERAKHIR').AsInteger + 1;
 

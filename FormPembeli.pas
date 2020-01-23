@@ -8,43 +8,35 @@ uses
   uADStanError, uADGUIxIntf, uADPhysIntf, uADStanDef, uADStanPool, uADStanAsync,
   uADPhysManager, uADCompClient, DB, uConnection, uADPhysODBCBase, uADPhysMSSQL,
   DBClient, Provider, uADStanParam, uADDatSManager, uADDAptIntf, uADDAptManager,
-  uADCompDataSet, Grids, DBGrids, ExtCtrls, ADODB, DBTables;
+  uADCompDataSet;
 
 type
   TfrmPembeli = class(TForm)
-    ADPhysMSSQLDriverLink1: TADPhysMSSQLDriverLink;
-    Panel1: TPanel;
     Label2: TLabel;
     Label3: TLabel;
     Label4: TLabel;
     edKode: TEdit;
     edNama: TEdit;
     edAlamat: TEdit;
-    Panel2: TPanel;
     Button1: TButton;
     Button2: TButton;
     Button3: TButton;
+    ADPhysMSSQLDriverLink1: TADPhysMSSQLDriverLink;
     Button4: TButton;
+    edID: TEdit;
     Button5: TButton;
     Button6: TButton;
-    DBGrid1: TDBGrid;
-    ADOQuery1: TADOQuery;
-    DataSource1: TDataSource;
-    ADOConnection1: TADOConnection;
-    btSimpan: TButton;
+    con2: TADConnection;
     procedure Button1Click(Sender: TObject);
     procedure Button3Click(Sender: TObject);
     procedure Button4Click(Sender: TObject);
     procedure Button5Click(Sender: TObject);
     procedure Button6Click(Sender: TObject);
-
   private
     FID: Integer;
     function IsDataValid: Boolean;
-
     { Private declarations }
   public
-    function autonumber: string;
     { Public declarations }
   end;
 
@@ -57,9 +49,7 @@ implementation
 procedure TfrmPembeli.Button1Click(Sender: TObject);
 var
   lPembeli: TPembeli;
-
 begin
-
   if not IsDataValid then
     Exit;
 
@@ -72,7 +62,6 @@ begin
 
     if lPembeli.Simpan then
     begin
-
       ShowMessage('Berhasil Simpan')
     end else begin
       ShowMessage('Gagal Simpan');
@@ -89,8 +78,6 @@ end;
 
 procedure TfrmPembeli.Button3Click(Sender: TObject);
 begin
-edNama.Text := autonumber;
-
   if TConnection.ConnectDB('belajar', 'MSSQL', '192.168.0.62','belajar_oop', 'sa', 'it@3Serangkai', '1433') then
   begin
     ShowMessage('Berhasil Membuat koneksi DB');
@@ -126,6 +113,7 @@ end;
 procedure TfrmPembeli.Button5Click(Sender: TObject);
 begin
   FID           := 0;
+
   edKode.Text   := '';
   edNama.Text   := '';
   edAlamat.Text := '';
