@@ -4,7 +4,9 @@ interface
 
 uses
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
-  Dialogs, Menus, StdCtrls, ClassPembeli;
+  Dialogs, Menus, StdCtrls, ClassPembeli, uADStanIntf, uADStanOption,
+  uADStanError, uADGUIxIntf, uADPhysIntf, uADStanDef, uADStanPool, uADStanAsync,
+  uADPhysManager, DB, uADCompClient;
 
 type
   TfrmPembeli = class(TForm)
@@ -18,6 +20,7 @@ type
     edAlamat: TEdit;
     Button1: TButton;
     Button2: TButton;
+    con1: TADConnection;
     procedure Button1Click(Sender: TObject);
   private
     function IsDataValid: Boolean;

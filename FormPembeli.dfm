@@ -86,4 +86,8 @@ object frmPembeli: TfrmPembeli
     Caption = 'Cancel'
     TabOrder = 5
   end
+  object con1: TADConnection
+    Left = 136
+    Top = 128
+  end
 end
