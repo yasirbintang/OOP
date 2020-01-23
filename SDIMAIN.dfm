@@ -12,6 +12,7 @@ object SDIAppForm: TSDIAppForm
   Font.Style = []
   Menu = MainMenu1
   OldCreateOrder = False
+  OnCreate = FormCreate
   PixelsPerInch = 96
   TextHeight = 16
   object StatusBar: TStatusBar
@@ -26,8 +27,6 @@ object SDIAppForm: TSDIAppForm
     AutoHint = True
     Panels = <>
     SimplePanel = True
-    ExplicitTop = 177
-    ExplicitWidth = 352
   end
   object MainMenu1: TMainMenu
     Images = ImageList1
@@ -142,7 +141,7 @@ object SDIAppForm: TSDIAppForm
     Left = 72
     Top = 152
     Bitmap = {
-      494C01010F0013000C0010001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C01010F001300100010001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000400000004000000001002000000000000040
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000
@@ -686,5 +685,9 @@ object SDIAppForm: TSDIAppForm
     Filter = 'All Files (*.*)|*.*'
     Left = 136
     Top = 152
+  end
+  object ADGUIxWaitCursor1: TADGUIxWaitCursor
+    Left = 80
+    Top = 72
   end
 end
