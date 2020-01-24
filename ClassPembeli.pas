@@ -14,7 +14,7 @@ type
   public
     constructor Create; reintroduce;
     function Hapus: Boolean;
-    function IsKodeSudahAda(aKode : String): Integer;
+    function IsKodeSudahAda(aKode : String; aID : Integer): Boolean;
     procedure LoadByID(AID : Integer);
     function Simpan: Boolean;
     function ToString: string;
@@ -35,13 +35,15 @@ begin
   Self.ID := 0;
 end;
 
-function TPembeli.IsKodeSudahAda(aKode : String): Integer;
+function TPembeli.IsKodeSudahAda(aKode : String; aID : Integer): Boolean;
 var
   sSQL: string;
   lcds: TClientDataSet;
 begin
-  Result := 0;
-  sSQL := 'select id from tpembeli where kode = ' + QuotedStr(AKode);
+  Result := False;
+  sSQL := 'select id from tpembeli ' +
+          ' where kode = ' + QuotedStr(AKode) +
+          ' and id <> ' + IntToStr(aID);
 
   lcds := TConnection.OpenQuery(sSQL);
   try
@@ -50,7 +52,7 @@ begin
   finally
     lcds.Free;
   end;
-  Result := Self.FID;
+  Result := True;
 end;
 
 function TPembeli.Hapus: Boolean;
