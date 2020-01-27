@@ -3,7 +3,7 @@ object frmBarang: TfrmBarang
   Top = 0
   Caption = 'Barang Baru'
   ClientHeight = 335
-  ClientWidth = 489
+  ClientWidth = 484
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -14,90 +14,55 @@ object frmBarang: TfrmBarang
   OnCreate = FormCreate
   PixelsPerInch = 96
   TextHeight = 13
-  object Label2: TLabel
-    Left = 24
-    Top = 72
-    Width = 27
-    Height = 13
-    Caption = 'Nama'
-  end
-  object Label3: TLabel
-    Left = 24
-    Top = 112
-    Width = 24
-    Height = 13
-    Caption = 'Kode'
-  end
-  object Label4: TLabel
-    Left = 24
-    Top = 152
-    Width = 29
-    Height = 13
-    Caption = 'Harga'
-  end
   object Label1: TLabel
-    Left = 416
-    Top = 112
+    Left = 271
+    Top = 159
     Width = 31
     Height = 13
     Caption = 'Label1'
   end
-  object edKode: TEdit
-    Left = 80
-    Top = 69
-    Width = 121
-    Height = 21
-    TabOrder = 0
+  object Label5: TLabel
+    Left = 271
+    Top = 132
+    Width = 68
+    Height = 13
+    Caption = 'Status Barang'
   end
-  object edNama: TEdit
-    Left = 80
-    Top = 109
-    Width = 121
-    Height = 21
-    TabOrder = 1
-  end
-  object edHarga: TEdit
-    Left = 80
-    Top = 149
-    Width = 121
-    Height = 21
-    TabOrder = 2
-  end
-  object Button1: TButton
-    Left = 398
-    Top = 27
+  object btnconnect: TButton
+    Left = 401
+    Top = 8
     Width = 75
     Height = 25
     Caption = 'Tes Koneksi'
-    TabOrder = 3
-    OnClick = Button1Click
+    TabOrder = 1
+    OnClick = btnconnectClick
   end
-  object Button2: TButton
-    Left = 398
-    Top = 147
+  object btnhapus: TButton
+    Left = 271
+    Top = 93
     Width = 75
     Height = 25
     Caption = 'Hapus'
     TabOrder = 4
-    OnClick = Button2Click
+    OnClick = btnhapusClick
   end
-  object Button3: TButton
-    Left = 312
-    Top = 147
+  object btnbaru: TButton
+    Left = 271
+    Top = 8
     Width = 75
     Height = 25
     Caption = 'Baru'
-    TabOrder = 5
-    OnClick = Button3Click
+    TabOrder = 3
+    OnClick = btnbaruClick
   end
-  object Button4: TButton
-    Left = 398
-    Top = 67
+  object btnlihat: TButton
+    Left = 401
+    Top = 39
     Width = 75
     Height = 25
     Caption = 'Lihat Barang'
-    TabOrder = 6
-    OnClick = Button4Click
+    TabOrder = 2
+    OnClick = btnlihatClick
   end
   object DBGrid1: TDBGrid
     Left = 8
@@ -105,50 +70,109 @@ object frmBarang: TfrmBarang
     Width = 473
     Height = 135
     DataSource = DSBarang
-    TabOrder = 7
+    TabOrder = 5
     TitleFont.Charset = DEFAULT_CHARSET
     TitleFont.Color = clWindowText
     TitleFont.Height = -11
     TitleFont.Name = 'Tahoma'
     TitleFont.Style = []
+    OnCellClick = DBGrid1CellClick
   end
   object btsimpan: TButton
-    Left = 231
-    Top = 147
+    Left = 271
+    Top = 53
     Width = 75
     Height = 25
     Caption = 'Simpan'
-    TabOrder = 8
+    TabOrder = 0
     OnClick = btsimpanClick
   end
+  object pnlpropety: TPanel
+    Left = -1
+    Top = 2
+    Width = 266
+    Height = 184
+    TabOrder = 6
+    object Label2: TLabel
+      Left = 53
+      Top = 96
+      Width = 27
+      Height = 13
+      Caption = 'Nama'
+    end
+    object Label3: TLabel
+      Left = 53
+      Top = 58
+      Width = 24
+      Height = 13
+      Caption = 'Kode'
+    end
+    object Label4: TLabel
+      Left = 51
+      Top = 136
+      Width = 29
+      Height = 13
+      Caption = 'Harga'
+    end
+    object edKode: TEdit
+      Left = 104
+      Top = 53
+      Width = 121
+      Height = 21
+      TabOrder = 0
+      OnKeyPress = edKodeKeyPress
+    end
+    object edNama: TEdit
+      Left = 104
+      Top = 93
+      Width = 121
+      Height = 21
+      TabOrder = 1
+    end
+    object edHarga: TEdit
+      Left = 104
+      Top = 133
+      Width = 121
+      Height = 21
+      TabOrder = 2
+    end
+    object Edit1: TEdit
+      Left = 9
+      Top = 8
+      Width = 121
+      Height = 21
+      TabOrder = 3
+      Text = 'Edit1'
+    end
+  end
   object con2: TADConnection
-    Left = 352
-    Top = 64
+    Left = 656
+    Top = 248
   end
   object con1: TADConnection
-    Left = 352
-    Top = 16
+    Left = 656
+    Top = 200
   end
   object ADConnection1: TADConnection
-    Left = 288
-    Top = 16
+    Left = 592
+    Top = 200
   end
   object DSBarang: TDataSource
-    Left = 288
-    Top = 72
+    Left = 592
+    Top = 256
   end
   object ADPhysMSSQLDriverLink1: TADPhysMSSQLDriverLink
-    Left = 352
-    Top = 112
+    Left = 656
+    Top = 296
   end
   object ADConnection2: TADConnection
-    Left = 224
-    Top = 72
+    Left = 528
+    Top = 256
   end
   object ClientDataSet1: TClientDataSet
     Aggregates = <>
     Params = <>
-    Left = 216
-    Top = 16
+    Left = 520
+    Top = 200
   end
 end
