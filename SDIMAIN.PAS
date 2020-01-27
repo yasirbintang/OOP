@@ -4,8 +4,8 @@ interface
 
 uses Windows, Classes, Graphics, Forms, Controls, Menus,
   Dialogs, StdCtrls, Buttons, ExtCtrls, ComCtrls, ImgList, StdActns,
-  ActnList, ToolWin, FormPembeli, uADGUIxIntf, uADGUIxFormsWait, uADStanIntf,
-  uADCompGUIx, uConnection, FrmSetKoneksi, FormBarang, ufrmpembelian;
+  ActnList, ToolWin, uADGUIxIntf, uADGUIxFormsWait, uADStanIntf,
+  uADCompGUIx, uConnection, FrmSetKoneksi, ufrmPembeli, ufrmBarang, ufrmpembelian;
 
 type
   TSDIAppForm = class(TForm)

@@ -18,9 +18,9 @@ object SDIAppForm: TSDIAppForm
   object lblStatus: TLabel
     AlignWithMargins = True
     Left = 3
-    Top = 370
+    Top = 369
     Width = 710
-    Height = 16
+    Height = 17
     Align = alBottom
     Alignment = taRightJustify
     Caption = '-'
@@ -31,7 +31,6 @@ object SDIAppForm: TSDIAppForm
     Font.Style = []
     ParentFont = False
     ExplicitLeft = 709
-    ExplicitTop = 369
     ExplicitWidth = 4
   end
   object MainMenu1: TMainMenu
@@ -149,7 +148,7 @@ object SDIAppForm: TSDIAppForm
     Left = 72
     Top = 152
     Bitmap = {
-      494C01010F001300240010001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C01010F0013002C0010001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000400000004000000001002000000000000040
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000

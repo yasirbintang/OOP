@@ -2,15 +2,17 @@ unit ClassPembelian;
 
 interface
 uses
-  uConnection, SysUtils, ClassPembeli;
+  uConnection, SysUtils, ClassPembeli, ClassBarangBaru;
 
   type
   TPembelian = class
   private
+    FFBarang: TBarang;
     FID: Integer;
     FPembeli: TPembeli;
   public
     function Simpan: Boolean;
+    property FBarang: TBarang read FFBarang write FFBarang;
     property ID: Integer read FID write FID;
     property Pembeli: TPembeli read FPembeli write FPembeli;
   end;

@@ -4,77 +4,264 @@ interface
 
 uses
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
-  Dialogs, StdCtrls, classBarang;
+  Dialogs,uConnection, Grids, DBGrids, StdCtrls, uADStanIntf, uADStanOption,
+  uADStanError, uADGUIxIntf, uADPhysIntf, uADStanDef, uADStanPool, uADStanAsync,
+  uADPhysManager, uADCompClient, DB, uADPhysODBCBase, uADPhysMSSQL,
+  DBClient, Provider, uADStanParam, uADDatSManager, uADDAptIntf, uADDAptManager,
+  uADCompDataSet, ExtCtrls, ClassBarang;
 
 type
   TfrmBarang = class(TForm)
+    btnconnect: TButton;
+    btnhapus: TButton;
+    btnbaru: TButton;
+    btnlihat: TButton;
+    DBGrid1: TDBGrid;
+    btsimpan: TButton;
+    DSBarang: TDataSource;
+    ADPhysMSSQLDriverLink1: TADPhysMSSQLDriverLink;
+    ADConnection2: TADConnection;
+    ClientDataSet1: TClientDataSet;
     Label1: TLabel;
+    pnlpropety: TPanel;
     Label2: TLabel;
-    edKode: TEdit;
     Label3: TLabel;
-    edNama: TEdit;
     Label4: TLabel;
+    edKode: TEdit;
+    edNama: TEdit;
     edHarga: TEdit;
-    Button1: TButton;
-    edID: TEdit;
-    Button2: TButton;
-    procedure Button1Click(Sender: TObject);
-    procedure Button2Click(Sender: TObject);
+    Edit1: TEdit;
+    Label5: TLabel;
+
+    procedure FormCreate(Sender: TObject);
+    procedure btsimpanClick(Sender: TObject);
+    procedure btnconnectClick(Sender: TObject);
+    procedure btnhapusClick(Sender: TObject);
+    procedure btnbaruClick(Sender: TObject);
+    procedure btnlihatClick(Sender: TObject);
+    procedure DBGrid1CellClick(Column: TColumn);
+    procedure edKodeKeyPress(Sender: TObject; var Key: Char);
   private
+    FID: Integer;
+
+    function IsDataValid: Boolean;
+    procedure LoadDataBarang;
+    function scandata: string;
+
     { Private declarations }
   public
-   function validasidata: Boolean;
     { Public declarations }
   end;
 
 var
   frmBarang: TfrmBarang;
-  Barang: TBarang;
+
 implementation
 
 {$R *.dfm}
 
-procedure TfrmBarang.Button1Click(Sender: TObject);
+
+procedure TfrmBarang.FormCreate(Sender: TObject);
 begin
-  if not validasidata then
+
+  LoadDataBarang;
+end;
+
+procedure TfrmBarang.btsimpanClick(Sender: TObject);
+var
+  lbarang: TBarang;
+begin
+  if not IsDataValid then
     Exit;
 
-  Barang := TBarang.Create;
+  lbarang := Tbarang.Create;
   try
-    barang.Kode := edKode.Text;
-    barang.Nama := edNama.Text;
-    barang.Harga := edharga.Text;
+    lbarang.Kode     := edKode.Text;
+    lbarang.Nama     := edNama.Text;
+    lbarang.Harga    := edHarga.Text;
+    lbarang.ID       := FID;
 
-    if barang.Simpan then
+    scandata;
+
+    if label1.Caption <> '' then
     begin
+      ShowMessage('kode sudah ada');
+      exit;
+    end;
+
+    if lbarang.IsKodeSudahAda(edKode.Text , FID) then
+    begin
+      ShowMessage('kode sudah ada');
+      exit;
+    end;
+
+    if lbarang.Simpan then
+    begin
+      LoadDataBarang;
       ShowMessage('Berhasil Simpan')
     end else begin
       ShowMessage('Gagal Simpan');
     end;
 
   finally
-    barang.Free;
+    lbarang.Free;
   end;
 end;
 
-procedure TfrmBarang.Button2Click(Sender: TObject);
+procedure TfrmBarang.btnconnectClick(Sender: TObject);
 begin
-  barang.ToString;
+ if TConnection.ConnectDB('belajar', 'MSSQL', '192.168.0.62','belajar_oop', 'sa', 'it@3Serangkai', '1433') then
+  begin
+    ShowMessage('Berhasil Membuat koneksi DB');
+  end;
+
 end;
 
-function TfrmBarang.validasidata: Boolean;
-begin
-  result:= false;
+procedure TfrmBarang.btnhapusClick(Sender: TObject);
+var
+  lbarang: TBarang;
 
-  if edKode.Text = '' then
+begin
+  lbarang := TBarang.Create;
+  lbarang.LoadByID(FID);
+
+  if MessageDlg('Apakah ingin dihapus?',mtConfirmation,mbYesNo,0) = mrYes then
   begin
-    ShowMessage('Kode Belum Diisi');
+    lbarang.Hapus;
+    LoadDataBarang;
+    ShowMessage('Berhasil Hapus');
+    btnbaru.Click;
+  end;
+
+// if lbarang.Hapus then
+//  begin
+//    LoadDataBarang;
+//    ShowMessage('Berhasil Hapus');
+//    Button3.Click;
+//  end;
+
+end;
+
+procedure TfrmBarang.btnbaruClick(Sender: TObject);
+begin
+FID           := 0;
+
+  edKode.Text   := '';
+  edNama.Text   := '';
+  edharga.Text := '';
+end;
+
+procedure TfrmBarang.btnlihatClick(Sender: TObject);
+var
+  lBarang: TBarang;
+  sID: string;
+begin
+  sID := InputBox('ID', 'ID', '0');
+
+  lBarang := TBarang.Create;
+  try
+    lBarang.LoadByID(StrToInt(sID));
+
+    if lBarang.ID > 0 then
+    begin
+      FID             := lBarang.ID;
+      edKode.Text     := lBarang.Kode;
+      edNama.Text     := lBarang.Nama;
+      edHarga.Text    := lBarang.Harga;
+    end;
+
+  finally
+    lBarang.Free;
+  end;
+end;
+
+procedure TfrmBarang.DBGrid1CellClick(Column: TColumn);
+var
+lcds : TClientDataSet;
+begin
+    DSBarang.DataSet := lcds;
+    edKode.Text := DBGrid1.Fields[2].Text;
+//    edNama.Text := lcds.FieldByName('nama').Text;
+//    edHarga.Text := lcds.FieldByName('harga').Text;
+
+end;
+
+procedure TfrmBarang.edKodeKeyPress(Sender: TObject; var Key: Char);
+begin
+    if not (key in['0'..'9', #8, #13]) then
+    ShowMessage('data harus angka');
+    //edKode.Clear;
+    //key:= #0;
+    //edKode.SetFocus;
+    //key:= #0 ;
+end;
+
+function TfrmBarang.IsDataValid: Boolean;
+var
+  str : string;
+begin
+  Result := False;
+  str := '';
+  if (edKode.Text = '') then
+  begin
+    str := 'Kode belum diisi.' + sLineBreak;
     edKode.SetFocus;
+  end;
+  if (edNama.Text = '') then
+  begin
+    str := str + 'Nama belum diisi.' + sLineBreak;
+    edNama.SetFocus;
+  end;
+  if (edHarga.Text = '') then
+  begin
+    str := str + 'Harga belum diisi.';
+    edHarga.SetFocus;
+  end;
+  str := StringReplace(StringReplace(str, '', ' ', [rfReplaceAll]), #13, ' ', [rfReplaceAll]);
+
+  if str <> '' then
+  begin
+    showMessage(str);
     exit;
   end;
 
-  Result := True; //
-  // TODO -cMM: TfrmBarang.validasidata default body inserted
+  Result := True;
 end;
 
+procedure Tfrmbarang.LoadDataBarang;
+var
+  lcds: TClientDataSet;
+  sSQL: string;
+begin
+  sSQL := 'select * from tbarang order by id';
+  lcds := TConnection.OpenQuery(sSQL, Self);
+
+  DSBarang.DataSet := lcds;
+end;
+
+
+
+function tfrmbarang.scandata: string;
+var
+  lcds : TClientDataSet;
+  sSQL: string;
+begin
+  sSQL := 'select kode, nama from tbarang ' +
+          ' where id <> '+ IntToStr(FID) +
+          ' and kode = ' + QuotedStr(edKode.Text);
+
+
+  lcds := TConnection.OpenQuery(sSQL);
+  try
+    if not lcds.IsEmpty then
+    begin
+      label1.Caption := lcds.FieldByName('kode').AsString + ' : ' + lcds.FieldByName('nama').AsString;
+    end else
+      label1.Caption := '';
+
+  finally
+    lcds.Free;
+  end;
+
+end;
 end.

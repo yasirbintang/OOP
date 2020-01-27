@@ -1,4 +1,4 @@
-unit ClassBarangBaru;
+unit ClassBarang;
 
 interface
 uses
