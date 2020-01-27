@@ -15,24 +15,28 @@ type
     ADPhysMSSQLDriverLink1: TADPhysMSSQLDriverLink;
     ADConnection1: TADConnection;
     Panel1: TPanel;
-    Label2: TLabel;
+    lblKode: TLabel;
     edKode: TEdit;
-    Label3: TLabel;
+    lblNama: TLabel;
     edNama: TEdit;
-    Label4: TLabel;
+    lblAlamat: TLabel;
     memAlamat: TMemo;
-    Button4: TButton;
-    Button1: TButton;
-    Button5: TButton;
-    Button2: TButton;
-    Button6: TButton;
+    btnLihat: TButton;
+    btnSimpan: TButton;
+    btnBaru: TButton;
+    btnCancel: TButton;
+    btnHapus: TButton;
     DBGridPembeli: TDBGrid;
     DSPembeli: TDataSource;
-    procedure Button1Click(Sender: TObject);
-    procedure Button2Click(Sender: TObject);
-    procedure Button4Click(Sender: TObject);
-    procedure Button5Click(Sender: TObject);
-    procedure Button6Click(Sender: TObject);
+    lblInputKodeWarning: TLabel;
+    lblInputNamaWarning: TLabel;
+    procedure btnSimpanClick(Sender: TObject);
+    procedure btnCancelClick(Sender: TObject);
+    procedure btnLihatClick(Sender: TObject);
+    procedure btnBaruClick(Sender: TObject);
+    procedure btnHapusClick(Sender: TObject);
+    procedure edKodeKeyPress(Sender: TObject; var Key: Char);
+    procedure edNamaKeyPress(Sender: TObject; var Key: Char);
     procedure FormShow(Sender: TObject);
   private
     FID: Integer;
@@ -49,7 +53,7 @@ implementation
 
 {$R *.dfm}
 
-procedure TfrmPembeli.Button1Click(Sender: TObject);
+procedure TfrmPembeli.btnSimpanClick(Sender: TObject);
 var
   lPembeli: TPembeli;
 begin
@@ -64,9 +68,12 @@ begin
     lPembeli.ID       := FID;
 
     if (lPembeli.IsKodeSudahAda(edKode.Text, FID)) then
+
+    if lPembeli.IsKodeSudahAda(edKode.Text, FID) then
+
     begin
       // warning kode sudah ada
-      ShowMessage(IntToStr(FID));
+      ShowMessage('Kode Sudah Ada');
       edKode.Focused;
     end else
 
@@ -83,12 +90,12 @@ begin
 
 end;
 
-procedure TfrmPembeli.Button2Click(Sender: TObject);
+procedure TfrmPembeli.btnCancelClick(Sender: TObject);
 begin
   Self.Close;
 end;
 
-procedure TfrmPembeli.Button4Click(Sender: TObject);
+procedure TfrmPembeli.btnLihatClick(Sender: TObject);
 var
   lPembeli: TPembeli;
   sID: string;
@@ -114,7 +121,7 @@ begin
 
 end;
 // Tombol Baru diklik
-procedure TfrmPembeli.Button5Click(Sender: TObject);
+procedure TfrmPembeli.btnBaruClick(Sender: TObject);
 begin
   FID           := 0;
 
@@ -123,7 +130,7 @@ begin
   memAlamat.Text := '';
 end;
 
-procedure TfrmPembeli.Button6Click(Sender: TObject);
+procedure TfrmPembeli.btnHapusClick(Sender: TObject);
 var
   lpembeli: TPembeli;
 begin
@@ -140,6 +147,28 @@ begin
   end
 end;
 
+procedure TfrmPembeli.edKodeKeyPress(Sender: TObject; var Key: Char);
+begin
+  if not (Key in ['0'..'9', #8, #13]) then begin
+    Key := #0;
+//    lblInputKodeWarning.Caption := 'Hanya Angka';
+    lblInputKodeWarning.Visible := True;
+  end else begin
+    lblInputKodeWarning.Visible := False;
+  end;
+end;
+
+procedure TfrmPembeli.edNamaKeyPress(Sender: TObject; var Key: Char);
+begin
+  if Key in ['0'..'9'] then
+  begin
+    Key := #0;
+//    lblInputNamaWarning.Caption := 'Hanya Huruf';
+    lblInputNamaWarning.Visible := True;
+  end else begin
+    lblInputNamaWarning.Visible := False;
+  end;
+end;
 procedure TfrmPembeli.FormShow(Sender: TObject);
 begin
 

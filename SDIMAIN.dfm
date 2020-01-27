@@ -15,36 +15,24 @@ object SDIAppForm: TSDIAppForm
   OnCreate = FormCreate
   PixelsPerInch = 96
   TextHeight = 16
-  object Label1: TLabel
-    Left = 464
-    Top = 349
-    Width = 49
-    Height = 16
-    Caption = 'Status :'
-  end
-  object Label2: TLabel
-    Left = 568
-    Top = 349
-    Width = 4
-    Height = 16
-    Caption = '-'
-  end
-  object StatusBar: TStatusBar
-    Left = 0
+  object lblStatus: TLabel
+    AlignWithMargins = True
+    Left = 3
     Top = 370
-    Width = 716
-    Height = 19
-    Margins.Left = 2
-    Margins.Top = 2
-    Margins.Right = 2
-    Margins.Bottom = 2
-    AutoHint = True
-    Panels = <
-      item
-        Text = 'Database : '
-        Width = 100
-      end>
-    SimplePanel = True
+    Width = 710
+    Height = 16
+    Align = alBottom
+    Alignment = taRightJustify
+    Caption = '-'
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clGrayText
+    Font.Height = -13
+    Font.Name = 'Century Gothic'
+    Font.Style = []
+    ParentFont = False
+    ExplicitLeft = 709
+    ExplicitTop = 369
+    ExplicitWidth = 4
   end
   object MainMenu1: TMainMenu
     Images = ImageList1
@@ -76,6 +64,7 @@ object SDIAppForm: TSDIAppForm
       Caption = 'Transaksi'
       object Pembelian1: TMenuItem
         Caption = 'Pembelian'
+        OnClick = Pembelian1Click
       end
     end
     object Help1: TMenuItem
@@ -160,7 +149,7 @@ object SDIAppForm: TSDIAppForm
     Left = 72
     Top = 152
     Bitmap = {
-      494C01010F0013001C0010001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C01010F001300240010001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000400000004000000001002000000000000040
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000
@@ -708,5 +697,9 @@ object SDIAppForm: TSDIAppForm
   object ADGUIxWaitCursor1: TADGUIxWaitCursor
     Left = 80
     Top = 72
+  end
+  object adgxwtcrsr1: TADGUIxWaitCursor
+    Left = 488
+    Top = 248
   end
 end

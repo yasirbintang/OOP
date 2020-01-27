@@ -3,7 +3,7 @@ object frmBarang: TfrmBarang
   Top = 0
   Caption = 'Barang Baru'
   ClientHeight = 335
-  ClientWidth = 484
+  ClientWidth = 485
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText

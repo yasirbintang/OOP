@@ -113,7 +113,9 @@ begin
   begin
      //generate id baru select max(id) AS ID_TERAKHIR from tpembeli;
     sSQL := 'select max(id) AS ID_TERAKHIR from tbarang';
+    //memanggil data dengan ID paling banyak/max dengan alias ID_TERAKHIR dari tabel barang
     with TConnection.OpenQuery(sSQL, nil) do
+    //
     begin
       try
         if not IsEmpty then
