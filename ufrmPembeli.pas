@@ -108,11 +108,10 @@ begin
 
     if lPembeli.ID > 0 then
     begin
-      FID             := lPembeli.ID;
-
-      edKode.Text     := lPembeli.Kode;
-      edNama.Text     := lPembeli.Nama;
-      memAlamat.Text   := lPembeli.Alamat;
+      FID            := lPembeli.ID;
+      edKode.Text    := lPembeli.Kode;
+      edNama.Text    := lPembeli.Nama;
+      memAlamat.Text := lPembeli.Alamat;
     end;
 
   finally

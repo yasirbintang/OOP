@@ -16,6 +16,7 @@ type
     function Hapus: Boolean;
     function IsKodeSudahAda(aKode : String; aID : Integer): Boolean;
     procedure LoadByID(AID : Integer);
+    procedure LoadbyKode(AKode : String);
     function Simpan: Boolean;
     function ToString: string;
     property ID: Integer read FID write FID;
@@ -99,6 +100,29 @@ begin
     lcds.Free;
   end;
 
+end;
+
+procedure TPembeli.LoadbyKode(AKode : String);
+var
+  lcds: TClientDataSet;
+  sSQL: string;
+begin
+  sSQL := ' select * from tpembeli ' +
+          ' where kode = ' + QuotedStr(Akode);
+
+  lcds := TConnection.OpenQuery(sSQL);
+  try
+    while not lcds.Eof do
+    begin
+      id      := lcds.FieldByName('id').AsInteger;
+      kode    := lcds.FieldByName('kode').AsString;
+      nama    := lcds.FieldByName('nama').AsString;
+      alamat  := lcds.FieldByName('alamat').AsString;
+      lcds.Next;
+    end;
+  finally
+    lcds.Free;
+  end;
 end;
 
 function TPembeli.Simpan: Boolean;

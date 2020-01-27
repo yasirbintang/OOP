@@ -36,7 +36,7 @@ object frmPembelian: TfrmPembelian
     end
     object Label2: TLabel
       Left = 18
-      Top = 70
+      Top = 81
       Width = 36
       Height = 13
       Caption = 'Pembeli'
@@ -53,7 +53,8 @@ object frmPembelian: TfrmPembelian
       Top = 66
       Width = 121
       Height = 21
-      TabOrder = 1
+      TabOrder = 2
+      OnKeyDown = edkodeKeyDown
     end
     object dtptanggal: TDateTimePicker
       Left = 94
@@ -62,9 +63,9 @@ object frmPembelian: TfrmPembelian
       Height = 21
       Date = 43857.379476782410000000
       Time = 43857.379476782410000000
-      TabOrder = 2
+      TabOrder = 1
     end
-    object edtnama: TEdit
+    object edNama: TEdit
       Left = 94
       Top = 91
       Width = 121
@@ -86,6 +87,7 @@ object frmPembelian: TfrmPembelian
       Height = 25
       Caption = 'Simpan'
       TabOrder = 0
+      OnClick = btnsimpanClick
     end
     object btnhapus: TButton
       Left = 275
@@ -113,10 +115,7 @@ object frmPembelian: TfrmPembelian
     Height = 156
     Align = alClient
     TabOrder = 2
-    ExplicitTop = 127
-    ExplicitWidth = 250
-    ExplicitHeight = 200
-    object cxgrdtblvwcxgrd1TableView1: TcxGridTableView
+    object cxGridTablePembelianItem: TcxGridTableView
       DataController.Summary.DefaultGroupSummaryItems = <>
       DataController.Summary.FooterSummaryItems = <>
       DataController.Summary.SummaryGroups = <>
@@ -153,7 +152,7 @@ object frmPembelian: TfrmPembelian
       end
     end
     object cxgrdlvlGrid1Level1: TcxGridLevel
-      GridView = cxgrdtblvwcxgrd1TableView1
+      GridView = cxGridTablePembelianItem
     end
   end
   object con1: TADConnection
