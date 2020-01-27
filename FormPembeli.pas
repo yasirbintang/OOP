@@ -67,7 +67,10 @@ begin
     lPembeli.Alamat   := memAlamat.Text;
     lPembeli.ID       := FID;
 
+    if (lPembeli.IsKodeSudahAda(edKode.Text, FID)) then
+
     if lPembeli.IsKodeSudahAda(edKode.Text, FID) then
+
     begin
       // warning kode sudah ada
       ShowMessage('Kode Sudah Ada');
@@ -168,6 +171,8 @@ begin
 end;
 procedure TfrmPembeli.FormShow(Sender: TObject);
 begin
+
+
   LoadDataPembeli;
 end;
 

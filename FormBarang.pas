@@ -4,49 +4,74 @@ interface
 
 uses
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
+<<<<<<< HEAD
   Dialogs,uConnection, Grids, DBGrids, StdCtrls, ClassBarangBaru, ClassPembelian;
+=======
+  Dialogs,uConnection, Grids, DBGrids, StdCtrls, ClassBarangBaru,uADStanIntf, uADStanOption,
+  uADStanError, uADGUIxIntf, uADPhysIntf, uADStanDef, uADStanPool, uADStanAsync,
+  uADPhysManager, uADCompClient, DB, uADPhysODBCBase, uADPhysMSSQL,
+  DBClient, Provider, uADStanParam, uADDatSManager, uADDAptIntf, uADDAptManager,
+  uADCompDataSet, ExtCtrls;
+>>>>>>> 534fcde1105e7ca9c7cc1e86fdfc66b23178aa91
 
 type
-  TForm3 = class(TForm)
-    Label1: TLabel;
-    Label2: TLabel;
-    edKode: TEdit;
-    edNama: TEdit;
-    Label3: TLabel;
-    edHarga: TEdit;
-    Label4: TLabel;
-    Button1: TButton;
-    Button2: TButton;
-    Button3: TButton;
-    Button4: TButton;
+  TfrmBarang = class(TForm)
+    btnconnect: TButton;
+    btnhapus: TButton;
+    btnbaru: TButton;
+    btnlihat: TButton;
     DBGrid1: TDBGrid;
     btsimpan: TButton;
-    edID: TEdit;
+    DSBarang: TDataSource;
+    ADPhysMSSQLDriverLink1: TADPhysMSSQLDriverLink;
+    ADConnection2: TADConnection;
+    ClientDataSet1: TClientDataSet;
+    Label1: TLabel;
+    pnlpropety: TPanel;
+    Label2: TLabel;
+    Label3: TLabel;
+    Label4: TLabel;
+    edKode: TEdit;
+    edNama: TEdit;
+    edHarga: TEdit;
+    Edit1: TEdit;
+    Label5: TLabel;
+
+    procedure FormCreate(Sender: TObject);
     procedure btsimpanClick(Sender: TObject);
-    procedure Button1Click(Sender: TObject);
-    procedure Button2Click(Sender: TObject);
-    procedure Button3Click(Sender: TObject);
-    procedure Button4Click(Sender: TObject);
+    procedure btnconnectClick(Sender: TObject);
+    procedure btnhapusClick(Sender: TObject);
+    procedure btnbaruClick(Sender: TObject);
+    procedure btnlihatClick(Sender: TObject);
+    procedure DBGrid1CellClick(Column: TColumn);
+    procedure edKodeKeyPress(Sender: TObject; var Key: Char);
   private
-  FID: Integer;
+    FID: Integer;
 
     function IsDataValid: Boolean;
+    procedure LoadDataBarang;
+    function scandata: string;
+
     { Private declarations }
   public
     { Public declarations }
   end;
 
 var
-  Form3: TForm3;
+  frmBarang: TfrmBarang;
 
 implementation
 
 {$R *.dfm}
 
 
+procedure TfrmBarang.FormCreate(Sender: TObject);
+begin
 
-procedure TForm3.btsimpanClick(Sender: TObject);
+  LoadDataBarang;
+end;
 
+procedure TfrmBarang.btsimpanClick(Sender: TObject);
 var
   lbarang: TBarang;
 begin
@@ -60,8 +85,23 @@ begin
     lbarang.Harga    := edHarga.Text;
     lbarang.ID       := FID;
 
+    scandata;
+
+    if label1.Caption <> '' then
+    begin
+      ShowMessage('kode sudah ada');
+      exit;
+    end;
+
+    if lbarang.IsKodeSudahAda(edKode.Text , FID) then
+    begin
+      ShowMessage('kode sudah ada');
+      exit;
+    end;
+
     if lbarang.Simpan then
     begin
+      LoadDataBarang;
       ShowMessage('Berhasil Simpan')
     end else begin
       ShowMessage('Gagal Simpan');
@@ -72,7 +112,7 @@ begin
   end;
 end;
 
-procedure TForm3.Button1Click(Sender: TObject);
+procedure TfrmBarang.btnconnectClick(Sender: TObject);
 begin
  if TConnection.ConnectDB('belajar', 'MSSQL', '192.168.0.62','belajar_oop', 'sa', 'it@3Serangkai', '1433') then
   begin
@@ -81,21 +121,32 @@ begin
 
 end;
 
-procedure TForm3.Button2Click(Sender: TObject);
+procedure TfrmBarang.btnhapusClick(Sender: TObject);
 var
   lbarang: TBarang;
+
 begin
   lbarang := TBarang.Create;
   lbarang.LoadByID(FID);
 
-  if lbarang.Hapus then
+  if MessageDlg('Apakah ingin dihapus?',mtConfirmation,mbYesNo,0) = mrYes then
   begin
+    lbarang.Hapus;
+    LoadDataBarang;
     ShowMessage('Berhasil Hapus');
-    Button3.Click;
+    btnbaru.Click;
   end;
+
+// if lbarang.Hapus then
+//  begin
+//    LoadDataBarang;
+//    ShowMessage('Berhasil Hapus');
+//    Button3.Click;
+//  end;
+
 end;
 
-procedure TForm3.Button3Click(Sender: TObject);
+procedure TfrmBarang.btnbaruClick(Sender: TObject);
 begin
 FID           := 0;
 
@@ -104,7 +155,7 @@ FID           := 0;
   edharga.Text := '';
 end;
 
-procedure TForm3.Button4Click(Sender: TObject);
+procedure TfrmBarang.btnlihatClick(Sender: TObject);
 var
   lBarang: TBarang;
   sID: string;
@@ -128,7 +179,28 @@ begin
   end;
 end;
 
-function Tform3.IsDataValid: Boolean;
+procedure TfrmBarang.DBGrid1CellClick(Column: TColumn);
+var
+lcds : TClientDataSet;
+begin
+    DSBarang.DataSet := lcds;
+    edKode.Text := DBGrid1.Fields[2].Text;
+//    edNama.Text := lcds.FieldByName('nama').Text;
+//    edHarga.Text := lcds.FieldByName('harga').Text;
+
+end;
+
+procedure TfrmBarang.edKodeKeyPress(Sender: TObject; var Key: Char);
+begin
+    if not (key in['0'..'9', #8, #13]) then
+    ShowMessage('data harus angka');
+    //edKode.Clear;
+    //key:= #0;
+    //edKode.SetFocus;
+    //key:= #0 ;
+end;
+
+function TfrmBarang.IsDataValid: Boolean;
 var
   str : string;
 begin
@@ -146,7 +218,7 @@ begin
   end;
   if (edHarga.Text = '') then
   begin
-    str := str + 'Alamat belum diisi.';
+    str := str + 'Harga belum diisi.';
     edHarga.SetFocus;
   end;
   str := StringReplace(StringReplace(str, '', ' ', [rfReplaceAll]), #13, ' ', [rfReplaceAll]);
@@ -160,4 +232,40 @@ begin
   Result := True;
 end;
 
+procedure Tfrmbarang.LoadDataBarang;
+var
+  lcds: TClientDataSet;
+  sSQL: string;
+begin
+  sSQL := 'select * from tbarang order by id';
+  lcds := TConnection.OpenQuery(sSQL, Self);
+
+  DSBarang.DataSet := lcds;
+end;
+
+
+
+function tfrmbarang.scandata: string;
+var
+  lcds : TClientDataSet;
+  sSQL: string;
+begin
+  sSQL := 'select kode, nama from tbarang ' +
+          ' where id <> '+ IntToStr(FID) +
+          ' and kode = ' + QuotedStr(edKode.Text);
+
+
+  lcds := TConnection.OpenQuery(sSQL);
+  try
+    if not lcds.IsEmpty then
+    begin
+      label1.Caption := lcds.FieldByName('kode').AsString + ' : ' + lcds.FieldByName('nama').AsString;
+    end else
+      label1.Caption := '';
+
+  finally
+    lcds.Free;
+  end;
+
+end;
 end.

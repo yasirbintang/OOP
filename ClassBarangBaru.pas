@@ -14,6 +14,7 @@ type
   public
     constructor Create; reintroduce;
     function Hapus: Boolean;
+    function IsKodeSudahAda(aKode : String; aID : Integer): Boolean;
     procedure LoadByID(AID : Integer);
     function Simpan: Boolean;
     function ToString: string;
@@ -23,12 +24,11 @@ type
     property Harga: String read FHarga write FHarga;
   end;
 
-
-
 implementation
 
 uses
   DBClient;
+
 
 constructor TBarang.Create;
 begin
@@ -56,6 +56,28 @@ begin
   end;
 end;
 
+function TBarang.IsKodeSudahAda(aKode : String; aID : Integer): Boolean;
+var
+  sSQL: string;
+  lcds: TClientDataSet;
+begin
+  Result := False;
+  sSQL := 'select id from TBarang ' +
+          ' where kode = ' + QuotedStr(AKode) +
+          ' and id <> ' + IntToStr(aID);
+
+  lcds := TConnection.OpenQuery(sSQL);
+  try
+    if lcds.IsEmpty then
+      Exit;
+  finally
+    lcds.Free;
+  end;
+  Result := True;
+end;
+
+
+
 procedure TBarang.LoadByID(AID : Integer);
 var
   lcds: TClientDataSet;
@@ -71,14 +93,13 @@ begin
       id      := lcds.FieldByName('id').AsInteger;
       kode    := lcds.FieldByName('kode').AsString;
       nama    := lcds.FieldByName('nama').AsString;
-      harga  := lcds.FieldByName('harga').AsString;
+      harga   := lcds.FieldByName('harga').AsString;
 
       lcds.Next;
     end;
   finally
     lcds.Free;
   end;
-
 
 end;
 
@@ -90,7 +111,24 @@ begin
 
   if ID = 0 then // data baru
   begin
-    // generate id baru select max(id) AS ID_TERAKHIR from tpembeli;
+     //generate id baru select max(id) AS ID_TERAKHIR from tpembeli;
+    sSQL := 'select max(id) AS ID_TERAKHIR from tbarang';
+    //memanggil data dengan ID paling banyak/max dengan alias ID_TERAKHIR dari tabel barang
+    with TConnection.OpenQuery(sSQL, nil) do
+    //
+    begin
+      try
+        if not IsEmpty then
+          ID := FieldByName('ID_TERAKHIR').AsInteger + 1
+        else
+          ID := 1;
+      finally
+        Free;
+      end;
+    end;
+
+
+
     // id berikutnya = id teraKHIR + 1;
     // ID := LCDS.fIELDBBYNAME('ID_TERAKHIR').AsInteger + 1;
 
@@ -130,21 +168,5 @@ begin
             ' Kode : ' + Self.Kode;
 end;
 
-//function getIDAutoGenerate(TBarang:string):string;
-//
-//var
-//  lcds  : TclientDataSet;
-//  sSQl: string;
-//  idakhir : string;
-//  AID : integer;
-//
-//begin
-// with idakhir do
-//  begin
-//
-//    sSQL := ' select * from tbarang ' +
-//          ' where id = max(id)';
-//  end;
-//
-// end;
+
 end.

@@ -18,9 +18,9 @@ object SDIAppForm: TSDIAppForm
   object lblStatus: TLabel
     AlignWithMargins = True
     Left = 3
-    Top = 369
+    Top = 370
     Width = 710
-    Height = 17
+    Height = 16
     Align = alBottom
     Alignment = taRightJustify
     Caption = '-'
@@ -30,9 +30,9 @@ object SDIAppForm: TSDIAppForm
     Font.Name = 'Century Gothic'
     Font.Style = []
     ParentFont = False
-    ExplicitLeft = 688
-    ExplicitTop = 364
-    ExplicitWidth = 20
+    ExplicitLeft = 709
+    ExplicitTop = 369
+    ExplicitWidth = 4
   end
   object MainMenu1: TMainMenu
     Images = ImageList1
@@ -64,6 +64,7 @@ object SDIAppForm: TSDIAppForm
       Caption = 'Transaksi'
       object Pembelian1: TMenuItem
         Caption = 'Pembelian'
+        OnClick = Pembelian1Click
       end
     end
     object Help1: TMenuItem
@@ -148,7 +149,7 @@ object SDIAppForm: TSDIAppForm
     Left = 72
     Top = 152
     Bitmap = {
-      494C01010F001300200010001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C01010F001300240010001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000400000004000000001002000000000000040
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000
@@ -692,5 +693,13 @@ object SDIAppForm: TSDIAppForm
     Filter = 'All Files (*.*)|*.*'
     Left = 136
     Top = 152
+  end
+  object ADGUIxWaitCursor1: TADGUIxWaitCursor
+    Left = 80
+    Top = 72
+  end
+  object adgxwtcrsr1: TADGUIxWaitCursor
+    Left = 488
+    Top = 248
   end
 end

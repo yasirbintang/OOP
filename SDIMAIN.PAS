@@ -5,7 +5,7 @@ interface
 uses Windows, Classes, Graphics, Forms, Controls, Menus,
   Dialogs, StdCtrls, Buttons, ExtCtrls, ComCtrls, ImgList, StdActns,
   ActnList, ToolWin, FormPembeli, uADGUIxIntf, uADGUIxFormsWait, uADStanIntf,
-  uADCompGUIx, uConnection, FrmSetKoneksi, FormBarang;
+  uADCompGUIx, uConnection, FrmSetKoneksi, FormBarang, ufrmpembelian;
 
 type
   TSDIAppForm = class(TForm)
@@ -34,6 +34,7 @@ type
     ransaksi1: TMenuItem;
     Pembelian1: TMenuItem;
     lblStatus: TLabel;
+    adgxwtcrsr1: TADGUIxWaitCursor;
     procedure Barang1Click(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure FileNew1Execute(Sender: TObject);
@@ -42,6 +43,7 @@ type
     procedure FileExit1Execute(Sender: TObject);
     procedure HelpAbout1Execute(Sender: TObject);
     procedure Pembeli1Click(Sender: TObject);
+    procedure Pembelian1Click(Sender: TObject);
   private
     { Private declarations }
   public
@@ -60,8 +62,8 @@ uses about;
 
 procedure TSDIAppForm.Barang1Click(Sender: TObject);
 begin
-    Form3 := TForm3.Create(Self);
-    Form3.Show
+    frmBarang := Tfrmbarang.Create(Self);
+    frmbarang.Show;
 end;
 
 procedure TSDIAppForm.FormCreate(Sender: TObject);
@@ -105,6 +107,12 @@ procedure TSDIAppForm.Pembeli1Click(Sender: TObject);
 begin
   frmPembeli := TfrmPembeli.Create(Self);
   frmPembeli.Show;
+end;
+
+procedure TSDIAppForm.Pembelian1Click(Sender: TObject);
+begin
+   frmpembelian := Tfrmpembelian.Create(self);
+   frmpembelian.show;
 end;
 
 end.
