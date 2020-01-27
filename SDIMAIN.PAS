@@ -21,7 +21,6 @@ type
     EditCopy1: TEditCopy;
     EditPaste1: TEditPaste;
     HelpAbout1: TAction;
-    StatusBar: TStatusBar;
     ImageList1: TImageList;
     MainMenu1: TMainMenu;
     File1: TMenuItem;
@@ -34,9 +33,7 @@ type
     Barang1: TMenuItem;
     ransaksi1: TMenuItem;
     Pembelian1: TMenuItem;
-    ADGUIxWaitCursor1: TADGUIxWaitCursor;
-    Label1: TLabel;
-    Label2: TLabel;
+    lblStatus: TLabel;
     procedure Barang1Click(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure FileNew1Execute(Sender: TObject);
@@ -71,7 +68,7 @@ procedure TSDIAppForm.FormCreate(Sender: TObject);
 begin
   if TConnection.ConnectDB('belajar', 'MSSQL', '192.168.0.62','belajar_oop', 'sa', 'it@3Serangkai', '1433') then
   begin
-    label2.Caption := 'Koneksi berhasil'
+    lblStatus.Caption := 'Koneksi berhasil'
   end else begin
     Form2 := TForm2.Create(Self);
     Form2.Show;

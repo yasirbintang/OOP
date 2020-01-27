@@ -21,30 +21,54 @@ object frmPembeli: TfrmPembeli
     Height = 211
     Align = alTop
     TabOrder = 0
-    ExplicitWidth = 379
     DesignSize = (
       400
       211)
-    object Label2: TLabel
+    object lblKode: TLabel
       Left = 17
       Top = 30
       Width = 24
       Height = 13
       Caption = 'Kode'
     end
-    object Label3: TLabel
+    object lblNama: TLabel
       Left = 17
       Top = 59
       Width = 27
       Height = 13
       Caption = 'Nama'
     end
-    object Label4: TLabel
+    object lblAlamat: TLabel
       Left = 17
       Top = 91
       Width = 33
       Height = 13
       Caption = 'Alamat'
+    end
+    object lblInputKodeWarning: TLabel
+      AlignWithMargins = True
+      Left = 283
+      Top = 32
+      Width = 64
+      Height = 13
+      Anchors = [akTop, akRight]
+      Caption = 'Hanya Angka'
+      Color = clYellow
+      ParentColor = False
+      Visible = False
+      ExplicitLeft = 280
+    end
+    object lblInputNamaWarning: TLabel
+      AlignWithMargins = True
+      Left = 283
+      Top = 64
+      Width = 61
+      Height = 13
+      Anchors = [akTop, akRight]
+      Caption = 'Hanya Huruf'
+      Color = clYellow
+      ParentColor = False
+      Visible = False
     end
     object edKode: TEdit
       Left = 89
@@ -53,6 +77,7 @@ object frmPembeli: TfrmPembeli
       Height = 21
       Anchors = [akLeft, akTop, akRight]
       TabOrder = 0
+      OnKeyPress = edKodeKeyPress
     end
     object edNama: TEdit
       Left = 89
@@ -61,6 +86,7 @@ object frmPembeli: TfrmPembeli
       Height = 21
       Anchors = [akLeft, akTop, akRight]
       TabOrder = 1
+      OnKeyPress = edNamaKeyPress
     end
     object memAlamat: TMemo
       Left = 89
@@ -70,17 +96,17 @@ object frmPembeli: TfrmPembeli
       Anchors = [akLeft, akTop, akRight]
       TabOrder = 2
     end
-    object Button4: TButton
+    object btnLihat: TButton
       Left = 302
       Top = 155
       Width = 75
       Height = 25
       Anchors = [akRight, akBottom]
       Caption = 'Lihat Pembeli'
-      TabOrder = 5
-      OnClick = Button4Click
+      TabOrder = 6
+      OnClick = btnLihatClick
     end
-    object Button1: TButton
+    object btnSimpan: TButton
       Left = 6
       Top = 186
       Width = 60
@@ -88,19 +114,19 @@ object frmPembeli: TfrmPembeli
       Anchors = [akLeft, akBottom]
       Caption = 'OK'
       TabOrder = 3
-      OnClick = Button1Click
+      OnClick = btnSimpanClick
     end
-    object Button5: TButton
+    object btnBaru: TButton
       Left = 302
       Top = 124
       Width = 75
       Height = 25
       Anchors = [akRight, akBottom]
       Caption = 'Baru'
-      TabOrder = 6
-      OnClick = Button5Click
+      TabOrder = 5
+      OnClick = btnBaruClick
     end
-    object Button2: TButton
+    object btnCancel: TButton
       Left = 72
       Top = 186
       Width = 60
@@ -108,9 +134,9 @@ object frmPembeli: TfrmPembeli
       Anchors = [akLeft, akBottom]
       Caption = 'Cancel'
       TabOrder = 4
-      OnClick = Button2Click
+      OnClick = btnCancelClick
     end
-    object Button6: TButton
+    object btnHapus: TButton
       Left = 302
       Top = 186
       Width = 75
@@ -118,7 +144,7 @@ object frmPembeli: TfrmPembeli
       Anchors = [akRight, akBottom]
       Caption = 'Hapus'
       TabOrder = 7
-      OnClick = Button6Click
+      OnClick = btnHapusClick
     end
   end
   object DBGridPembeli: TDBGrid
