@@ -13,94 +13,148 @@ object frmPembelian: TfrmPembelian
   OldCreateOrder = False
   PixelsPerInch = 96
   TextHeight = 13
-  object Label1: TLabel
-    Left = 16
-    Top = 19
-    Width = 64
-    Height = 13
-    Caption = 'No Pembelian'
-  end
-  object lbl1: TLabel
-    Left = 16
-    Top = 59
-    Width = 38
-    Height = 13
-    Caption = 'Tanggal'
-  end
-  object Label2: TLabel
-    Left = 18
-    Top = 91
-    Width = 36
-    Height = 13
-    Caption = 'Pembeli'
-  end
-  object ednopembelian: TEdit
-    Left = 94
-    Top = 16
-    Width = 121
-    Height = 21
+  object pnlAtas: TPanel
+    Left = 0
+    Top = 0
+    Width = 454
+    Height = 121
+    Align = alTop
     TabOrder = 0
+    object Label1: TLabel
+      Left = 16
+      Top = 19
+      Width = 64
+      Height = 13
+      Caption = 'No Pembelian'
+    end
+    object lbl1: TLabel
+      Left = 16
+      Top = 45
+      Width = 38
+      Height = 13
+      Caption = 'Tanggal'
+    end
+    object Label2: TLabel
+      Left = 18
+      Top = 70
+      Width = 36
+      Height = 13
+      Caption = 'Pembeli'
+    end
+    object ednopembelian: TEdit
+      Left = 94
+      Top = 16
+      Width = 121
+      Height = 21
+      TabOrder = 0
+    end
+    object edkode: TEdit
+      Left = 94
+      Top = 66
+      Width = 121
+      Height = 21
+      TabOrder = 1
+    end
+    object dtptanggal: TDateTimePicker
+      Left = 94
+      Top = 41
+      Width = 121
+      Height = 21
+      Date = 43857.379476782410000000
+      Time = 43857.379476782410000000
+      TabOrder = 2
+    end
+    object edtnama: TEdit
+      Left = 94
+      Top = 91
+      Width = 121
+      Height = 21
+      TabOrder = 3
+    end
   end
-  object edkode: TEdit
-    Left = 94
-    Top = 88
-    Width = 121
-    Height = 21
-    TabOrder = 2
-  end
-  object dtptanggal: TDateTimePicker
-    Left = 94
-    Top = 51
-    Width = 121
-    Height = 21
-    Date = 43857.379476782410000000
-    Time = 43857.379476782410000000
+  object pnlButon: TPanel
+    Left = 0
+    Top = 277
+    Width = 454
+    Height = 41
+    Align = alBottom
     TabOrder = 1
+    object btnsimpan: TButton
+      Left = 181
+      Top = 8
+      Width = 75
+      Height = 25
+      Caption = 'Simpan'
+      TabOrder = 0
+    end
+    object btnhapus: TButton
+      Left = 275
+      Top = 8
+      Width = 75
+      Height = 25
+      Caption = 'Hapus'
+      TabOrder = 1
+    end
+    object Baru: TBitBtn
+      Left = 371
+      Top = 8
+      Width = 75
+      Height = 25
+      Caption = 'Baru'
+      DoubleBuffered = True
+      ParentDoubleBuffered = False
+      TabOrder = 2
+    end
   end
-  object dbgrdpembelian: TDBGrid
-    Left = 8
-    Top = 192
-    Width = 438
-    Height = 118
-    TabOrder = 4
-    TitleFont.Charset = DEFAULT_CHARSET
-    TitleFont.Color = clWindowText
-    TitleFont.Height = -11
-    TitleFont.Name = 'Tahoma'
-    TitleFont.Style = []
-  end
-  object btnsimpan: TButton
-    Left = 170
-    Top = 161
-    Width = 75
-    Height = 25
-    Caption = 'Simpan'
-    TabOrder = 5
-  end
-  object btnhapus: TButton
-    Left = 264
-    Top = 161
-    Width = 75
-    Height = 25
-    Caption = 'Hapus'
-    TabOrder = 6
-  end
-  object Baru: TBitBtn
-    Left = 360
-    Top = 161
-    Width = 75
-    Height = 25
-    Caption = 'Baru'
-    DoubleBuffered = True
-    ParentDoubleBuffered = False
-    TabOrder = 7
-  end
-  object edtnama: TEdit
-    Left = 94
-    Top = 125
-    Width = 121
-    Height = 21
-    TabOrder = 3
+  object cxgrd1: TcxGrid
+    Left = 0
+    Top = 121
+    Width = 454
+    Height = 156
+    Align = alClient
+    TabOrder = 2
+    ExplicitTop = 127
+    ExplicitWidth = 250
+    ExplicitHeight = 200
+    object cxgrdtblvwcxgrd1TableView1: TcxGridTableView
+      DataController.Summary.DefaultGroupSummaryItems = <>
+      DataController.Summary.FooterSummaryItems = <>
+      DataController.Summary.SummaryGroups = <>
+      OptionsData.Appending = True
+      object cxGridColKodeBarang: TcxGridColumn
+        Caption = 'Kode'
+        HeaderAlignmentHorz = taCenter
+      end
+      object cxGridColNamaBarang: TcxGridColumn
+        Caption = 'Nama'
+        HeaderAlignmentHorz = taCenter
+      end
+      object cxGridColQty: TcxGridColumn
+        Caption = 'Qty'
+        PropertiesClassName = 'TcxCurrencyEditProperties'
+        Properties.DisplayFormat = ',0.;-,0.'
+        HeaderAlignmentHorz = taCenter
+      end
+      object cxGridColHarga: TcxGridColumn
+        Caption = 'Harga'
+        PropertiesClassName = 'TcxCurrencyEditProperties'
+        Properties.DisplayFormat = ',0.;-,0.'
+        HeaderAlignmentHorz = taCenter
+      end
+      object cxGridColTotal: TcxGridColumn
+        Caption = 'Total'
+        PropertiesClassName = 'TcxCurrencyEditProperties'
+        Properties.DisplayFormat = ',0.;-,0.'
+        HeaderAlignmentHorz = taCenter
+      end
+      object cxGridColID: TcxGridColumn
+        Caption = 'ID'
+        Visible = False
+      end
+    end
+    object cxgrdlvlGrid1Level1: TcxGridLevel
+      GridView = cxgrdtblvwcxgrd1TableView1
+    end
   end
   object con1: TADConnection
     Left = 392

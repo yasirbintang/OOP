@@ -9,7 +9,8 @@ uses
   ClassBarang in 'ClassBarang.pas',
   ufrmPembeli in 'ufrmPembeli.pas' {frmPembeli},
   ufrmBarang in 'ufrmBarang.pas' {frmBarang},
-  ufrmPembelian in 'ufrmPembelian.pas' {frmPembelian};
+  ufrmPembelian in 'ufrmPembelian.pas' {frmPembelian},
+  ClassPembelian0 in 'ClassPembelian0.pas';
 
 {$R *.RES}
 
