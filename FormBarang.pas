@@ -4,7 +4,7 @@ interface
 
 uses
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
-  Dialogs,uConnection, Grids, DBGrids, StdCtrls, ClassBarangBaru;
+  Dialogs,uConnection, Grids, DBGrids, StdCtrls, ClassBarangBaru, ClassPembelian;
 
 type
   TForm3 = class(TForm)
