@@ -107,14 +107,14 @@ end;
 procedure TfrmPembelian.cxGridColKodeBarangPropertiesValidate(Sender: TObject;
   var DisplayValue: Variant; var ErrorText: TCaption; var Error: Boolean);
 var
-  iRecord: Integer;
-  lBarang: TBarang;
-  sKode: string;
+  iRecord : Integer;
+  lBarang : TBarang;
+  sKode   : string;
 begin
   iRecord := cxGridTablePembelianItem.DataController.FocusedRecordIndex;
 //  iColumn := cxGridColKodeBarang.Index;
 
-  sKode := DisplayValue;
+  sKode   := DisplayValue;
   lBarang := TBarang.Create;
   try
     lBarang.LoadByKode(sKode);
@@ -135,25 +135,19 @@ end;
 procedure TfrmPembelian.cxGridColQtyPropertiesValidate(Sender: TObject;
   var DisplayValue: Variant; var ErrorText: TCaption; var Error: Boolean);
 var
-  dTotal: Double;
-  iRecord: Integer;
-  iQty: Integer;
-  vHarga: Variant;
+  dTotal  : Double;
+  iRecord : Integer;
+  iQty    : Integer;
+  vHarga  : Variant;
 begin
 //   cxGridTablePembelianItem.Controller.EditingController
-  if VarIsNull(DisplayValue) then
-    Exit;
-
-  if DisplayValue = '' then
-    Exit;
-
   iRecord := cxGridTablePembelianItem.DataController.FocusedRecordIndex;
-
-  vHarga := cxGridTablePembelianItem.DataController.GetValue(iRecord, cxGridColHarga.Index);
-  if VarIsNull(vHarga) then
-    Exit;
-
   iQty    := StrToInt(DisplayValue);
+  vHarga  := cxGridTablePembelianItem.DataController.GetValue(iRecord, cxGridColHarga.Index);
+
+  if VarIsNull(DisplayValue) then Exit;
+  if DisplayValue = '' then Exit;
+  if VarIsNull(vHarga) then Exit;
 
   dTotal  := iQty * vHarga;
   cxGridTablePembelianItem.DataController.SetValue(iRecord, cxGridColTotal.Index, dTotal);
