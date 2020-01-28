@@ -47,6 +47,7 @@ type
     cxGridColHarga: TcxGridColumn;
     cxGridColTotal: TcxGridColumn;
     cxGridColID: TcxGridColumn;
+    procedure BaruClick(Sender: TObject);
     procedure btnsimpanClick(Sender: TObject);
     procedure edkodeKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
     procedure cxGridColKodeBarangPropertiesEditValueChanged(Sender: TObject);
@@ -72,6 +73,25 @@ uses
   ClassPembelian0;
 
 {$R *.dfm}
+
+procedure TfrmPembelian.BaruClick(Sender: TObject);
+begin
+  ednopembelian.Text := '';
+  edkode.Text := '';
+  edNama.Text := '';
+
+  with cxGridTablePembelianItem.DataController do
+  begin
+    BeginUpdate;
+    try
+      while RecordCount > 0 do
+      DeleteRecord(0);
+    finally
+      EndUpdate;
+    end;
+  end;
+
+end;
 
 procedure TfrmPembelian.btnsimpanClick(Sender: TObject);
 var
@@ -128,26 +148,42 @@ var
   sKode: string;
 begin
   iRecord := cxGridTablePembelianItem.DataController.FocusedRecordIndex;
-//  iColumn := cxGridColKodeBarang.Index;
+  // iColumn := cxGridColKodeBarang.Index;
 
   sKode := DisplayValue;
   lBarang := TBarang.Create;
   try
-    lBarang.LoadByID(1);
-    cxGridTablePembelianItem.DataController.Values[iRecord, cxGridColNamaBarang.Index] := lBarang.Nama;
-    cxGridTablePembelianItem.DataController.Values[iRecord, cxGridColQty.Index] := 1;
-    cxGridTablePembelianItem.DataController.Values[iRecord, cxGridColHarga.Index] := lBarang.Harga;
+    lBarang.LoadByCode(sKode);
+
+    cxGridTablePembelianItem.DataController.Values[iRecord, cxGridColNamaBarang.Index]  := lBarang.Nama;
+    cxGridTablePembelianItem.DataController.Values[iRecord, cxGridColQty.Index]         := 1;
+    cxGridTablePembelianItem.DataController.Values[iRecord, cxGridColHarga.Index]       := lBarang.Harga;
+    cxGridTablePembelianItem.DataController.Values[iRecord, cxGridColTotal.Index]       := lBarang.Harga;
   finally
     lBarang.Free;
   end;
-
-
 
 end;
 
 procedure TfrmPembelian.cxGridColQtyPropertiesValidate(Sender: TObject;
   var DisplayValue: Variant; var ErrorText: TCaption; var Error: Boolean);
+var
+  dHarga: Double;
+  dQty: Double;
+  sqty :string;
+  dTotal : double;
+  iRecord : Integer;
 begin
+   sQTy := DisplayValue;
+   iRecord := cxGridTablePembelianItem.DataController.FocusedRecordIndex;
+
+   dHarga := cxGridTablePembelianItem.DataController.GetValue(iRecord, cxGridColHarga.Index);
+   dQty   := StrToFloat(DisplayValue);
+
+   dTotal := dQty * dHarga;
+   cxGridTablePembelianItem.DataController.SetValue(iRecord, cxGridColTotal.Index, dTotal);
+
+
   // hitung total
 //  Error := True;
 end;

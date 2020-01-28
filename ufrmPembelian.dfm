@@ -106,6 +106,7 @@ object frmPembelian: TfrmPembelian
       DoubleBuffered = True
       ParentDoubleBuffered = False
       TabOrder = 2
+      OnClick = BaruClick
     end
   end
   object cxgrd1: TcxGrid
@@ -144,6 +145,7 @@ object frmPembelian: TfrmPembelian
           '6'
           '7'
           '8')
+        Properties.OnValidate = cxGridColQtyPropertiesValidate
         HeaderAlignmentHorz = taCenter
       end
       object cxGridColHarga: TcxGridColumn

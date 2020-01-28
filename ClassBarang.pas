@@ -15,6 +15,7 @@ type
     constructor Create; reintroduce;
     function Hapus: Boolean;
     function IsKodeSudahAda(aKode : String; aID : Integer): Boolean;
+    procedure LoadByCode(ACode :String);
     procedure LoadByID(AID : Integer);
     function Simpan: Boolean;
 //    function ToString: string;
@@ -73,6 +74,31 @@ begin
     lcds.Free;
   end;
   Result := True;
+end;
+
+procedure TBarang.LoadByCode(ACode :String);
+var
+  lcds : TClientDataSet;
+  ssQL : string;
+begin
+  ssQL := 'select * from tbarang ' +
+          'where kode = '  + QuotedStr(ACode);
+
+    lcds := TConnection.OpenQuery(ssQL);
+    try
+    while not lcds.Eof do begin
+      id      := lcds.FieldByName('id').AsInteger;
+      kode    := lcds.FieldByName('kode').AsString;
+      nama    := lcds.FieldByName('nama').AsString;
+      harga   := lcds.FieldByName('harga').AsString;
+
+      lcds.Next;
+    end;
+    finally
+      lcds.Free;
+    end;
+
+  // TODO -cMM: TBarang.LoadByCode default body inserted
 end;
 
 
