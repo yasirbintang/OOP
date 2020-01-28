@@ -17,7 +17,7 @@ type
     function IsKodeSudahAda(aKode : String; aID : Integer): Boolean;
     procedure LoadByID(AID : Integer);
     function Simpan: Boolean;
-    function ToString: string;
+//    function ToString: string;
     property ID: Integer read FID write FID;
     property Kode: String read FKode write FKode;
     property Nama: String read FNama write FNama;
@@ -46,8 +46,7 @@ begin
 
   FDConnection.StartTransaction;
   try
-    if TConnection.ExecuteSQL(sSQL) then
-    begin
+    if TConnection.ExecuteSQL(sSQL) then begin
       FDConnection.Commit;
       Result := True;
     end;
@@ -88,8 +87,7 @@ begin
 
   lcds := TConnection.OpenQuery(sSQL);
   try
-    while not lcds.Eof do
-    begin
+    while not lcds.Eof do begin
       id      := lcds.FieldByName('id').AsInteger;
       kode    := lcds.FieldByName('kode').AsString;
       nama    := lcds.FieldByName('nama').AsString;
@@ -114,9 +112,7 @@ begin
      //generate id baru select max(id) AS ID_TERAKHIR from tpembeli;
     sSQL := 'select max(id) AS ID_TERAKHIR from tbarang';
     //memanggil data dengan ID paling banyak/max dengan alias ID_TERAKHIR dari tabel barang
-    with TConnection.OpenQuery(sSQL, nil) do
-    //
-    begin
+    with TConnection.OpenQuery(sSQL, nil) do begin
       try
         if not IsEmpty then
           ID := FieldByName('ID_TERAKHIR').AsInteger + 1
@@ -126,8 +122,6 @@ begin
         Free;
       end;
     end;
-
-
 
     // id berikutnya = id teraKHIR + 1;
     // ID := LCDS.fIELDBBYNAME('ID_TERAKHIR').AsInteger + 1;
@@ -149,10 +143,8 @@ begin
 
   FDConnection.StartTransaction;
   try
-    if TConnection.ExecuteSQL(sSQL) then
-    begin
+    if TConnection.ExecuteSQL(sSQL) then begin
       FDConnection.Commit;
-
       Result := True;
     end;
   except
@@ -161,12 +153,11 @@ begin
 
 end;
 
-function TBarang.ToString: string;
+{function TBarang.ToString: string;
 begin
   Result := 'Data Pembeli' + #13 +
             '---------------------' + #13 +
             ' Kode : ' + Self.Kode;
-end;
-
+end;}
 
 end.

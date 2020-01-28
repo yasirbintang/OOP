@@ -122,16 +122,28 @@ object frmPembelian: TfrmPembelian
       OptionsData.Appending = True
       object cxGridColKodeBarang: TcxGridColumn
         Caption = 'Kode'
+        PropertiesClassName = 'TcxTextEditProperties'
+        Properties.OnEditValueChanged = cxGridColKodeBarangPropertiesEditValueChanged
+        Properties.OnValidate = cxGridColKodeBarangPropertiesValidate
         HeaderAlignmentHorz = taCenter
       end
       object cxGridColNamaBarang: TcxGridColumn
         Caption = 'Nama'
         HeaderAlignmentHorz = taCenter
+        Options.Editing = False
       end
       object cxGridColQty: TcxGridColumn
         Caption = 'Qty'
-        PropertiesClassName = 'TcxCurrencyEditProperties'
-        Properties.DisplayFormat = ',0.;-,0.'
+        PropertiesClassName = 'TcxComboBoxProperties'
+        Properties.Items.Strings = (
+          '1'
+          '2'
+          '3'
+          '4'
+          '5'
+          '6'
+          '7'
+          '8')
         HeaderAlignmentHorz = taCenter
       end
       object cxGridColHarga: TcxGridColumn
@@ -139,12 +151,14 @@ object frmPembelian: TfrmPembelian
         PropertiesClassName = 'TcxCurrencyEditProperties'
         Properties.DisplayFormat = ',0.;-,0.'
         HeaderAlignmentHorz = taCenter
+        Options.Editing = False
       end
       object cxGridColTotal: TcxGridColumn
         Caption = 'Total'
         PropertiesClassName = 'TcxCurrencyEditProperties'
         Properties.DisplayFormat = ',0.;-,0.'
         HeaderAlignmentHorz = taCenter
+        Options.Editing = False
       end
       object cxGridColID: TcxGridColumn
         Caption = 'ID'

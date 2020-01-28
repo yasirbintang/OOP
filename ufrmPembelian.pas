@@ -19,7 +19,7 @@ uses
   dxSkinXmas2008Blue, dxSkinscxPCPainter, cxCustomData, cxFilter, cxData,
   cxDataStorage, cxEdit, cxGridCustomTableView, cxGridTableView,
   cxGridCustomView, cxClasses, cxGridLevel, cxGrid, cxCurrencyEdit,
-  ClassPembeli, classbarang;
+  ClassPembeli, classbarang, cxTextEdit, cxDropDownEdit;
 
 type
   TfrmPembelian = class(TForm)
@@ -49,6 +49,11 @@ type
     cxGridColID: TcxGridColumn;
     procedure btnsimpanClick(Sender: TObject);
     procedure edkodeKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
+    procedure cxGridColKodeBarangPropertiesEditValueChanged(Sender: TObject);
+    procedure cxGridColKodeBarangPropertiesValidate(Sender: TObject;
+      var DisplayValue: Variant; var ErrorText: TCaption; var Error: Boolean);
+    procedure cxGridColQtyPropertiesValidate(Sender: TObject;
+      var DisplayValue: Variant; var ErrorText: TCaption; var Error: Boolean);
   private
     FPembeli: Tpembeli;
     function GetPembeli: Tpembeli;
@@ -70,21 +75,21 @@ uses
 
 procedure TfrmPembelian.btnsimpanClick(Sender: TObject);
 var
-  I: Integer;
-  lBarang: tbarang;
-  lPembelian: TPembelian;
-  lPembelianItem: TPembelianItem;
+  I              : Integer;
+  lBarang        : TBarang;
+  lPembelian     : TPembelian;
+  lPembelianItem : TPembelianItem;
 begin
-  lPembelian := TPembelian.Create;
+  lPembelian         := TPembelian.Create;
   lPembelian.noBukti := ednopembelian.Text;
   lPembelian.Pembeli := Pembeli;
-  //dst ....
+  lPembelian.Tgl     := dtptanggal.Date;
 
+  // cxGrid: Writable field hanya KodeBarang & Qty, lainnya read-only
 
-  for I := 0 to cxGridTablePembelianItem.DataController.RecordCount - 1 do
-  begin
+  for I := 0 to cxGridTablePembelianItem.DataController.RecordCount - 1 do begin
     lPembelianItem := TPembelianItem.Create;
-    lBarang := TBarang.Create;
+    lBarang        := TBarang.Create;
     lBarang.LoadByID(i+1);
 
     lPembelianItem.Barang := lBarang;
@@ -97,18 +102,60 @@ begin
   end;
 
   if lPembelian.Simpan then begin
-//      ShowMessage('Berhasil Simpan')
+      ShowMessage('Berhasil Simpan');
+  end else begin
+//      ShowMessage('Gagal Simpan');
       btnsimpan.Enabled:=False;
-    end else begin
-      ShowMessage('Gagal Simpan');
-    end;
+  end;
+end;
 
+// Cari Nama Pembeli: Ketik Kode Pembeli kemudian tekan tombol Enter
+procedure TfrmPembelian.cxGridColKodeBarangPropertiesEditValueChanged(
+  Sender: TObject);
+var
+  iColumn: Integer;
+  iRecord: Integer;
+  sKode: string;
+begin
+
+end;
+
+procedure TfrmPembelian.cxGridColKodeBarangPropertiesValidate(Sender: TObject;
+  var DisplayValue: Variant; var ErrorText: TCaption; var Error: Boolean);
+var
+  iRecord: Integer;
+  lBarang: TBarang;
+  sKode: string;
+begin
+  iRecord := cxGridTablePembelianItem.DataController.FocusedRecordIndex;
+//  iColumn := cxGridColKodeBarang.Index;
+
+  sKode := DisplayValue;
+  lBarang := TBarang.Create;
+  try
+    lBarang.LoadByID(1);
+    cxGridTablePembelianItem.DataController.Values[iRecord, cxGridColNamaBarang.Index] := lBarang.Nama;
+    cxGridTablePembelianItem.DataController.Values[iRecord, cxGridColQty.Index] := 1;
+    cxGridTablePembelianItem.DataController.Values[iRecord, cxGridColHarga.Index] := lBarang.Harga;
+  finally
+    lBarang.Free;
+  end;
+
+
+
+end;
+
+procedure TfrmPembelian.cxGridColQtyPropertiesValidate(Sender: TObject;
+  var DisplayValue: Variant; var ErrorText: TCaption; var Error: Boolean);
+begin
+  // hitung total
+//  Error := True;
 end;
 
 procedure TfrmPembelian.edkodeKeyDown(Sender: TObject; var Key: Word; Shift:
     TShiftState);
 begin
-if Key = VK_RETURN then begin
+  if Key = VK_RETURN then begin
      Pembeli.LoadbyKode(edkode.Text);
      edNama.Text := Pembeli.Nama;
   end

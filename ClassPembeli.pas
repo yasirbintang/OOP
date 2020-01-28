@@ -18,7 +18,7 @@ type
     procedure LoadByID(AID : Integer);
     procedure LoadbyKode(AKode : String);
     function Simpan: Boolean;
-    function ToString: string;
+//    function ToString: string;
     property ID: Integer read FID write FID;
     property Kode: String read FKode write FKode;
     property Nama: String read FNama write FNama;
@@ -66,10 +66,8 @@ begin
 
   FDConnection.StartTransaction;
   try
-    if TConnection.ExecuteSQL(sSQL) then
-    begin
+    if TConnection.ExecuteSQL(sSQL) then begin
       FDConnection.Commit;
-
       Result := True;
     end;
   except
@@ -87,8 +85,7 @@ begin
 
   lcds := TConnection.OpenQuery(sSQL);
   try
-    while not lcds.Eof do
-    begin
+    while not lcds.Eof do begin
       id      := lcds.FieldByName('id').AsInteger;
       kode    := lcds.FieldByName('kode').AsString;
       nama    := lcds.FieldByName('nama').AsString;
@@ -112,8 +109,7 @@ begin
 
   lcds := TConnection.OpenQuery(sSQL);
   try
-    while not lcds.Eof do
-    begin
+    while not lcds.Eof do begin
       id      := lcds.FieldByName('id').AsInteger;
       kode    := lcds.FieldByName('kode').AsString;
       nama    := lcds.FieldByName('nama').AsString;
@@ -168,15 +164,14 @@ begin
   except
     FDConnection.Rollback;
   end;
-
 end;
 
-function TPembeli.ToString: string;
+{function TPembeli.ToString: string;
 begin
   Result := 'Data Pembeli' + #13 +
             '---------------------' + #13 +
             ' Kode : ' + Self.Kode;
-end;
+end;}
 
 end.
 

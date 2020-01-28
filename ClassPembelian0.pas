@@ -79,44 +79,39 @@ var
   I: Integer;
 begin
   Result := False;
-
-  // SQL utk insert tpembelian
-  // SQL u/ hapus tpembelian item
-  // sql u/ insert tpembelianiem (looping)
-
-    if ID = 0 then begin
-    sSQL := 'select max(id) AS ID_TERAKHIR from tpembelian';
-    with TConnection.OpenQuery(sSQL, nil) do begin
-      try
-        if not IsEmpty then
-          ID := FieldByName('ID_TERAKHIR').AsInteger + 1
-        else
-          ID := 1;
-      finally
-        Free;
-      end;
+  if ID = 0 then begin
+  sSQL := 'select max(id) AS ID_TERAKHIR from tpembelian';
+  with TConnection.OpenQuery(sSQL, nil) do begin
+    try
+      if not IsEmpty then
+        ID := FieldByName('ID_TERAKHIR').AsInteger + 1
+      else
+        ID := 1;
+    finally
+      Free;
     end;
+  end;
 
-    sSQL := 'insert into tpembelian (id, no_bukti, tanggal, pembeli) values('+
-      IntToStr(FID)                                + ', ' +
-      QuotedStr(nobukti)                           + ', ' +
-      QuotedStr(FormatDateTime('yyyy/mm/dd', tgl)) + ', ' +
-      IntToStr(Pembeli.ID)                         + ');';
-    end else begin
-      sSQL := 'update table tpembelian set '                         +
-        'no_bukti = ' + QuotedStr(nobukti)                           +
-        'tanggal = '  + QuotedStr(FormatDateTime('yyyy/mm/dd', tgl)) +
-        'pembeli = '  + IntToStr(Pembeli.ID)                         +
-        'where id = ' + IntToStr(FID) + ';';
-    end;
+  sSQL := 'insert into tpembelian (id, no_bukti, tanggal, pembeli) values('+
+    IntToStr(FID)                                + ', ' +
+    QuotedStr(nobukti)                           + ', ' +
+    QuotedStr(FormatDateTime('yyyy/mm/dd', tgl)) + ', ' +
+    IntToStr(Pembeli.ID)                         + ');';
+  end else begin
+    sSQL := 'update table tpembelian set '                         +
+      'no_bukti = ' + QuotedStr(nobukti)                           +
+      'tanggal = '  + QuotedStr(FormatDateTime('yyyy/mm/dd', tgl)) +
+      'pembeli = '  + IntToStr(Pembeli.ID)                         +
+      'where id = ' + IntToStr(FID) + ';';
+  end;
 
-    sSQLTambahan := 'delete from tpembelianitem where header_id = ' + IntToStr(FID) + ';';
-    sSQL := sSQL + sSQLTambahan;
+  sSQLTambahan := 'delete from tpembelianitem where header_id = ' +
+  IntToStr(FID) + ';';
+  sSQL := sSQL + sSQLTambahan;
 
-    for I := 0 to PembelianItems.Count - 1 do
-    begin
-      sSQL := sSQL + PembelianItems[i].GenerateSQL(FID);
-    end;
+  for I := 0 to PembelianItems.Count - 1 do begin
+    sSQL := sSQL + PembelianItems[i].GenerateSQL(FID);
+  end;
 
   FDConnection.StartTransaction;
   try
@@ -148,19 +143,22 @@ begin
 
   Result := sSQL;
 end;
-
-{Procedure
-  Buat Pembelian baru
-  Ubah Pembelian
-  Hapus Pembelian
+{
+Procedure
+  1. Create Pembelian
+     1a. Looping:
+           buat PembelianItem baru
+  2. Update Pembelian
+     2a. Looping:
+           Dari header_id yg ingin diupdate, hapus PembelianItem yg lama
+           kemudian tambahkan pembelianitem baru.
+  3. Delete Pembelian
+     3a. Looping:
+           hapus PembelianItemsesuai header_id yg dipilih
 
 Function
-  Cari Pembelian berdasarkan
-  1 Kode Pembelian
-  2 Tanggal Pembelian
-  3 Pembeli: Kode/Nama
-  4 Barang: Kode/Nama
-
-  Ubah Pembelian yg sebelumnya diperoleh dari pencarian
+  1. Cari Pembelian berdasarkan
+   1a. Kode Pembelian
+   1b. Kode Pembeli
 }
 end.
