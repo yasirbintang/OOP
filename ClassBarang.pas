@@ -10,19 +10,19 @@ type
     FID: Integer;
     FKode: String;
     FNama: String;
-    FHarga: String;
+    FHarga: double;
   public
     constructor Create; reintroduce;
     function Hapus: Boolean;
     function IsKodeSudahAda(aKode : String; aID : Integer): Boolean;
-    procedure LoadByCode(ACode :String);
     procedure LoadByID(AID : Integer);
+    procedure LoadbyKode(AKode : String);
     function Simpan: Boolean;
 //    function ToString: string;
     property ID: Integer read FID write FID;
     property Kode: String read FKode write FKode;
     property Nama: String read FNama write FNama;
-    property Harga: String read FHarga write FHarga;
+    property Harga: double read FHarga write FHarga;
   end;
 
 implementation
@@ -76,33 +76,6 @@ begin
   Result := True;
 end;
 
-procedure TBarang.LoadByCode(ACode :String);
-var
-  lcds : TClientDataSet;
-  ssQL : string;
-begin
-  ssQL := 'select * from tbarang ' +
-          'where kode = '  + QuotedStr(ACode);
-
-    lcds := TConnection.OpenQuery(ssQL);
-    try
-    while not lcds.Eof do begin
-      id      := lcds.FieldByName('id').AsInteger;
-      kode    := lcds.FieldByName('kode').AsString;
-      nama    := lcds.FieldByName('nama').AsString;
-      harga   := lcds.FieldByName('harga').AsString;
-
-      lcds.Next;
-    end;
-    finally
-      lcds.Free;
-    end;
-
-  // TODO -cMM: TBarang.LoadByCode default body inserted
-end;
-
-
-
 procedure TBarang.LoadByID(AID : Integer);
 var
   lcds: TClientDataSet;
@@ -117,7 +90,7 @@ begin
       id      := lcds.FieldByName('id').AsInteger;
       kode    := lcds.FieldByName('kode').AsString;
       nama    := lcds.FieldByName('nama').AsString;
-      harga   := lcds.FieldByName('harga').AsString;
+      harga   := lcds.FieldByName('harga').AsFloat;
 
       lcds.Next;
     end;
@@ -125,6 +98,27 @@ begin
     lcds.Free;
   end;
 
+end;
+procedure TBarang.LoadbyKode(AKode : String);
+var
+  lcds: TClientDataSet;
+  sSQL: string;
+begin
+  sSQL := ' select * from tbarang ' +
+          ' where kode = ' + QuotedStr(Akode);
+
+  lcds := TConnection.OpenQuery(sSQL);
+  try
+    while not lcds.Eof do begin
+      id      := lcds.FieldByName('id').AsInteger;
+      kode    := lcds.FieldByName('kode').AsString;
+      nama    := lcds.FieldByName('nama').AsString;
+      harga   := lcds.FieldByName('harga').AsFloat;
+      lcds.Next;
+    end;
+  finally
+    lcds.Free;
+  end;
 end;
 
 function TBarang.Simpan: Boolean;
@@ -156,12 +150,12 @@ begin
           IntToStr(ID) + ',' +
           QuotedStr(Kode) + ',' +
           QuotedStr(Nama) + ',' +
-          QuotedStr(Harga) + ')';
+          FloatToStr(Harga) + ')';
   end else begin // update
     sSQL:= 'update tbarang set ' +
            ' kode = ' + QuotedStr(Kode) + ',' +
            ' nama = ' + QuotedStr(Nama) + ',' +
-           ' harga = ' + QuotedStr(Harga) +
+           ' harga = ' + FloatToStr(Harga) +
            ' where id = ' + IntToStr(id);
   end;
 
