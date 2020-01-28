@@ -19,7 +19,6 @@ begin
   Application.Initialize;
   Application.CreateForm(TSDIAppForm, SDIAppForm);
   Application.CreateForm(TAboutBox, AboutBox);
-  Application.CreateForm(TfrmPembelian, frmPembelian);
   Application.Run;
 end.
 

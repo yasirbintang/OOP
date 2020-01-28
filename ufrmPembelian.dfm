@@ -119,7 +119,6 @@ object frmPembelian: TfrmPembelian
       DoubleBuffered = True
       ParentDoubleBuffered = False
       TabOrder = 2
-      OnClick = BaruClick
     end
   end
   object cxgrd1: TcxGrid
