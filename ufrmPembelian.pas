@@ -48,7 +48,6 @@ type
     pnlAtas: TPanel;
     pnlButon: TPanel;
     procedure btnsimpanClick(Sender: TObject);
-    procedure cxGridColKodeBarangPropertiesEditValueChanged(Sender: TObject);
     procedure cxGridColKodeBarangPropertiesValidate(Sender: TObject; var
         DisplayValue: Variant; var ErrorText: TCaption; var Error: Boolean);
     procedure cxGridColQtyPropertiesValidate(Sender: TObject; var DisplayValue:
@@ -105,17 +104,6 @@ begin
   end;
 end;
 
-// Cari Nama Pembeli: Ketik Kode Pembeli kemudian tekan tombol Enter
-procedure TfrmPembelian.cxGridColKodeBarangPropertiesEditValueChanged(
-  Sender: TObject);
-var
-  iColumn: Integer;
-  iRecord: Integer;
-  sKode: string;
-begin
-
-end;
-
 procedure TfrmPembelian.cxGridColKodeBarangPropertiesValidate(Sender: TObject;
   var DisplayValue: Variant; var ErrorText: TCaption; var Error: Boolean);
 var
@@ -129,23 +117,46 @@ begin
   sKode := DisplayValue;
   lBarang := TBarang.Create;
   try
-    lBarang.LoadByID(1);
-    cxGridTablePembelianItem.DataController.Values[iRecord, cxGridColNamaBarang.Index] := lBarang.Nama;
-    cxGridTablePembelianItem.DataController.Values[iRecord, cxGridColQty.Index] := 1;
-    cxGridTablePembelianItem.DataController.Values[iRecord, cxGridColHarga.Index] := lBarang.Harga;
+    lBarang.LoadByKode(sKode);
+    cxGridTablePembelianItem.DataController.Values[iRecord, cxGridColNamaBarang.Index]
+      := lBarang.Nama;
+    cxGridTablePembelianItem.DataController.Values[iRecord, cxGridColQty.Index]
+      := 1;
+    cxGridTablePembelianItem.DataController.Values[iRecord, cxGridColHarga.Index]
+      := lBarang.Harga;
+    cxGridTablePembelianItem.DataController.Values[iRecord, cxGridColTotal.Index]
+      := lBarang.Harga;
   finally
     lBarang.Free;
   end;
-
-
 
 end;
 
 procedure TfrmPembelian.cxGridColQtyPropertiesValidate(Sender: TObject;
   var DisplayValue: Variant; var ErrorText: TCaption; var Error: Boolean);
+var
+  dTotal: Double;
+  iRecord: Integer;
+  iQty: Integer;
+  vHarga: Variant;
 begin
-  // hitung total
-//  Error := True;
+//   cxGridTablePembelianItem.Controller.EditingController
+  if VarIsNull(DisplayValue) then
+    Exit;
+
+  if DisplayValue = '' then
+    Exit;
+
+  iRecord := cxGridTablePembelianItem.DataController.FocusedRecordIndex;
+
+  vHarga := cxGridTablePembelianItem.DataController.GetValue(iRecord, cxGridColHarga.Index);
+  if VarIsNull(vHarga) then
+    Exit;
+
+  iQty    := StrToInt(DisplayValue);
+
+  dTotal  := iQty * vHarga;
+  cxGridTablePembelianItem.DataController.SetValue(iRecord, cxGridColTotal.Index, dTotal);
 end;
 
 procedure TfrmPembelian.edkodeKeyDown(Sender: TObject; var Key: Word; Shift:

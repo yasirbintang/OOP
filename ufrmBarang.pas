@@ -78,7 +78,7 @@ begin
   try
     lbarang.Kode     := edKode.Text;
     lbarang.Nama     := edNama.Text;
-    lbarang.Harga    := edHarga.Text;
+    lbarang.Harga    := StrToFloat(edHarga.Text);
     lbarang.ID       := FID;
 
     scandata;
@@ -167,7 +167,7 @@ begin
       FID             := lBarang.ID;
       edKode.Text     := lBarang.Kode;
       edNama.Text     := lBarang.Nama;
-      edHarga.Text    := lBarang.Harga;
+      edHarga.Text    := FloatToStr(lBarang.Harga);
     end;
 
   finally
