@@ -20,6 +20,9 @@ object frmPembelian: TfrmPembelian
     Height = 121
     Align = alTop
     TabOrder = 0
+    DesignSize = (
+      454
+      121)
     object Label1: TLabel
       Left = 16
       Top = 19
@@ -44,23 +47,26 @@ object frmPembelian: TfrmPembelian
     object ednopembelian: TEdit
       Left = 94
       Top = 16
-      Width = 121
+      Width = 75
       Height = 21
+      Anchors = [akLeft, akTop, akRight]
       TabOrder = 0
     end
     object edkode: TEdit
       Left = 94
       Top = 66
-      Width = 121
+      Width = 75
       Height = 21
+      Anchors = [akLeft, akTop, akRight]
       TabOrder = 2
       OnKeyDown = edkodeKeyDown
     end
     object dtptanggal: TDateTimePicker
       Left = 94
       Top = 41
-      Width = 121
+      Width = 75
       Height = 21
+      Anchors = [akLeft, akTop, akRight]
       Date = 43857.379476782410000000
       Time = 43857.379476782410000000
       TabOrder = 1
@@ -68,8 +74,9 @@ object frmPembelian: TfrmPembelian
     object edNama: TEdit
       Left = 94
       Top = 91
-      Width = 121
+      Width = 171
       Height = 21
+      Anchors = [akLeft, akTop, akRight]
       TabOrder = 3
     end
   end
@@ -80,11 +87,15 @@ object frmPembelian: TfrmPembelian
     Height = 41
     Align = alBottom
     TabOrder = 1
+    DesignSize = (
+      454
+      41)
     object btnsimpan: TButton
       Left = 181
       Top = 8
       Width = 75
       Height = 25
+      Anchors = [akLeft, akTop, akRight]
       Caption = 'Simpan'
       TabOrder = 0
       OnClick = btnsimpanClick
@@ -94,6 +105,7 @@ object frmPembelian: TfrmPembelian
       Top = 8
       Width = 75
       Height = 25
+      Anchors = [akTop, akRight]
       Caption = 'Hapus'
       TabOrder = 1
     end
@@ -102,6 +114,7 @@ object frmPembelian: TfrmPembelian
       Top = 8
       Width = 75
       Height = 25
+      Anchors = [akTop, akRight]
       Caption = 'Baru'
       DoubleBuffered = True
       ParentDoubleBuffered = False
@@ -120,6 +133,7 @@ object frmPembelian: TfrmPembelian
       DataController.Summary.FooterSummaryItems = <>
       DataController.Summary.SummaryGroups = <>
       OptionsData.Appending = True
+      OptionsView.GroupByBox = False
       object cxGridColKodeBarang: TcxGridColumn
         Caption = 'Kode'
         PropertiesClassName = 'TcxTextEditProperties'
@@ -170,17 +184,17 @@ object frmPembelian: TfrmPembelian
     end
   end
   object con1: TADConnection
-    Left = 392
-    Top = 24
+    Left = 376
+    Top = 8
   end
   object DSpembelian: TDataSource
-    Left = 344
-    Top = 24
+    Left = 408
+    Top = 56
   end
   object DSbelian: TClientDataSet
     Aggregates = <>
     Params = <>
-    Left = 368
-    Top = 104
+    Left = 416
+    Top = 8
   end
 end

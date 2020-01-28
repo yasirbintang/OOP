@@ -23,44 +23,41 @@ uses
 
 type
   TfrmPembelian = class(TForm)
-    con1: TADConnection;
-    DSpembelian: TDataSource;
-    DSbelian: TClientDataSet;
-    pnlAtas: TPanel;
-    Label1: TLabel;
-    lbl1: TLabel;
-    Label2: TLabel;
-    ednopembelian: TEdit;
-    edkode: TEdit;
-    dtptanggal: TDateTimePicker;
-    edNama: TEdit;
-    pnlButon: TPanel;
-    btnsimpan: TButton;
-    btnhapus: TButton;
     Baru: TBitBtn;
-    cxgrdlvlGrid1Level1: TcxGridLevel;
+    btnhapus: TButton;
+    btnsimpan: TButton;
+    con1: TADConnection;
     cxgrd1: TcxGrid;
-    cxGridTablePembelianItem: TcxGridTableView;
+    cxgrdlvlGrid1Level1: TcxGridLevel;
+    cxGridColHarga: TcxGridColumn;
+    cxGridColID: TcxGridColumn;
     cxGridColKodeBarang: TcxGridColumn;
     cxGridColNamaBarang: TcxGridColumn;
     cxGridColQty: TcxGridColumn;
-    cxGridColHarga: TcxGridColumn;
     cxGridColTotal: TcxGridColumn;
-    cxGridColID: TcxGridColumn;
+    cxGridTablePembelianItem: TcxGridTableView;
+    DSbelian: TClientDataSet;
+    DSpembelian: TDataSource;
+    dtptanggal: TDateTimePicker;
+    edkode: TEdit;
+    edNama: TEdit;
+    ednopembelian: TEdit;
+    Label1: TLabel;
+    Label2: TLabel;
+    lbl1: TLabel;
+    pnlAtas: TPanel;
+    pnlButon: TPanel;
     procedure btnsimpanClick(Sender: TObject);
-    procedure edkodeKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
     procedure cxGridColKodeBarangPropertiesEditValueChanged(Sender: TObject);
-    procedure cxGridColKodeBarangPropertiesValidate(Sender: TObject;
-      var DisplayValue: Variant; var ErrorText: TCaption; var Error: Boolean);
-    procedure cxGridColQtyPropertiesValidate(Sender: TObject;
-      var DisplayValue: Variant; var ErrorText: TCaption; var Error: Boolean);
+    procedure cxGridColKodeBarangPropertiesValidate(Sender: TObject; var
+        DisplayValue: Variant; var ErrorText: TCaption; var Error: Boolean);
+    procedure cxGridColQtyPropertiesValidate(Sender: TObject; var DisplayValue:
+        Variant; var ErrorText: TCaption; var Error: Boolean);
+    procedure edkodeKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
   private
     FPembeli: Tpembeli;
     function GetPembeli: Tpembeli;
     property Pembeli: Tpembeli read GetPembeli write FPembeli;
-    { Private declarations }
-  public
-    { Public declarations }
   end;
 
 var
@@ -70,7 +67,6 @@ implementation
 
 uses
   ClassPembelian0;
-
 {$R *.dfm}
 
 procedure TfrmPembelian.btnsimpanClick(Sender: TObject);
