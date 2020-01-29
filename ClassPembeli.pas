@@ -18,7 +18,6 @@ type
     procedure LoadByID(AID : Integer);
     procedure LoadbyKode(AKode : String);
     function Simpan: Boolean;
-//    function ToString: string;
     property ID: Integer read FID write FID;
     property Kode: String read FKode write FKode;
     property Nama: String read FNama write FNama;
@@ -44,7 +43,7 @@ begin
   Result := False;
   sSQL := 'select id from tpembeli ' +
           ' where kode = ' + QuotedStr(AKode) +
-          ' and id <> ' + IntToStr(aID);
+          ' and id <> '    + IntToStr(aID);
 
   lcds := TConnection.OpenQuery(sSQL);
   try
@@ -82,7 +81,6 @@ var
 begin
   sSQL := ' select * from tpembeli ' +
           ' where id = ' + IntToStr(AID);
-
   lcds := TConnection.OpenQuery(sSQL);
   try
     while not lcds.Eof do begin
@@ -104,16 +102,14 @@ var
   lcds: TClientDataSet;
   sSQL: string;
 begin
-  sSQL := ' select * from tpembeli ' +
-          ' where kode = ' + QuotedStr(Akode);
+  sSQL := 'select * from tpembeli ' +
+          'where kode = '           +
+          QuotedStr(Akode)          + ';';
 
   lcds := TConnection.OpenQuery(sSQL);
   try
     while not lcds.Eof do begin
-      id      := lcds.FieldByName('id').AsInteger;
-      kode    := lcds.FieldByName('kode').AsString;
-      nama    := lcds.FieldByName('nama').AsString;
-      alamat  := lcds.FieldByName('alamat').AsString;
+      LoadByID(lcds.FieldByName('ID').AsInteger);
       lcds.Next;
     end;
   finally
@@ -139,8 +135,6 @@ begin
         Free;
       end;
     end;
-    // id berikutnya = id teraKHIR + 1;
-    // ID := LCDS.fIELDBBYNAME('ID_TERAKHIR').AsInteger + 1;
 
     sSQL := 'insert into tpembeli (id,kode,nama,alamat) values (' +
           IntToStr(ID) + ',' +
@@ -165,13 +159,6 @@ begin
     FDConnection.Rollback;
   end;
 end;
-
-{function TPembeli.ToString: string;
-begin
-  Result := 'Data Pembeli' + #13 +
-            '---------------------' + #13 +
-            ' Kode : ' + Self.Kode;
-end;}
 
 end.
 
