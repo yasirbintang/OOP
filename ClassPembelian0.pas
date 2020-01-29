@@ -14,13 +14,16 @@ type
     FPembeli: TPembeli;
     FPembelianItems: TObjectList<TPembelianItem>;
     FTgl: TDateTime;
+    function GetPembeli: TPembeli;
     function GetPembelianItems: TObjectList<TPembelianItem>;
   public
     function Hapus: Boolean;
+    procedure LoadByID(AID : Integer);
+    procedure LoadByCode(AKode : String);
     function Simpan: Boolean;
     property ID: Integer read FID write FID;
     property noBukti: String read FnoBukti write FnoBukti;
-    property Pembeli: TPembeli read FPembeli write FPembeli;
+    property Pembeli: TPembeli read GetPembeli write FPembeli;
     property PembelianItems: TObjectList<TPembelianItem> read GetPembelianItems
         write FPembelianItems;
     property Tgl: TDateTime read FTgl write FTgl;
@@ -33,12 +36,13 @@ type
     Fharga: double;
     FHeader_ID: Integer;
     FQty: Integer;
-    Ftotal: double;
+    FTotal: double;
+    function GetBarang: TBarang;
   public
     destructor Destroy; override;
     function GenerateSQL(AHeader_ID : Integer): string;
     property itemID: Integer read FitemID write FitemID;
-    property Barang: TBarang read FBarang write FBarang;
+    property Barang: TBarang read GetBarang write FBarang;
     property harga: double read Fharga write Fharga;
     property Header_ID: Integer read FHeader_ID write FHeader_ID;
     property Qty: Integer read FQty write FQty;
@@ -46,6 +50,16 @@ type
   end;
 
 implementation
+uses
+DBClient;
+
+function TPembelian.GetPembeli: TPembeli;
+begin
+  if FPembeli = nil then
+    FPembeli := TPembeli.Create;
+
+  Result := FPembeli;
+end;
 
 function TPembelian.GetPembelianItems: TObjectList<TPembelianItem>;
 begin
@@ -70,6 +84,92 @@ begin
   except
     FDConnection.Rollback;
   end;
+end;
+
+procedure TPembelian.LoadByID(AID : Integer);
+var
+  lcds: TClientDataSet;
+  lPembelianItem: TPembelianItem;
+  sSQL: string;
+
+begin
+    //PembelianItems.Create;
+//    TPembelianItem.Create;
+    //TBarang.Create;
+
+   sSQL := ' select * from tpembelian ' +
+          ' where Id = ' + IntToStr(AID);
+
+  lcds := TConnection.OpenQuery(sSQL);
+  try
+    while not lcds.Eof do begin
+      noBukti       := lcds.FieldByName('No_Bukti').AsString;
+      Tgl           := lcds.FieldByName('Tanggal').AsDateTime;
+      Self.ID       := lcds.FieldByName('ID').AsInteger;
+
+      Pembeli.LoadByID(lcds.FieldByName('Pembeli').AsInteger);
+
+      lcds.Next;
+    end;
+  finally
+    lcds.Free;
+  end;
+
+  sSQL := 'select * from tpembelianitem' +
+          ' where header_id = ' + IntToStr(Self.ID);
+
+  lcds := TConnection.OpenQuery(sSQL);
+  try
+
+    Self.PembelianItems.Clear;
+    while not lcds.Eof do
+    begin
+      lPembelianItem := TPembelianItem.Create;
+
+      lPembelianItem.Barang.LoadByID(lcds.FieldByName('barang').AsInteger);
+
+      lPembelianItem.harga      := 0;
+      lPembelianItem.Header_ID  := Self.ID;
+      lPembelianItem.Qty        := 0;
+      lPembelianItem.Total      := lPembelianItem.harga * lPembelianItem.Qty;
+
+      Self.PembelianItems.Add(lPembelianItem);
+
+      lcds.Next;
+    end;
+  finally
+    lcds.Free;
+  end;
+
+  // TODO -cMM: TPembelian.LoadByNoPembelian default body inserted
+end;
+
+procedure TPembelian.LoadByCode(AKode : String);
+var
+  lcds: TClientDataSet;
+  sSQL: string;
+
+begin
+    //PembelianItems.Create;
+    TPembelianItem.Create;
+    //TBarang.Create;
+
+   sSQL := ' select ID from tpembelian ' +
+          ' where no_bukti = ' + QuotedStr(AKode);
+
+  lcds := TConnection.OpenQuery(sSQL);
+  try
+    while not lcds.Eof do begin
+      LoadByID(lcds.FieldByName('ID').AsInteger);
+
+      lcds.Next;
+    end;
+  finally
+    lcds.Free;
+  end;
+
+
+  // TODO -cMM: TPembelian.LoadByNoPembelian default body inserted
 end;
 
 function TPembelian.Simpan: Boolean;
@@ -143,6 +243,17 @@ begin
 
   Result := sSQL;
 end;
+
+function TPembelianItem.GetBarang: TBarang;
+begin
+  if FBarang = nil then
+    FBarang := TBarang.Create;
+
+  Result := FBarang;
+end;
+
+
+
 {
 Procedure
   1. Create Pembelian

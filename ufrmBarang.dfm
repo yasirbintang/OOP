@@ -76,7 +76,6 @@ object frmBarang: TfrmBarang
     TitleFont.Height = -11
     TitleFont.Name = 'Tahoma'
     TitleFont.Style = []
-    OnCellClick = DBGrid1CellClick
   end
   object btsimpan: TButton
     Left = 271

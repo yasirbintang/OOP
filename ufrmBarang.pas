@@ -39,7 +39,6 @@ type
     procedure btnhapusClick(Sender: TObject);
     procedure btnbaruClick(Sender: TObject);
     procedure btnlihatClick(Sender: TObject);
-    procedure DBGrid1CellClick(Column: TColumn);
     procedure edKodeKeyPress(Sender: TObject; var Key: Char);
   private
     FID: Integer;
@@ -63,7 +62,6 @@ implementation
 
 procedure TfrmBarang.FormCreate(Sender: TObject);
 begin
-
   LoadDataBarang;
 end;
 
@@ -175,16 +173,6 @@ begin
   end;
 end;
 
-procedure TfrmBarang.DBGrid1CellClick(Column: TColumn);
-var
-lcds : TClientDataSet;
-begin
-    DSBarang.DataSet := lcds;
-    edKode.Text := DBGrid1.Fields[2].Text;
-//    edNama.Text := lcds.FieldByName('nama').Text;
-//    edHarga.Text := lcds.FieldByName('harga').Text;
-
-end;
 
 procedure TfrmBarang.edKodeKeyPress(Sender: TObject; var Key: Char);
 begin
