@@ -23,21 +23,21 @@ object frmPembelian: TfrmPembelian
     DesignSize = (
       454
       121)
-    object Label1: TLabel
+    object lblNoPembelian: TLabel
       Left = 16
       Top = 19
       Width = 64
       Height = 13
       Caption = 'No Pembelian'
     end
-    object lbl1: TLabel
+    object lblTgl: TLabel
       Left = 16
       Top = 45
       Width = 38
       Height = 13
       Caption = 'Tanggal'
     end
-    object Label2: TLabel
+    object lblPembeli: TLabel
       Left = 18
       Top = 81
       Width = 36
@@ -64,11 +64,12 @@ object frmPembelian: TfrmPembelian
     object dtptanggal: TDateTimePicker
       Left = 94
       Top = 41
-      Width = 75
+      Width = 162
       Height = 21
       Anchors = [akLeft, akTop, akRight]
-      Date = 43857.379476782410000000
-      Time = 43857.379476782410000000
+      Date = 36526.379476782410000000
+      Time = 36526.379476782410000000
+      DateFormat = dfLong
       TabOrder = 1
     end
     object edNama: TEdit
@@ -77,6 +78,7 @@ object frmPembelian: TfrmPembelian
       Width = 171
       Height = 21
       Anchors = [akLeft, akTop, akRight]
+      ReadOnly = True
       TabOrder = 3
     end
   end
@@ -134,6 +136,10 @@ object frmPembelian: TfrmPembelian
       DataController.Summary.SummaryGroups = <>
       OptionsData.Appending = True
       OptionsView.GroupByBox = False
+      object cxGridColID: TcxGridColumn
+        Caption = 'ID'
+        Visible = False
+      end
       object cxGridColKodeBarang: TcxGridColumn
         Caption = 'Kode'
         PropertiesClassName = 'TcxTextEditProperties'
@@ -164,6 +170,7 @@ object frmPembelian: TfrmPembelian
         Caption = 'Harga'
         PropertiesClassName = 'TcxCurrencyEditProperties'
         Properties.DisplayFormat = ',0.;-,0.'
+        Properties.ReadOnly = True
         HeaderAlignmentHorz = taCenter
         Options.Editing = False
       end
@@ -171,12 +178,9 @@ object frmPembelian: TfrmPembelian
         Caption = 'Total'
         PropertiesClassName = 'TcxCurrencyEditProperties'
         Properties.DisplayFormat = ',0.;-,0.'
+        Properties.ReadOnly = True
         HeaderAlignmentHorz = taCenter
         Options.Editing = False
-      end
-      object cxGridColID: TcxGridColumn
-        Caption = 'ID'
-        Visible = False
       end
     end
     object cxgrdlvlGrid1Level1: TcxGridLevel

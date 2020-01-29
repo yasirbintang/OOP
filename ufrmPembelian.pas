@@ -42,9 +42,9 @@ type
     edkode: TEdit;
     edNama: TEdit;
     ednopembelian: TEdit;
-    Label1: TLabel;
-    Label2: TLabel;
-    lbl1: TLabel;
+    lblNoPembelian: TLabel;
+    lblPembeli: TLabel;
+    lblTgl: TLabel;
     pnlAtas: TPanel;
     pnlButon: TPanel;
     procedure btnsimpanClick(Sender: TObject);
@@ -112,20 +112,14 @@ var
   sKode   : string;
 begin
   iRecord := cxGridTablePembelianItem.DataController.FocusedRecordIndex;
-//  iColumn := cxGridColKodeBarang.Index;
-
   sKode   := DisplayValue;
   lBarang := TBarang.Create;
   try
     lBarang.LoadByKode(sKode);
-    cxGridTablePembelianItem.DataController.Values[iRecord, cxGridColNamaBarang.Index]
-      := lBarang.Nama;
-    cxGridTablePembelianItem.DataController.Values[iRecord, cxGridColQty.Index]
-      := 1;
-    cxGridTablePembelianItem.DataController.Values[iRecord, cxGridColHarga.Index]
-      := lBarang.Harga;
-    cxGridTablePembelianItem.DataController.Values[iRecord, cxGridColTotal.Index]
-      := lBarang.Harga;
+    cxGridTablePembelianItem.DataController.Values[iRecord, cxGridColNamaBarang.Index] := lBarang.Nama;
+    cxGridTablePembelianItem.DataController.Values[iRecord, cxGridColQty.Index]        := 1;
+    cxGridTablePembelianItem.DataController.Values[iRecord, cxGridColHarga.Index]      := lBarang.Harga;
+    cxGridTablePembelianItem.DataController.Values[iRecord, cxGridColTotal.Index]      := lBarang.Harga;
   finally
     lBarang.Free;
   end;
@@ -140,13 +134,12 @@ var
   iQty    : Integer;
   vHarga  : Variant;
 begin
-//   cxGridTablePembelianItem.Controller.EditingController
+  if (DisplayValue = '') or VarIsNull(DisplayValue) then Exit;
   iRecord := cxGridTablePembelianItem.DataController.FocusedRecordIndex;
   iQty    := StrToInt(DisplayValue);
-  vHarga  := cxGridTablePembelianItem.DataController.GetValue(iRecord, cxGridColHarga.Index);
+  if not (iQty >= 1) then ShowMessage('Hanya Bilangan Positif');
 
-  if VarIsNull(DisplayValue) then Exit;
-  if DisplayValue = '' then Exit;
+  vHarga  := cxGridTablePembelianItem.DataController.GetValue(iRecord, cxGridColHarga.Index);
   if VarIsNull(vHarga) then Exit;
 
   dTotal  := iQty * vHarga;
