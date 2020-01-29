@@ -51,6 +51,7 @@ object frmPembelian: TfrmPembelian
       Height = 21
       Anchors = [akLeft, akTop, akRight]
       TabOrder = 0
+      OnKeyDown = ednopembelianKeyDown
     end
     object edkode: TEdit
       Left = 94
@@ -119,6 +120,7 @@ object frmPembelian: TfrmPembelian
       DoubleBuffered = True
       ParentDoubleBuffered = False
       TabOrder = 2
+      OnClick = BaruClick
     end
   end
   object cxgrd1: TcxGrid
