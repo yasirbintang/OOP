@@ -14,6 +14,34 @@ object frmPembeli: TfrmPembeli
   OnShow = FormShow
   PixelsPerInch = 96
   TextHeight = 13
+  object cxg1: TcxGrid
+    Left = 0
+    Top = 211
+    Width = 400
+    Height = 149
+    Align = alClient
+    TabOrder = 2
+    Visible = False
+    ExplicitTop = 212
+    ExplicitWidth = 250
+    ExplicitHeight = 200
+    object cxGTV: TcxGridDBTableView
+      DataController.Summary.DefaultGroupSummaryItems = <>
+      DataController.Summary.FooterSummaryItems = <>
+      DataController.Summary.SummaryGroups = <>
+      OptionsView.NoDataToDisplayInfoText = '.'
+      OptionsView.GroupByBox = False
+      object cxGTVColKode: TcxGridDBColumn
+      end
+      object cxGTVColNama: TcxGridDBColumn
+      end
+      object cxGTVColAlamat: TcxGridDBColumn
+      end
+    end
+    object cxGLv: TcxGridLevel
+      GridView = cxGTV
+    end
+  end
   object Panel1: TPanel
     Left = 0
     Top = 0
@@ -71,28 +99,28 @@ object frmPembeli: TfrmPembeli
       Visible = False
     end
     object edKode: TEdit
-      Left = 89
-      Top = 27
-      Width = 185
-      Height = 21
+      Left = 88
+      Top = 24
+      Width = 184
+      Height = 24
       Anchors = [akLeft, akTop, akRight]
       TabOrder = 0
-      OnKeyPress = edKodeKeyPress
+      OnKeyDown = edKodeKeyDown
     end
     object edNama: TEdit
-      Left = 89
+      Left = 88
       Top = 56
-      Width = 185
-      Height = 21
+      Width = 184
+      Height = 24
       Anchors = [akLeft, akTop, akRight]
       TabOrder = 1
       OnKeyPress = edNamaKeyPress
     end
     object memAlamat: TMemo
-      Left = 89
-      Top = 91
-      Width = 185
-      Height = 89
+      Left = 88
+      Top = 88
+      Width = 184
+      Height = 88
       Anchors = [akLeft, akTop, akRight]
       TabOrder = 2
     end
@@ -178,7 +206,7 @@ object frmPembeli: TfrmPembeli
     Top = 104
   end
   object DSPembeli: TDataSource
-    Left = 96
+    Left = 360
     Top = 216
   end
 end
