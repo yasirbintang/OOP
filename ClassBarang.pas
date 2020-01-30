@@ -74,6 +74,7 @@ begin
     lcds.Free;
   end;
   Result := True;
+
 end;
 
 procedure TBarang.LoadByID(AID : Integer);
@@ -131,7 +132,7 @@ begin
   begin
      //generate id baru select max(id) AS ID_TERAKHIR from tpembeli;
     sSQL := 'select max(id) AS ID_TERAKHIR from tbarang';
-    //memanggil data dengan ID paling banyak/max dengan alias ID_TERAKHIR dari tabel barang
+
     with TConnection.OpenQuery(sSQL, nil) do begin
       try
         if not IsEmpty then
@@ -143,8 +144,9 @@ begin
       end;
     end;
 
-    // id berikutnya = id teraKHIR + 1;
-    // ID := LCDS.fIELDBBYNAME('ID_TERAKHIR').AsInteger + 1;
+
+
+
 
     sSQL := 'insert into tbarang (id,kode,nama,harga) values (' +
           IntToStr(ID) + ',' +
@@ -158,8 +160,6 @@ begin
            ' harga = ' + FloatToStr(Harga) +
            ' where id = ' + IntToStr(id);
   end;
-
-
 
   FDConnection.StartTransaction;
   try

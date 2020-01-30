@@ -18,6 +18,8 @@ type
     function GetPembelianItems: TObjectList<TPembelianItem>;
   public
     function Hapus: Boolean;
+    function IsKodeBelumAda(ACode : String): Boolean;
+
     procedure LoadByID(AID : Integer);
     procedure LoadByCode(AKode : String);
     function Simpan: Boolean;
@@ -40,7 +42,9 @@ type
     function GetBarang: TBarang;
   public
     destructor Destroy; override;
+
     function GenerateSQL(AHeader_ID : Integer): string;
+    procedure LoadByHdrID(aHdrID : Integer);
     property itemID: Integer read FitemID write FitemID;
     property Barang: TBarang read GetBarang write FBarang;
     property harga: double read Fharga write Fharga;
@@ -72,9 +76,18 @@ end;
 function TPembelian.Hapus: Boolean;
 var
   sSql: string;
+  sSQLYasir: string;
+  lpembelianitem : TPembelianItem;
+
 begin
+  //TPembelianItem.Create;
+
   Result := False;
-  sSql := 'hapus tpembelian where id = ' + IntToStr(FID);
+  sSql := 'delete tpembelian where id = ' + IntToStr(FID) + ';';
+  sSQLYasir := 'delete tpembelianitem where header_id = ' + IntToStr(FID)+ ';';
+
+  sSql := sSql + sSQLYasir;
+
   FDConnection.StartTransaction;
   try
     if TConnection.ExecuteSQL(sSQL) then begin
@@ -84,6 +97,20 @@ begin
   except
     FDConnection.Rollback;
   end;
+end;
+
+function TPembelian.IsKodeBelumAda(ACode : String): Boolean;
+var
+sSQL : string;
+lcds : TClientDataSet;
+begin
+  Result := False;
+  sSQL := 'select kode from tpembeli ' +
+          'where kode <> ' + QuotedStr(ACode) + ';' ;
+
+  lcds := TConnection.OpenQuery(sSQL);
+
+  // TODO -cMM: TPembelian.IsKodeBelumAda default body inserted
 end;
 
 procedure TPembelian.LoadByID(AID : Integer);
@@ -128,9 +155,9 @@ begin
 
       lPembelianItem.Barang.LoadByID(lcds.FieldByName('barang').AsInteger);
 
-      lPembelianItem.harga      := 0;
+      lPembelianItem.harga      := lcds.FieldByName('harga').AsFloat;
       lPembelianItem.Header_ID  := Self.ID;
-      lPembelianItem.Qty        := 0;
+      lPembelianItem.Qty        := lcds.FieldByName('qty').AsInteger;
       lPembelianItem.Total      := lPembelianItem.harga * lPembelianItem.Qty;
 
       Self.PembelianItems.Add(lPembelianItem);
@@ -198,10 +225,10 @@ begin
     QuotedStr(FormatDateTime('yyyy/mm/dd', tgl)) + ', ' +
     IntToStr(Pembeli.ID)                         + ');';
   end else begin
-    sSQL := 'update table tpembelian set '                         +
+    sSQL := 'update tpembelian set '                         +
       'no_bukti = ' + QuotedStr(nobukti)                           +
-      'tanggal = '  + QuotedStr(FormatDateTime('yyyy/mm/dd', tgl)) +
-      'pembeli = '  + IntToStr(Pembeli.ID)                         +
+      ',tanggal = '  + QuotedStr(FormatDateTime('yyyy/mm/dd', tgl)) +
+      ',pembeli = '  + IntToStr(Pembeli.ID)                         +
       'where id = ' + IntToStr(FID) + ';';
   end;
 
@@ -250,6 +277,37 @@ begin
     FBarang := TBarang.Create;
 
   Result := FBarang;
+end;
+
+procedure TPembelianItem.LoadByHdrID(aHdrID : Integer);
+var
+  lcds: TClientDataSet;
+  sSQL: string;
+  lpembelian : TPembelian;
+
+begin
+
+   sSQL := ' select * from tpembelianitem ' +
+           ' where Header_ID = ' + IntToStr(aHdrID);
+
+  lcds := TConnection.OpenQuery(sSQL);
+  try
+    while not lcds.Eof do begin
+      Header_ID       := lcds.FieldByName('Header_ID').AsInteger;
+      lpembelian.LoadByID(lcds.FieldByName('Barang').AsInteger);
+      Qty             := lcds.FieldByName('qty').AsInteger;
+      harga           := lcds.FieldByName('harga').AsFloat;
+      total           := lcds.FieldByName('total').AsFloat;
+
+      lcds.Next;
+    end;
+  finally
+    lcds.Free;
+  end;
+
+
+  // TODO -cMM: TPembelian.LoadByNoPembelian default body insert
+  // TODO -cMM: TPembelianItem.LoadByHdrID default body inserted
 end;
 
 

@@ -11,6 +11,8 @@ object frmPembelian: TfrmPembelian
   Font.Name = 'Tahoma'
   Font.Style = []
   OldCreateOrder = False
+  OnCreate = FormCreate
+  OnShow = FormShow
   PixelsPerInch = 96
   TextHeight = 13
   object pnlAtas: TPanel
@@ -46,7 +48,7 @@ object frmPembelian: TfrmPembelian
     end
     object ednopembelian: TEdit
       Left = 94
-      Top = 16
+      Top = 14
       Width = 75
       Height = 21
       Anchors = [akLeft, akTop, akRight]
@@ -109,6 +111,7 @@ object frmPembelian: TfrmPembelian
       Anchors = [akTop, akRight]
       Caption = 'Hapus'
       TabOrder = 1
+      OnClick = btnhapusClick
     end
     object Baru: TBitBtn
       Left = 371
@@ -130,6 +133,7 @@ object frmPembelian: TfrmPembelian
     Height = 156
     Align = alClient
     TabOrder = 2
+    ExplicitTop = 123
     object cxGridTablePembelianItem: TcxGridTableView
       DataController.Summary.DefaultGroupSummaryItems = <>
       DataController.Summary.FooterSummaryItems = <>
