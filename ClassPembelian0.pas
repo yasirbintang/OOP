@@ -106,10 +106,17 @@ lcds : TClientDataSet;
 begin
   Result := False;
   sSQL := 'select kode from tpembeli ' +
-          'where kode <> ' + QuotedStr(ACode) + ';' ;
+          'where kode <> ' + QuotedStr(ACode);
 
   lcds := TConnection.OpenQuery(sSQL);
+  try
+    if lcds.IsEmpty then begin
+      Exit;
+    end;
 
+  finally
+  lcds.Free;
+  end;
   // TODO -cMM: TPembelian.IsKodeBelumAda default body inserted
 end;
 

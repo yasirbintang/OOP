@@ -19,7 +19,7 @@ uses
   dxSkinXmas2008Blue, dxSkinscxPCPainter, cxCustomData, cxFilter, cxData,
   cxDataStorage, cxEdit, cxGridCustomTableView, cxGridTableView,
   cxGridCustomView, cxClasses, cxGridLevel, cxGrid, cxCurrencyEdit,
-  ClassPembeli, classbarang, cxTextEdit, cxDropDownEdit, uConnection, StrUtils;
+  ClassPembeli, classbarang, cxTextEdit, cxDropDownEdit, uConnection, StrUtils, ufrmPembeli;
 
 type
   TfrmPembelian = class(TForm)
@@ -299,6 +299,12 @@ begin
 
         end;
 
+      end;
+
+      if lPembelian.IsKodeBelumAda(edkode.Text) then
+      begin
+         if MessageDlg('Kode tidak ditemukan, ingin mendaftar terlebih dahulu?',mtConfirmation,mbYesNo,0) = mrYes then
+            ufrmPembeli.frmPembeli.Show;
       end;
 
     finally
