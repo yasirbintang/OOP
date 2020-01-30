@@ -19,7 +19,7 @@ type
   public
     function Hapus: Boolean;
     procedure LoadByID(AID : Integer);
-    procedure LoadByCode(AKode : String);
+    procedure LoadbyNoBukti(AKode : String);
     function Simpan: Boolean;
     property ID: Integer read FID write FID;
     property noBukti: String read FnoBukti write FnoBukti;
@@ -91,7 +91,6 @@ var
   lcds: TClientDataSet;
   lPembelianItem: TPembelianItem;
   sSQL: string;
-
 begin
     //PembelianItems.Create;
 //    TPembelianItem.Create;
@@ -117,20 +116,17 @@ begin
 
   sSQL := 'select * from tpembelianitem' +
           ' where header_id = ' + IntToStr(Self.ID);
-
   lcds := TConnection.OpenQuery(sSQL);
   try
-
     Self.PembelianItems.Clear;
     while not lcds.Eof do
     begin
       lPembelianItem := TPembelianItem.Create;
 
       lPembelianItem.Barang.LoadByID(lcds.FieldByName('barang').AsInteger);
-
-      lPembelianItem.harga      := 0;
       lPembelianItem.Header_ID  := Self.ID;
-      lPembelianItem.Qty        := 0;
+      lPembelianItem.harga      := lcds.FieldByName('harga').AsFloat;
+      lPembelianItem.Qty        := lcds.FieldByName('Qty').AsInteger;
       lPembelianItem.Total      := lPembelianItem.harga * lPembelianItem.Qty;
 
       Self.PembelianItems.Add(lPembelianItem);
@@ -140,15 +136,12 @@ begin
   finally
     lcds.Free;
   end;
-
-  // TODO -cMM: TPembelian.LoadByNoPembelian default body inserted
 end;
 
-procedure TPembelian.LoadByCode(AKode : String);
+procedure TPembelian.LoadbyNoBukti(AKode : String);
 var
   lcds: TClientDataSet;
   sSQL: string;
-
 begin
     //PembelianItems.Create;
     TPembelianItem.Create;
@@ -168,8 +161,6 @@ begin
     lcds.Free;
   end;
 
-
-  // TODO -cMM: TPembelian.LoadByNoPembelian default body inserted
 end;
 
 function TPembelian.Simpan: Boolean;
@@ -234,12 +225,13 @@ function TPembelianItem.GenerateSQL(AHeader_ID : Integer): string;
 var
   sSQL: string;
 begin
-  sSQL := 'insert into tpembelianitem (header_id, barang, qty, harga, total) values ('+
-      IntToStr(AHeader_ID)                         + ', ' +
-      IntToStr(Barang.ID)                           + ', ' +
-      IntToStr(Qty) + ', ' +
-      FloatToStr(harga) + ', ' +
-      FloatToStr(Total) + ');';
+  sSQL := 'insert into tpembelianitem '+
+      '(header_id, barang, qty, harga, total) values ('+
+      IntToStr(AHeader_ID) + ', ' +
+      IntToStr(Barang.ID)  + ', ' +
+      IntToStr(Qty)        + ', ' +
+      FloatToStr(harga)    + ', ' +
+      FloatToStr(Total)    + ');';
 
   Result := sSQL;
 end;
@@ -252,24 +244,4 @@ begin
   Result := FBarang;
 end;
 
-
-
-{
-Procedure
-  1. Create Pembelian
-     1a. Looping:
-           buat PembelianItem baru
-  2. Update Pembelian
-     2a. Looping:
-           Dari header_id yg ingin diupdate, hapus PembelianItem yg lama
-           kemudian tambahkan pembelianitem baru.
-  3. Delete Pembelian
-     3a. Looping:
-           hapus PembelianItemsesuai header_id yg dipilih
-
-Function
-  1. Cari Pembelian berdasarkan
-   1a. Kode Pembelian
-   1b. Kode Pembeli
-}
 end.

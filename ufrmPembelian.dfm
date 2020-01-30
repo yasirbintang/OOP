@@ -44,23 +44,22 @@ object frmPembelian: TfrmPembelian
       Height = 13
       Caption = 'Pembeli'
     end
-    object ednopembelian: TEdit
+    object edNoBukti: TEdit
       Left = 94
       Top = 16
       Width = 75
       Height = 21
       Anchors = [akLeft, akTop, akRight]
       TabOrder = 0
-      OnKeyDown = ednopembelianKeyDown
+      OnKeyDown = edNoBuktiKeyDown
     end
-    object edkode: TEdit
+    object edPembeliKode: TEdit
       Left = 94
       Top = 66
       Width = 75
       Height = 21
       Anchors = [akLeft, akTop, akRight]
       TabOrder = 2
-      OnKeyDown = edkodeKeyDown
     end
     object dtptanggal: TDateTimePicker
       Left = 94
@@ -73,7 +72,7 @@ object frmPembelian: TfrmPembelian
       DateFormat = dfLong
       TabOrder = 1
     end
-    object edNama: TEdit
+    object edPembeliNama: TEdit
       Left = 94
       Top = 91
       Width = 171
@@ -137,6 +136,7 @@ object frmPembelian: TfrmPembelian
       DataController.Summary.FooterSummaryItems = <>
       DataController.Summary.SummaryGroups = <>
       OptionsData.Appending = True
+      OptionsView.NoDataToDisplayInfoText = '.'
       OptionsView.GroupByBox = False
       object cxGridColID: TcxGridColumn
         Caption = 'ID'
