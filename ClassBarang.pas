@@ -7,10 +7,10 @@ uses
 type
   TBarang = class
   private
+    FHarga: double;
     FID: Integer;
     FKode: String;
     FNama: String;
-    FHarga: double;
   public
     constructor Create; reintroduce;
     function Hapus: Boolean;
@@ -18,18 +18,16 @@ type
     procedure LoadByID(AID : Integer);
     procedure LoadbyKode(AKode : String);
     function Simpan: Boolean;
-//    function ToString: string;
+    property Harga: double read FHarga write FHarga;
     property ID: Integer read FID write FID;
     property Kode: String read FKode write FKode;
     property Nama: String read FNama write FNama;
-    property Harga: double read FHarga write FHarga;
   end;
 
 implementation
 
 uses
   DBClient;
-
 
 constructor TBarang.Create;
 begin
@@ -74,7 +72,6 @@ begin
     lcds.Free;
   end;
   Result := True;
-
 end;
 
 procedure TBarang.LoadByID(AID : Integer);
@@ -84,7 +81,6 @@ var
 begin
   sSQL := ' select * from tbarang ' +
           ' where id = ' + IntToStr(AID);
-
   lcds := TConnection.OpenQuery(sSQL);
   try
     while not lcds.Eof do begin
@@ -100,21 +96,20 @@ begin
   end;
 
 end;
+
 procedure TBarang.LoadbyKode(AKode : String);
 var
   lcds: TClientDataSet;
   sSQL: string;
 begin
-  sSQL := ' select * from tbarang ' +
-          ' where kode = ' + QuotedStr(Akode);
+  sSQL := 'select * from tbarang ' +
+          'where kode = '          +
+          QuotedStr(Akode)         + ';';
 
   lcds := TConnection.OpenQuery(sSQL);
   try
     while not lcds.Eof do begin
-      id      := lcds.FieldByName('id').AsInteger;
-      kode    := lcds.FieldByName('kode').AsString;
-      nama    := lcds.FieldByName('nama').AsString;
-      harga   := lcds.FieldByName('harga').AsFloat;
+      LoadByID(lcds.FieldByName('ID').AsInteger);
       lcds.Next;
     end;
   finally
@@ -132,7 +127,7 @@ begin
   begin
      //generate id baru select max(id) AS ID_TERAKHIR from tpembeli;
     sSQL := 'select max(id) AS ID_TERAKHIR from tbarang';
-
+    //memanggil data dengan ID paling banyak/max dengan alias ID_TERAKHIR dari tabel barang
     with TConnection.OpenQuery(sSQL, nil) do begin
       try
         if not IsEmpty then
@@ -143,10 +138,6 @@ begin
         Free;
       end;
     end;
-
-
-
-
 
     sSQL := 'insert into tbarang (id,kode,nama,harga) values (' +
           IntToStr(ID) + ',' +
@@ -170,14 +161,6 @@ begin
   except
     FDConnection.Rollback;
   end;
-
 end;
-
-{function TBarang.ToString: string;
-begin
-  Result := 'Data Pembeli' + #13 +
-            '---------------------' + #13 +
-            ' Kode : ' + Self.Kode;
-end;}
 
 end.

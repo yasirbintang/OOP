@@ -3,11 +3,14 @@ unit ufrmPembelian;
 interface
 
 uses
-  Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
-  Dialogs, ComCtrls, StdCtrls, uADStanIntf, uADStanOption, uADStanError,
-  uADGUIxIntf, uADPhysIntf, uADStanDef, uADStanPool, uADStanAsync,
-  uADPhysManager, DB, uADCompClient, Buttons, Grids, DBGrids, DBClient, ExtCtrls,
-  cxGraphics, cxControls, cxLookAndFeels, cxLookAndFeelPainters, cxStyles,
+  Buttons, ClassPembeli, Classes, ComCtrls, Controls, DB, DBClient, DBGrids,
+  Dialogs, ExtCtrls, Forms, Graphics, Grids, Messages, StdCtrls, SysUtils,
+  Variants, StrUtils, classbarang, cxClasses, cxControls, cxCurrencyEdit, cxCustomData,
+  cxData, cxDataStorage, cxDropDownEdit, cxEdit, cxFilter, cxGraphics, cxGrid,
+  cxGridCustomTableView, cxGridCustomView, cxGridLevel, cxGridTableView, cxLabel,
+  cxLookAndFeelPainters, cxLookAndFeels, cxMaskEdit, cxStyles, cxTextEdit,
+  uADCompClient, uADGUIxIntf, uADPhysIntf, uADPhysManager, uADStanAsync, uADStanDef,
+  uADStanError, uADStanIntf, uADStanOption, uADStanPool, uConnection, Windows,
   dxSkinsCore, dxSkinBlack, dxSkinBlue, dxSkinCaramel, dxSkinCoffee,
   dxSkinDarkRoom, dxSkinDarkSide, dxSkinFoggy, dxSkinGlassOceans,
   dxSkiniMaginary, dxSkinLilian, dxSkinLiquidSky, dxSkinLondonLiquidSky,
@@ -16,61 +19,51 @@ uses
   dxSkinOffice2010Black, dxSkinOffice2010Blue, dxSkinOffice2010Silver,
   dxSkinPumpkin, dxSkinSeven, dxSkinSharp, dxSkinSilver, dxSkinSpringTime,
   dxSkinStardust, dxSkinSummer2008, dxSkinsDefaultPainters, dxSkinValentine,
-  dxSkinXmas2008Blue, dxSkinscxPCPainter, cxCustomData, cxFilter, cxData,
-  cxDataStorage, cxEdit, cxGridCustomTableView, cxGridTableView,
-  cxGridCustomView, cxClasses, cxGridLevel, cxGrid, cxCurrencyEdit,
-  ClassPembeli, classbarang, cxTextEdit, cxDropDownEdit, uConnection, StrUtils, ufrmPembeli, cxLabel;
+  dxSkinXmas2008Blue, dxSkinscxPCPainter;
 
 type
   TfrmPembelian = class(TForm)
-    edNoBukti : TEdit;
-    edPembeliKode : TEdit;
-    edPembeliNama : TEdit;
-    lblNoPembelian : TLabel;
-    lblTgl : TLabel;
-    lblPembeli : TLabel;
-    Baru: TBitBtn;
-    btnhapus: TButton;
-    btnsimpan: TButton;
-    con1: TADConnection;
-    cxgrd1: TcxGrid;
-    cxgrdlvlGrid1Level1: TcxGridLevel;
-    cxGridColHarga: TcxGridColumn;
-    cxGridColID: TcxGridColumn;
-    cxGridColKodeBarang: TcxGridColumn;
-    cxGridColNamaBarang: TcxGridColumn;
-    cxGridColQty: TcxGridColumn;
-    cxGridColTotal: TcxGridColumn;
-    cxGridTablePembelianItem: TcxGridTableView;
-    DSbelian: TClientDataSet;
-    DSpembelian: TDataSource;
-    dtptanggal: TDateTimePicker;
-    pnlAtas: TPanel;
-    pnlButon: TPanel;
-
-    procedure FormCreate(Sender: TObject);
-    procedure autocode;
-    procedure BaruClick(Sender: TObject);
-    procedure btnhapusClick(Sender: TObject);
-    procedure btnsimpanClick(Sender: TObject);
-    procedure cxGridColKodeBarangPropertiesValidate(Sender: TObject; var
-        DisplayValue: Variant; var ErrorText: TCaption; var Error: Boolean);
-    procedure cxGridColQtyPropertiesValidate(Sender: TObject; var DisplayValue:
-        Variant; var ErrorText: TCaption; var Error: Boolean);
-    procedure edNoBuktiKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
-    procedure edPembeliKodeKeyDown(Sender: TObject; var Key: Word; Shift:
-        TShiftState);
-    procedure FormShow(Sender: TObject);
+  Baru: TBitBtn;
+  btnhapus: TButton;
+  btnsimpan: TButton;
+  con1: TADConnection;
+  cxgrd1: TcxGrid;
+  cxgrdlvlGrid1Level1: TcxGridLevel;
+  cxGridColHarga: TcxGridColumn;
+  cxGridColID: TcxGridColumn;
+  cxGridColKodeBarang: TcxGridColumn;
+  cxGridColNamaBarang: TcxGridColumn;
+  cxGridColQty: TcxGridColumn;
+  cxGridColTotal: TcxGridColumn;
+  cxGridTablePembelianItem: TcxGridTableView;
+  DSbelian: TClientDataSet;
+  DSpembelian: TDataSource;
+  dtptanggal: TDateTimePicker;
+  edNoBukti: TEdit;
+  edPembeliKode: TEdit;
+  edPembeliNama: TEdit;
+  lblNoPembelian: TLabel;
+  lblPembeli: TLabel;
+  lblTgl: TLabel;
+  pnlAtas: TPanel;
+  pnlButon: TPanel;
+  procedure autocode;
+  procedure BaruClick(Sender: TObject);
+  procedure btnhapusClick(Sender: TObject);
+  procedure btnsimpanClick(Sender: TObject);
+  procedure cxGridColKodeBarangPropertiesValidate(Sender: TObject;
+    var DisplayValue: Variant; var ErrorText: TCaption; var Error: Boolean);
+  procedure cxGridColQtyPropertiesValidate(Sender: TObject;
+    var DisplayValue: Variant; var ErrorText: TCaption; var Error: Boolean);
+  procedure edNoBuktiKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
+  procedure edPembeliKodeKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
+  procedure FormCreate(Sender: TObject);
+  //procedure FormShow(Sender: TObject);
   private
+    FID: Integer;
     FPembeli: Tpembeli;
-    FID : Integer;
-    Fnopembeli: string;
     function GetPembeli: Tpembeli;
-    function IsDataValid: Boolean;
     property Pembeli: Tpembeli read GetPembeli write FPembeli;
-
-  public
-    property nopembeli: string read Fnopembeli write Fnopembeli;
   end;
 
 var
@@ -82,55 +75,31 @@ uses
   ClassPembelian0;
 {$R *.dfm}
 
-procedure TfrmPembelian.FormCreate(Sender: TObject);
-begin
-//autocode;
-
-    if edNoBukti.Text = '' then
-    begin
-
-       autocode;
-
-    end;
-
-end;
-
-
 procedure TfrmPembelian.autocode;
 var
   hasil, nilai, total : String ;
   i : Integer;
   lcds : TClientDataSet;
-  sPrefix: string;
-  sSQL : string;
-
+  sNoBukti, sS, sSQL : String;
 begin
-//  lpembelian := TPembelian.Create;
   nilai := '0000';
-
-  sPrefix := 'P/' + FormatDateTime('YYYY/', dtptanggal.Date);
-
+  sS := FormatDateTime('P/yy/', dtptanggal.date);
   sSQL := ' select max(no_bukti) as max_no from TPembelian ' +
-          ' where no_bukti like ' + QuotedStr(sPrefix + '%'); //memanggil
+          ' where no_bukti like ' + QuotedStr(sS+'%');
 
   lcds := TConnection.OpenQuery(sSQL);
-
     try
       while not lcds.Eof do begin
+      sNoBukti := lcds.FieldByName('max_no').AsString;
+      if sNobukti = '' then  Exit;
+      edNoBukti.Text := sNoBukti;
 
-      nopembeli := lcds.FieldByName('max_no').AsString;
-
-      edNoBukti.Text := nopembeli;
       lcds.Next;
-
-      hasil := RightStr(nopembeli,4);
-
+      hasil := RightStr(sNoBukti,4);
       i     := StrToInt(hasil) + 1;
-
       total := nilai + IntToStr(i);
 
-      ednobukti.Text := sPrefix + RightStr(total,4);
-
+      ednoBukti.Text := sS + RightStr(total,4);
       end;
     finally
       lcds.Free;
@@ -140,9 +109,11 @@ begin
 
 procedure TfrmPembelian.BaruClick(Sender: TObject);
 begin
-  ednobukti.Text := '';
-  edpembelikode.Text := '';
-  edpembelinama.Text := '';
+  FID := 0;
+  edNoBukti.Text := '';
+  dtptanggal.date := Now;
+  edPembeliKode.Text := '';
+  edPembeliNama.Text := '';
 
   cxGridTablePembelianItem.DataController.RecordCount := 0;
   autocode;
@@ -151,18 +122,18 @@ end;
 
 procedure TfrmPembelian.btnhapusClick(Sender: TObject);
 var
-  lpembelian : TPembelian;
+  lPembelian: TPembelian;
 begin
-  lpembelian := TPembelian.Create;
-  try
-    lpembelian.LoadByID(FID);
-
-    if MessageDlg('Apakah ingin dihapus?',mtConfirmation,mbYesNo,0) = mrYes then
-    begin
-      if lpembelian.Hapus then
-        ShowMessage('Berhasil Hapus');
-        Baru.Click;
-
+  lPembelian := TPembelian.Create;
+  lPembelian.LoadByID(FID);
+  if Dialogs.MessageDlg('Hapus?',mtConfirmation,
+      [mbYes, mbNo], 0, mbYes) = mrYes then begin
+    if lPembelian.ID > 0 then begin
+      lPembelian.Hapus;
+      ShowMessage(lPembelian.noBukti + ' Berhasil dihapus');
+      Baru.Click;
+    end else begin
+      ShowMessage(lPembelian.noBukti + ' Gagal dihapus');
     end;
   finally
     lpembelian.Free;
@@ -180,19 +151,15 @@ begin
     Exit;
 
   lPembelian         := TPembelian.Create;
+  lPembelian.ID      := FID;
   lPembelian.noBukti := edNoBukti.Text;
   lPembelian.Pembeli := Pembeli;
   lPembelian.Tgl     := dtptanggal.Date;
-  lPembelian.ID      := FID;
-
-  // cxGrid: Writable field hanya KodeBarang & Qty, lainnya read-only
+  lPembelian.Pembeli.LoadbyKode(edPembeliKode.Text);
 
   for I := 0 to cxGridTablePembelianItem.DataController.RecordCount - 1 do begin
     lPembelianItem := TPembelianItem.Create;
-    lBarang        := TBarang.Create;
-    lBarang.LoadByID(i+1);
-
-    lPembelianItem.Barang := lBarang;
+    lPembelianItem.Barang.LoadbyKode(cxGridTablePembelianItem.DataController.Values[i, cxGridColKodeBarang.index]);
     lPembelianItem.harga  := cxGridTablePembelianItem.DataController.Values[i, cxGridColHarga.Index];
     lPembelianItem.Qty    := cxGridTablePembelianItem.DataController.Values[i, cxGridColQty.Index];
     lPembelianItem.Total  := cxGridTablePembelianItem.DataController.Values[i, cxGridColTotal.Index];
@@ -200,7 +167,10 @@ begin
     lPembelian.PembelianItems.Add(lPembelianItem);
 
   end;
-
+  if lPembelian.isKodesudahada(edNoBukti.Text, FID) then begin
+    ShowMessage('Kode ini ' + edNoBukti.Text +'sudah ada');
+    edNoBukti.Focused;
+  end else
   if lPembelian.Simpan then begin
       ShowMessage('Berhasil Simpan');
       ednobukti.Text := '';
@@ -211,8 +181,7 @@ begin
 
       autocode;
   end else begin
-//      ShowMessage('Gagal Simpan');
-      btnsimpan.Enabled:=False;
+      ShowMessage('Gagal Simpan');
   end;
 
 end;
@@ -225,23 +194,16 @@ var
   sKode   : string;
 begin
   iRecord := cxGridTablePembelianItem.DataController.FocusedRecordIndex;
-//  iColumn := cxGridColKodeBarang.Index;
+
 
   sKode   := DisplayValue;
   lBarang := TBarang.Create;
   try
     lBarang.LoadByKode(sKode);
-    cxGridTablePembelianItem.DataController.Values[iRecord, cxGridColNamaBarang.Index]
-      := lBarang.Nama;
-    cxGridTablePembelianItem.DataController.Values[iRecord, cxGridColQty.Index]
-      := 1;
-    cxGridTablePembelianItem.DataController.Values[iRecord, cxGridColHarga.Index]
-      := lBarang.Harga;
-    cxGridTablePembelianItem.DataController.Values[iRecord, cxGridColTotal.Index]
-      := lBarang.Harga;
-
-
-
+    cxGridTablePembelianItem.DataController.Values[iRecord, cxGridColNamaBarang.Index] := lBarang.Nama;
+    cxGridTablePembelianItem.DataController.Values[iRecord, cxGridColQty.Index]        := 1;
+    cxGridTablePembelianItem.DataController.Values[iRecord, cxGridColHarga.Index]      := lBarang.Harga;
+    cxGridTablePembelianItem.DataController.Values[iRecord, cxGridColTotal.Index]      := lBarang.Harga;
   finally
     lBarang.Free;
   end;
@@ -256,9 +218,11 @@ var
   iQty    : Integer;
   vHarga  : Variant;
 begin
-//   cxGridTablePembelianItem.Controller.EditingController
+  if (DisplayValue = '') or VarIsNull(DisplayValue) then Exit;
   iRecord := cxGridTablePembelianItem.DataController.FocusedRecordIndex;
   iQty    := StrToInt(DisplayValue);
+  if not (iQty >= 1) then ShowMessage('Hanya Bilangan Positif');
+
   vHarga  := cxGridTablePembelianItem.DataController.GetValue(iRecord, cxGridColHarga.Index);
 
   if VarIsNull(DisplayValue)then Exit;
@@ -316,31 +280,16 @@ begin
 
 end;
 
-procedure TfrmPembelian.edPembeliKodeKeyDown(Sender: TObject; var Key: Word;
-    Shift: TShiftState);
+procedure TfrmPembelian.edPembeliKodeKeyDown(Sender: TObject; var Key: Word; Shift:
+    TShiftState);
 begin
-
   if Key = VK_RETURN then begin
-     Pembeli.LoadbyKode(edPembeliKode.Text); //:= edPembeliKode.Text;
+     Pembeli.LoadbyKode(edPembeliKode.Text);
      edPembeliNama.Text := Pembeli.Nama;
-     cxgrd1.SetFocus;
-
-
-
-  end;
-//
-//  if Key = VK_RETURN then begin
-//     lpembelian.IsKodeBelumAda(edPembeliKode.Text);
-//     if MessageDlg('Kode Pembeli tidak ditemukan, apakah ingin mendaftar?', mtConfirmation, [mbYes, mbNo], 0) = mrYes then
-//     begin
-//       frmPembeli.Show;
-//     end;
-//
-//  end;
-
+  end
 end;
 
-procedure TfrmPembelian.FormShow(Sender: TObject);
+procedure TfrmPembelian.FormCreate(Sender: TObject);
 begin
   edPembeliKode.SetFocus;
 end;
