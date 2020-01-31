@@ -3,11 +3,14 @@ unit ufrmPembelian;
 interface
 
 uses
-  Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
-  Dialogs, ComCtrls, StdCtrls, uADStanIntf, uADStanOption, uADStanError,
-  uADGUIxIntf, uADPhysIntf, uADStanDef, uADStanPool, uADStanAsync,
-  uADPhysManager, DB, uADCompClient, Buttons, Grids, DBGrids, DBClient, ExtCtrls,
-  cxGraphics, cxControls, cxLookAndFeels, cxLookAndFeelPainters, cxStyles,
+  Buttons, ClassPembeli, Classes, ComCtrls, Controls, DB, DBClient, DBGrids,
+  Dialogs, ExtCtrls, Forms, Graphics, Grids, Messages, StdCtrls, SysUtils,
+  Variants, StrUtils, classbarang, cxClasses, cxControls, cxCurrencyEdit, cxCustomData,
+  cxData, cxDataStorage, cxDropDownEdit, cxEdit, cxFilter, cxGraphics, cxGrid,
+  cxGridCustomTableView, cxGridCustomView, cxGridLevel, cxGridTableView, cxLabel,
+  cxLookAndFeelPainters, cxLookAndFeels, cxMaskEdit, cxStyles, cxTextEdit,
+  uADCompClient, uADGUIxIntf, uADPhysIntf, uADPhysManager, uADStanAsync, uADStanDef,
+  uADStanError, uADStanIntf, uADStanOption, uADStanPool, uConnection, Windows,
   dxSkinsCore, dxSkinBlack, dxSkinBlue, dxSkinCaramel, dxSkinCoffee,
   dxSkinDarkRoom, dxSkinDarkSide, dxSkinFoggy, dxSkinGlassOceans,
   dxSkiniMaginary, dxSkinLilian, dxSkinLiquidSky, dxSkinLondonLiquidSky,
@@ -16,50 +19,46 @@ uses
   dxSkinOffice2010Black, dxSkinOffice2010Blue, dxSkinOffice2010Silver,
   dxSkinPumpkin, dxSkinSeven, dxSkinSharp, dxSkinSilver, dxSkinSpringTime,
   dxSkinStardust, dxSkinSummer2008, dxSkinsDefaultPainters, dxSkinValentine,
-  dxSkinXmas2008Blue, dxSkinscxPCPainter, cxCustomData, cxFilter, cxData,
-  cxDataStorage, cxEdit, cxGridCustomTableView, cxGridTableView,
-  cxGridCustomView, cxClasses, cxGridLevel, cxGrid, cxCurrencyEdit,
-  ClassPembeli, classbarang, cxTextEdit, cxDropDownEdit;
+  dxSkinXmas2008Blue, dxSkinscxPCPainter;
 
 type
   TfrmPembelian = class(TForm)
-    Baru: TBitBtn;
-    btnhapus: TButton;
-    btnsimpan: TButton;
-    con1: TADConnection;
-    cxgrd1: TcxGrid;
-    cxgrdlvlGrid1Level1: TcxGridLevel;
-    cxGridColHarga: TcxGridColumn;
-    cxGridColID: TcxGridColumn;
-    cxGridColKodeBarang: TcxGridColumn;
-    cxGridColNamaBarang: TcxGridColumn;
-    cxGridColQty: TcxGridColumn;
-    cxGridColTotal: TcxGridColumn;
-    cxGridTablePembelianItem: TcxGridTableView;
-    DSbelian: TClientDataSet;
-    DSpembelian: TDataSource;
-    dtptanggal: TDateTimePicker;
-    edNoBukti: TEdit;
-    edPembeliKode: TEdit;
-    edPembeliNama: TEdit;
-    lblNoPembelian: TLabel;
-    lblPembeli: TLabel;
-    lblTgl: TLabel;
-    pnlAtas: TPanel;
-    pnlButon: TPanel;
-    procedure FormCreate(Sender: TObject);
-    procedure autocode;
-    procedure BaruClick(Sender: TObject);
-    procedure btnhapusClick(Sender: TObject);
-    procedure btnsimpanClick(Sender: TObject);
-    procedure cxGridColKodeBarangPropertiesValidate(Sender: TObject;
-      var DisplayValue: Variant; var ErrorText: TCaption; var Error: Boolean);
-    procedure cxGridColQtyPropertiesValidate(Sender: TObject;
-      var DisplayValue: Variant; var ErrorText: TCaption; var Error: Boolean);
-    procedure edNoBuktiKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
-    procedure edPembeliKodeKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
-    procedure FormShow(Sender: TObject);
-
+  Baru: TBitBtn;
+  btnhapus: TButton;
+  btnsimpan: TButton;
+  con1: TADConnection;
+  cxgrd1: TcxGrid;
+  cxgrdlvlGrid1Level1: TcxGridLevel;
+  cxGridColHarga: TcxGridColumn;
+  cxGridColID: TcxGridColumn;
+  cxGridColKodeBarang: TcxGridColumn;
+  cxGridColNamaBarang: TcxGridColumn;
+  cxGridColQty: TcxGridColumn;
+  cxGridColTotal: TcxGridColumn;
+  cxGridTablePembelianItem: TcxGridTableView;
+  DSbelian: TClientDataSet;
+  DSpembelian: TDataSource;
+  dtptanggal: TDateTimePicker;
+  edNoBukti: TEdit;
+  edPembeliKode: TEdit;
+  edPembeliNama: TEdit;
+  lblNoPembelian: TLabel;
+  lblPembeli: TLabel;
+  lblTgl: TLabel;
+  pnlAtas: TPanel;
+  pnlButon: TPanel;
+  procedure autocode;
+  procedure BaruClick(Sender: TObject);
+  procedure btnhapusClick(Sender: TObject);
+  procedure btnsimpanClick(Sender: TObject);
+  procedure cxGridColKodeBarangPropertiesValidate(Sender: TObject;
+    var DisplayValue: Variant; var ErrorText: TCaption; var Error: Boolean);
+  procedure cxGridColQtyPropertiesValidate(Sender: TObject;
+    var DisplayValue: Variant; var ErrorText: TCaption; var Error: Boolean);
+  procedure edNoBuktiKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
+  procedure edPembeliKodeKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
+  procedure FormCreate(Sender: TObject);
+  //procedure FormShow(Sender: TObject);
   private
     FID: Integer;
     FPembeli: Tpembeli;
@@ -76,33 +75,31 @@ uses
   ClassPembelian0;
 {$R *.dfm}
 
-procedure TfrmPembelian.FormCreate(Sender: TObject);
-begin
-    if ednopembelian.Text = '' then autocode;
-end;
-
 procedure TfrmPembelian.autocode;
 var
   hasil, nilai, total : String ;
   i : Integer;
   lcds : TClientDataSet;
-  sPrefix: string;
-  sSQL : string;
+  sNoBukti, sS, sSQL : String;
 begin
   nilai := '0000';
-  sPrefix := 'P/' + FormatDateTime('YYYY/', dtptanggal.DateTime);
+  sS := FormatDateTime('P/yy/', dtptanggal.date);
   sSQL := ' select max(no_bukti) as max_no from TPembelian ' +
-          ' where no_bukti like ' + QuotedStr(sPrefix + '%'); //memanggil
+          ' where no_bukti like ' + QuotedStr(sS+'%');
+
   lcds := TConnection.OpenQuery(sSQL);
     try
       while not lcds.Eof do begin
-      nopembeli := lcds.FieldByName('max_no').AsString;
-      ednopembelian.Text := nopembeli;
+      sNoBukti := lcds.FieldByName('max_no').AsString;
+      if sNobukti = '' then  Exit;
+      edNoBukti.Text := sNoBukti;
+
       lcds.Next;
-      hasil := RightStr(nopembeli,4);
+      hasil := RightStr(sNoBukti,4);
       i     := StrToInt(hasil) + 1;
       total := nilai + IntToStr(i);
-      ednopembelian.Text := sPrefix + RightStr(total,4);
+
+      ednoBukti.Text := sS + RightStr(total,4);
       end;
     finally
       lcds.Free;
@@ -226,7 +223,6 @@ begin
          FID := lPembelian.ID;
          edNoBukti.Text := lPembelian.noBukti;
          dtptanggal.date := lPembelian.Tgl;
-
          Pembeli.LoadbyKode(lPembelian.Pembeli.Kode);
          edPembeliKode.Text := lPembelian.Pembeli.Kode;
          edPembeliNama.Text := lPembelian.Pembeli.Nama;
@@ -261,6 +257,11 @@ begin
      Pembeli.LoadbyKode(edPembeliKode.Text);
      edPembeliNama.Text := Pembeli.Nama;
   end
+end;
+
+procedure TfrmPembelian.FormCreate(Sender: TObject);
+begin
+    if edNoBukti.Text = '' then autocode;
 end;
 
 function TfrmPembelian.GetPembeli: Tpembeli;

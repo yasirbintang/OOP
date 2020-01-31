@@ -1,9 +1,13 @@
 object frmPembelian: TfrmPembelian
   Left = 0
   Top = 0
+  Margins.Left = 5
+  Margins.Top = 5
+  Margins.Right = 5
+  Margins.Bottom = 5
   Caption = 'Form Pembelian'
-  ClientHeight = 318
-  ClientWidth = 454
+  ClientHeight = 320
+  ClientWidth = 434
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -12,20 +16,19 @@ object frmPembelian: TfrmPembelian
   Font.Style = []
   OldCreateOrder = False
   OnCreate = FormCreate
-  OnShow = FormShow
-  PixelsPerInch = 96
+  PixelsPerInch = 80
   TextHeight = 13
   object pnlAtas: TPanel
     Left = 0
     Top = 0
-    Width = 454
-    Height = 121
+    Width = 434
+    Height = 120
     Align = alTop
     ParentBackground = False
     TabOrder = 0
     DesignSize = (
-      454
-      121)
+      434
+      120)
     object lblNoPembelian: TLabel
       Left = 16
       Top = 19
@@ -50,65 +53,72 @@ object frmPembelian: TfrmPembelian
     object edNoBukti: TEdit
       Left = 94
       Top = 14
-      Width = 75
+      Width = 55
       Height = 21
       Anchors = [akLeft, akTop, akRight]
       TabOrder = 0
       OnKeyDown = edNoBuktiKeyDown
+      ExplicitWidth = 75
     end
     object edPembeliKode: TEdit
       Left = 94
       Top = 66
-      Width = 75
+      Width = 55
       Height = 21
       Anchors = [akLeft, akTop, akRight]
       TabOrder = 2
       OnKeyDown = edPembeliKodeKeyDown
+      ExplicitWidth = 75
     end
     object dtptanggal: TDateTimePicker
       Left = 94
       Top = 41
-      Width = 162
+      Width = 142
       Height = 21
       Anchors = [akLeft, akTop, akRight]
-      Date = 36526.379476782410000000
-      Time = 36526.379476782410000000
+      Date = 43831.379476782410000000
+      Time = 43831.379476782410000000
       DateFormat = dfLong
       TabOrder = 1
+      ExplicitWidth = 162
     end
     object edPembeliNama: TEdit
       Left = 94
       Top = 91
-      Width = 171
+      Width = 151
       Height = 21
       Anchors = [akLeft, akTop, akRight]
       Color = clSilver
       ReadOnly = True
       TabOrder = 3
+      ExplicitWidth = 171
     end
   end
   object pnlButon: TPanel
     Left = 0
-    Top = 277
-    Width = 454
+    Top = 279
+    Width = 434
     Height = 41
     Align = alBottom
     TabOrder = 1
+    ExplicitTop = 277
+    ExplicitWidth = 454
     DesignSize = (
-      454
+      434
       41)
     object btnsimpan: TButton
       Left = 181
       Top = 8
-      Width = 75
+      Width = 55
       Height = 25
       Anchors = [akLeft, akTop, akRight]
       Caption = 'Simpan'
       TabOrder = 0
       OnClick = btnsimpanClick
+      ExplicitWidth = 75
     end
     object btnhapus: TButton
-      Left = 275
+      Left = 255
       Top = 8
       Width = 75
       Height = 25
@@ -116,9 +126,10 @@ object frmPembelian: TfrmPembelian
       Caption = 'Hapus'
       TabOrder = 1
       OnClick = btnhapusClick
+      ExplicitLeft = 275
     end
     object Baru: TBitBtn
-      Left = 371
+      Left = 351
       Top = 8
       Width = 75
       Height = 25
@@ -128,16 +139,20 @@ object frmPembelian: TfrmPembelian
       ParentDoubleBuffered = False
       TabOrder = 2
       OnClick = BaruClick
+      ExplicitLeft = 371
     end
   end
   object cxgrd1: TcxGrid
     Left = 0
-    Top = 121
-    Width = 454
-    Height = 156
+    Top = 120
+    Width = 434
+    Height = 159
     Align = alClient
     TabOrder = 2
-    ExplicitTop = 123
+    LookAndFeel.SkinName = 'LondonLiquidSky'
+    ExplicitTop = 121
+    ExplicitWidth = 454
+    ExplicitHeight = 156
     object cxGridTablePembelianItem: TcxGridTableView
       DataController.Summary.DefaultGroupSummaryItems = <>
       DataController.Summary.FooterSummaryItems = <>

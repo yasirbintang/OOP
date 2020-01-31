@@ -75,10 +75,10 @@ var
   sSql: string;
 begin
   Result := False;
-  sSql := 'delete tpembelian where id = ' + IntToStr(FID) + ';';
-  sSQLYasir := 'delete tpembelianitem where header_id = ' + IntToStr(FID)+ ';';
+  sSql := 'delete tpembelian where id = '            + IntToStr(FID) +
+          'delete tpembelianitem where header_id = ' + IntToStr(FID)+ ';';
 
-  sSql := sSql + sSQLYasir;
+  sSql := sSql;
 
   FDConnection.StartTransaction;
   try
