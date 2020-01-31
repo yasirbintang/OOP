@@ -19,7 +19,8 @@ uses
   dxSkinXmas2008Blue, dxSkinscxPCPainter, cxCustomData, cxFilter, cxData,
   cxDataStorage, cxEdit, cxGridCustomTableView, cxGridTableView,
   cxGridCustomView, cxClasses, cxGridLevel, cxGrid, cxCurrencyEdit,
-  ClassPembeli, classbarang, cxTextEdit, cxDropDownEdit;
+  ClassPembeli, classbarang, cxTextEdit, cxDropDownEdit, cxLabel,
+  cxDBLookupComboBox, cxMaskEdit;
 
 type
   TfrmPembelian = class(TForm)
@@ -36,12 +37,12 @@ type
     cxGridColQty: TcxGridColumn;
     cxGridColTotal: TcxGridColumn;
     cxGridTablePembelianItem: TcxGridTableView;
-    edNoBukti: TEdit;
-    edPembeliKode: TEdit;
-    edPembeliNama: TEdit;
     DSbelian: TClientDataSet;
     DSpembelian: TDataSource;
     dtptanggal: TDateTimePicker;
+    edNoBukti: TEdit;
+    edPembeliKode: TEdit;
+    edPembeliNama: TEdit;
     lblNoPembelian: TLabel;
     lblPembeli: TLabel;
     lblTgl: TLabel;
@@ -60,7 +61,6 @@ type
     FID: Integer;
     FPembeli: Tpembeli;
     function GetPembeli: Tpembeli;
-
     property Pembeli: Tpembeli read GetPembeli write FPembeli;
   end;
 
@@ -125,7 +125,10 @@ begin
     lPembelian.PembelianItems.Add(lPembelianItem);
 
   end;
-
+  if lPembelian.isKodesudahada(edNoBukti.Text, FID) then begin
+    ShowMessage('Kode ini ' + edNoBukti.Text +'sudah ada');
+    edNoBukti.Focused;
+  end else
   if lPembelian.Simpan then begin
       ShowMessage('Berhasil Simpan');
   end else begin

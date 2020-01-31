@@ -18,6 +18,7 @@ type
     function GetPembelianItems: TObjectList<TPembelianItem>;
   public
     function Hapus: Boolean;
+    function isKodesudahada(skode : String; aID : Integer): boolean;
     procedure LoadByID(AID : Integer);
     procedure LoadbyNoBukti(AKode : String);
     function Simpan: Boolean;
@@ -31,20 +32,20 @@ type
 
   TPembelianItem = class(TObject)
   private
-    FitemID: Integer;
     FBarang: TBarang;
     Fharga: double;
     FHeader_ID: Integer;
+    FitemID: Integer;
     FQty: Integer;
     FTotal: double;
     function GetBarang: TBarang;
   public
     destructor Destroy; override;
     function GenerateSQL(AHeader_ID : Integer): string;
-    property itemID: Integer read FitemID write FitemID;
     property Barang: TBarang read GetBarang write FBarang;
     property harga: double read Fharga write Fharga;
     property Header_ID: Integer read FHeader_ID write FHeader_ID;
+    property itemID: Integer read FitemID write FitemID;
     property Qty: Integer read FQty write FQty;
     property Total: double read FTotal write FTotal;
   end;
@@ -86,18 +87,33 @@ begin
   end;
 end;
 
+function TPembelian.isKodesudahada(skode : String; aID : Integer): boolean;
+var
+  lcds: TClientDataSet;
+  sSQL: string;
+begin
+  Result := False;
+  sSQL := 'select id from tpembelian' +
+    ' where no_bukti = ' + QuotedStr(sKode) +
+    ' and id <> '    + IntToStr(aID) + ';';
+
+  lcds := TConnection.OpenQuery(sSQL);
+  try
+    if lcds.IsEmpty then Exit;
+  finally
+    lcds.Free;
+  end;
+  Result := True;
+end;
+
 procedure TPembelian.LoadByID(AID : Integer);
 var
   lcds: TClientDataSet;
   lPembelianItem: TPembelianItem;
   sSQL: string;
 begin
-    //PembelianItems.Create;
-//    TPembelianItem.Create;
-    //TBarang.Create;
-
    sSQL := ' select * from tpembelian ' +
-          ' where Id = ' + IntToStr(AID);
+          ' where Id = ' + IntToStr(AID) + ';';
 
   lcds := TConnection.OpenQuery(sSQL);
   try
@@ -115,7 +131,8 @@ begin
   end;
 
   sSQL := 'select * from tpembelianitem' +
-          ' where header_id = ' + IntToStr(Self.ID);
+          ' where header_id = ' +
+          IntToStr(Self.ID) + ';';
   lcds := TConnection.OpenQuery(sSQL);
   try
     Self.PembelianItems.Clear;
@@ -143,9 +160,7 @@ var
   lcds: TClientDataSet;
   sSQL: string;
 begin
-    //PembelianItems.Create;
-    TPembelianItem.Create;
-    //TBarang.Create;
+   TPembelianItem.Create;
 
    sSQL := ' select ID from tpembelian ' +
           ' where no_bukti = ' + QuotedStr(AKode);

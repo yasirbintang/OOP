@@ -19,6 +19,7 @@ object frmPembelian: TfrmPembelian
     Width = 454
     Height = 121
     Align = alTop
+    ParentBackground = False
     TabOrder = 0
     DesignSize = (
       454
@@ -60,6 +61,7 @@ object frmPembelian: TfrmPembelian
       Height = 21
       Anchors = [akLeft, akTop, akRight]
       TabOrder = 2
+      OnKeyDown = edPembeliKodeKeyDown
     end
     object dtptanggal: TDateTimePicker
       Left = 94
@@ -78,6 +80,7 @@ object frmPembelian: TfrmPembelian
       Width = 171
       Height = 21
       Anchors = [akLeft, akTop, akRight]
+      Color = clSilver
       ReadOnly = True
       TabOrder = 3
     end
@@ -147,26 +150,21 @@ object frmPembelian: TfrmPembelian
         PropertiesClassName = 'TcxTextEditProperties'
         Properties.OnValidate = cxGridColKodeBarangPropertiesValidate
         HeaderAlignmentHorz = taCenter
+        MinWidth = 10
       end
       object cxGridColNamaBarang: TcxGridColumn
         Caption = 'Nama'
+        PropertiesClassName = 'TcxLabelProperties'
         HeaderAlignmentHorz = taCenter
         Options.Editing = False
       end
       object cxGridColQty: TcxGridColumn
         Caption = 'Qty'
-        PropertiesClassName = 'TcxComboBoxProperties'
-        Properties.Items.Strings = (
-          '1'
-          '2'
-          '3'
-          '4'
-          '5'
-          '6'
-          '7'
-          '8')
-        Properties.OnValidate = cxGridColQtyPropertiesValidate
+        PropertiesClassName = 'TcxMaskEditProperties'
+        Properties.MaskKind = emkRegExpr
+        Properties.EditMask = '[1-9]\d*$'
         HeaderAlignmentHorz = taCenter
+        MinWidth = 5
       end
       object cxGridColHarga: TcxGridColumn
         Caption = 'Harga'
@@ -174,6 +172,7 @@ object frmPembelian: TfrmPembelian
         Properties.DisplayFormat = ',0.;-,0.'
         Properties.ReadOnly = True
         HeaderAlignmentHorz = taCenter
+        MinWidth = 15
         Options.Editing = False
       end
       object cxGridColTotal: TcxGridColumn
@@ -182,6 +181,7 @@ object frmPembelian: TfrmPembelian
         Properties.DisplayFormat = ',0.;-,0.'
         Properties.ReadOnly = True
         HeaderAlignmentHorz = taCenter
+        MinWidth = 15
         Options.Editing = False
       end
     end
