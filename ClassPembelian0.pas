@@ -75,7 +75,11 @@ var
   sSql: string;
 begin
   Result := False;
-  sSql := 'hapus tpembelian where id = ' + IntToStr(FID);
+  sSql := 'delete tpembelian where id = ' + IntToStr(FID) + ';';
+  sSQLYasir := 'delete tpembelianitem where header_id = ' + IntToStr(FID)+ ';';
+
+  sSql := sSql + sSQLYasir;
+
   FDConnection.StartTransaction;
   try
     if TConnection.ExecuteSQL(sSQL) then begin
@@ -131,8 +135,7 @@ begin
   end;
 
   sSQL := 'select * from tpembelianitem' +
-          ' where header_id = ' +
-          IntToStr(Self.ID) + ';';
+          ' where header_id = ' + IntToStr(Self.ID);
   lcds := TConnection.OpenQuery(sSQL);
   try
     Self.PembelianItems.Clear;
@@ -160,8 +163,6 @@ var
   lcds: TClientDataSet;
   sSQL: string;
 begin
-   TPembelianItem.Create;
-
    sSQL := ' select ID from tpembelian ' +
           ' where no_bukti = ' + QuotedStr(AKode);
 
@@ -206,8 +207,8 @@ begin
   end else begin
     sSQL := 'update table tpembelian set '                         +
       'no_bukti = ' + QuotedStr(nobukti)                           +
-      'tanggal = '  + QuotedStr(FormatDateTime('yyyy/mm/dd', tgl)) +
-      'pembeli = '  + IntToStr(Pembeli.ID)                         +
+      ',tanggal = '  + QuotedStr(FormatDateTime('yyyy/mm/dd', tgl)) +
+      ',pembeli = '  + IntToStr(Pembeli.ID)                         +
       'where id = ' + IntToStr(FID) + ';';
   end;
 

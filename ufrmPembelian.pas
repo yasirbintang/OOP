@@ -19,8 +19,7 @@ uses
   dxSkinXmas2008Blue, dxSkinscxPCPainter, cxCustomData, cxFilter, cxData,
   cxDataStorage, cxEdit, cxGridCustomTableView, cxGridTableView,
   cxGridCustomView, cxClasses, cxGridLevel, cxGrid, cxCurrencyEdit,
-  ClassPembeli, classbarang, cxTextEdit, cxDropDownEdit, cxLabel,
-  cxDBLookupComboBox, cxMaskEdit;
+  ClassPembeli, classbarang, cxTextEdit, cxDropDownEdit;
 
 type
   TfrmPembelian = class(TForm)
@@ -48,15 +47,19 @@ type
     lblTgl: TLabel;
     pnlAtas: TPanel;
     pnlButon: TPanel;
+    procedure FormCreate(Sender: TObject);
+    procedure autocode;
     procedure BaruClick(Sender: TObject);
     procedure btnhapusClick(Sender: TObject);
     procedure btnsimpanClick(Sender: TObject);
-    procedure cxGridColKodeBarangPropertiesValidate(Sender: TObject; var
-        DisplayValue: Variant; var ErrorText: TCaption; var Error: Boolean);
-    procedure cxGridColQtyPropertiesValidate(Sender: TObject; var DisplayValue:
-        Variant; var ErrorText: TCaption; var Error: Boolean);
+    procedure cxGridColKodeBarangPropertiesValidate(Sender: TObject;
+      var DisplayValue: Variant; var ErrorText: TCaption; var Error: Boolean);
+    procedure cxGridColQtyPropertiesValidate(Sender: TObject;
+      var DisplayValue: Variant; var ErrorText: TCaption; var Error: Boolean);
     procedure edNoBuktiKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
     procedure edPembeliKodeKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
+    procedure FormShow(Sender: TObject);
+
   private
     FID: Integer;
     FPembeli: Tpembeli;
@@ -73,6 +76,39 @@ uses
   ClassPembelian0;
 {$R *.dfm}
 
+procedure TfrmPembelian.FormCreate(Sender: TObject);
+begin
+    if ednopembelian.Text = '' then autocode;
+end;
+
+procedure TfrmPembelian.autocode;
+var
+  hasil, nilai, total : String ;
+  i : Integer;
+  lcds : TClientDataSet;
+  sPrefix: string;
+  sSQL : string;
+begin
+  nilai := '0000';
+  sPrefix := 'P/' + FormatDateTime('YYYY/', dtptanggal.DateTime);
+  sSQL := ' select max(no_bukti) as max_no from TPembelian ' +
+          ' where no_bukti like ' + QuotedStr(sPrefix + '%'); //memanggil
+  lcds := TConnection.OpenQuery(sSQL);
+    try
+      while not lcds.Eof do begin
+      nopembeli := lcds.FieldByName('max_no').AsString;
+      ednopembelian.Text := nopembeli;
+      lcds.Next;
+      hasil := RightStr(nopembeli,4);
+      i     := StrToInt(hasil) + 1;
+      total := nilai + IntToStr(i);
+      ednopembelian.Text := sPrefix + RightStr(total,4);
+      end;
+    finally
+      lcds.Free;
+    end;
+  end;
+
 procedure TfrmPembelian.BaruClick(Sender: TObject);
 begin
   FID := 0;
@@ -87,15 +123,15 @@ end;
 procedure TfrmPembelian.btnhapusClick(Sender: TObject);
 var
   lPembelian: TPembelian;
-
 begin
   lPembelian := TPembelian.Create;
   lPembelian.LoadByID(FID);
   if Dialogs.MessageDlg('Hapus?',mtConfirmation,
       [mbYes, mbNo], 0, mbYes) = mrYes then begin
-    lPembelian.Hapus;
     if lPembelian.ID > 0 then begin
+      lPembelian.Hapus;
       ShowMessage(lPembelian.noBukti + ' Berhasil dihapus');
+      Baru.Click;
     end else begin
       ShowMessage(lPembelian.noBukti + ' Gagal dihapus');
     end;
@@ -111,9 +147,8 @@ begin
   lPembelian         := TPembelian.Create;
   lPembelian.ID      := FID;
   lPembelian.noBukti := edNoBukti.Text;
-  lPembelian.Pembeli.LoadbyKode(edPembeliKode.Text);
-
   lPembelian.Tgl     := dtptanggal.Date;
+  lPembelian.Pembeli.LoadbyKode(edPembeliKode.Text);
 
   for I := 0 to cxGridTablePembelianItem.DataController.RecordCount - 1 do begin
     lPembelianItem := TPembelianItem.Create;
@@ -123,7 +158,6 @@ begin
     lPembelianItem.Total  := cxGridTablePembelianItem.DataController.Values[i, cxGridColTotal.Index];
 
     lPembelian.PembelianItems.Add(lPembelianItem);
-
   end;
   if lPembelian.isKodesudahada(edNoBukti.Text, FID) then begin
     ShowMessage('Kode ini ' + edNoBukti.Text +'sudah ada');
@@ -133,7 +167,6 @@ begin
       ShowMessage('Berhasil Simpan');
   end else begin
       ShowMessage('Gagal Simpan');
-//      btnsimpan.Enabled:=False;
   end;
 end;
 
@@ -183,7 +216,6 @@ procedure TfrmPembelian.edNoBuktiKeyDown(Sender: TObject; var Key: Word; Shift:
     TShiftState);
 var
   lPembelian: Tpembelian;
-  //lpembelianitem: TPembelianItem;
   I, II: integer;
 begin
   if Key = VK_RETURN then begin
@@ -235,9 +267,7 @@ function TfrmPembelian.GetPembeli: Tpembeli;
 begin
   if FPembeli = nil then
     FPembeli := TPembeli.Create;
-
    Result := FPembeli;
 end;
 
 end.
-

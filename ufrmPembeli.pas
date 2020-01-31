@@ -104,7 +104,7 @@ var
   lPembeli: TPembeli;
   s: string;
 begin
-  s := DBGridPembeli.Fields[1].Value;
+  s := DBGridPembeli.DataSource.DataSet.FieldByName('kode').AsString;
 
   lPembeli := TPembeli.Create;
   lPembeli.LoadbyKode(s);
