@@ -3,56 +3,34 @@ unit ufrmPembeli;
 interface
 
 uses
-  Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
-  Dialogs, Menus, StdCtrls, ClassPembeli, uADStanIntf, uADStanOption,
-  uADStanError, uADGUIxIntf, uADPhysIntf, uADStanDef, uADStanPool, uADStanAsync,
-  uADPhysManager, uADCompClient, DB, uConnection, uADPhysODBCBase, uADPhysMSSQL,
-  DBClient, Provider, uADStanParam, uADDatSManager, uADDAptIntf, uADDAptManager,
-  uADCompDataSet, ExtCtrls, Grids, DBGrids,
-  cxGrid, cxGridDBTableView, cxGridLevel, cxGraphics, cxControls,
-  cxLookAndFeels, cxLookAndFeelPainters, cxStyles, dxSkinsCore, dxSkinBlack,
-  dxSkinBlue, dxSkinCaramel, dxSkinCoffee, dxSkinDarkRoom, dxSkinDarkSide,
-  dxSkinFoggy, dxSkinGlassOceans, dxSkiniMaginary, dxSkinLilian,
-  dxSkinLiquidSky, dxSkinLondonLiquidSky, dxSkinMcSkin, dxSkinMoneyTwins,
-  dxSkinOffice2007Black, dxSkinOffice2007Blue, dxSkinOffice2007Green,
-  dxSkinOffice2007Pink, dxSkinOffice2007Silver, dxSkinOffice2010Black,
-  dxSkinOffice2010Blue, dxSkinOffice2010Silver, dxSkinPumpkin, dxSkinSeven,
-  dxSkinSharp, dxSkinSilver, dxSkinSpringTime, dxSkinStardust, dxSkinSummer2008,
-  dxSkinsDefaultPainters, dxSkinValentine, dxSkinXmas2008Blue,
-  dxSkinscxPCPainter, cxCustomData, cxFilter, cxData, cxDataStorage, cxEdit,
-  cxDBData, cxGridCustomTableView, cxGridTableView, cxClasses, cxGridCustomView;
+  ClassPembeli, Classes, Controls, DB, DBClient, DBGrids, Dialogs, ExtCtrls, Forms,
+  Graphics, Grids, Menus, Messages, Provider, StdCtrls, SysUtils, Variants, uADCompClient,
+  uADCompDataSet, uADDAptIntf, uADDAptManager, uADDatSManager, uADGUIxIntf, uADPhysIntf,
+  uADPhysMSSQL, uADPhysManager, uADPhysODBCBase, uADStanAsync, uADStanDef, uADStanError,
+  uADStanIntf, uADStanOption, uADStanParam, uADStanPool, uConnection, Windows;
 
 type
   TfrmPembeli = class(TForm)
-    ADPhysMSSQLDriverLink1: TADPhysMSSQLDriverLink;
     ADConnection1: TADConnection;
-    Panel1: TPanel;
-    lblKode: TLabel;
-    edKode: TEdit;
-    lblNama: TLabel;
-    edNama: TEdit;
-    lblAlamat: TLabel;
-    memAlamat: TMemo;
-    btnLihat: TButton;
-    btnSimpan: TButton;
+    ADPhysMSSQLDriverLink1: TADPhysMSSQLDriverLink;
     btnBaru: TButton;
-    btnCancel: TButton;
     btnHapus: TButton;
+    btnSimpan: TButton;
     DBGridPembeli: TDBGrid;
     DSPembeli: TDataSource;
+    edKode: TEdit;
+    edNama: TEdit;
+    lblAlamat: TLabel;
     lblInputKodeWarning: TLabel;
     lblInputNamaWarning: TLabel;
-    cxGTV: TcxGridDBTableView;
-    cxGLv: TcxGridLevel;
-    cxg1: TcxGrid;
-    cxGTVColKode: TcxGridDBColumn;
-    cxGTVColNama: TcxGridDBColumn;
-    cxGTVColAlamat: TcxGridDBColumn;
-    procedure btnSimpanClick(Sender: TObject);
-    procedure btnCancelClick(Sender: TObject);
-    procedure btnLihatClick(Sender: TObject);
+    lblKode: TLabel;
+    lblNama: TLabel;
+    memAlamat: TMemo;
+    pnlAtas: TPanel;
     procedure btnBaruClick(Sender: TObject);
     procedure btnHapusClick(Sender: TObject);
+    procedure btnSimpanClick(Sender: TObject);
+    procedure DBGridPembeliCellClick(Column: TColumn);
     procedure edKodeKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
     procedure edNamaKeyPress(Sender: TObject; var Key: Char);
     procedure FormShow(Sender: TObject);
@@ -60,9 +38,6 @@ type
     FID: Integer;
     function IsDataValid: Boolean;
     procedure LoadDataPembeli;
-
-  public
-
   end;
 
 var
@@ -71,12 +46,35 @@ implementation
 
 {$R *.dfm}
 
+// Tombol Baru diklik
+procedure TfrmPembeli.btnBaruClick(Sender: TObject);
+begin
+  FID            := 0;
+  edKode.Text    := '';
+  edNama.Text    := '';
+  memAlamat.Text := '';
+end;
+
+procedure TfrmPembeli.btnHapusClick(Sender: TObject);
+var
+  lPembeli: TPembeli;
+begin
+  lPembeli := TPembeli.Create;
+  lPembeli.LoadByID(FID);
+  if MessageDlg('Hapus?',mtConfirmation,mbYesNo,0) = mrYes then
+    lPembeli.Hapus;
+    LoadDataPembeli;
+    if lPembeli.ID > 0 then begin
+      ShowMessage(lPembeli.Nama + ' Berhasil dihapus');
+    end else
+      ShowMessage(lPembeli.Nama + ' Gagal dihapus');
+end;
+
 procedure TfrmPembeli.btnSimpanClick(Sender: TObject);
 var
   lPembeli: TPembeli;
 begin
-  if not IsDataValid then
-    Exit;
+  if not IsDataValid then Exit;
 
   lPembeli := TPembeli.Create;
   try
@@ -101,57 +99,20 @@ begin
 
 end;
 
-procedure TfrmPembeli.btnCancelClick(Sender: TObject);
-begin
-  Self.Close;
-end;
-
-procedure TfrmPembeli.btnLihatClick(Sender: TObject);
+procedure TfrmPembeli.DBGridPembeliCellClick(Column: TColumn);
 var
   lPembeli: TPembeli;
-  sID: string;
+  s: string;
 begin
-  sID := InputBox('ID', 'ID', '0');
+  s := DBGridPembeli.Fields[1].Value;
 
   lPembeli := TPembeli.Create;
-  try
-    lPembeli.LoadByID(StrToInt(sID));
+  lPembeli.LoadbyKode(s);
 
-    if lPembeli.ID > 0 then begin
-      FID            := lPembeli.ID;
-      edKode.Text    := lPembeli.Kode;
-      edNama.Text    := lPembeli.Nama;
-      memAlamat.Text := lPembeli.Alamat;
-    end;
-  finally
-    lPembeli.Free;
-  end;
-
-end;
-// Tombol Baru diklik
-procedure TfrmPembeli.btnBaruClick(Sender: TObject);
-begin
-  FID            := 0;
-  edKode.Text    := '';
-  edNama.Text    := '';
-  memAlamat.Text := '';
-end;
-
-procedure TfrmPembeli.btnHapusClick(Sender: TObject);
-var
-  lPembeli: TPembeli;
-begin
-  lPembeli := TPembeli.Create;
-  lPembeli.LoadByID(FID);
-  if Dialogs.MessageDlg('Hapus?',mtConfirmation,
-      [mbYes, mbNo], 0, mbYes) = mrYes then begin
-    lPembeli.Hapus;
-    LoadDataPembeli;
-    if lPembeli.ID > 0 then begin
-      ShowMessage(lPembeli.Nama + ' Berhasil dihapus');
-    end else
-      ShowMessage(lPembeli.Nama + ' Gagal dihapus');
-  end;
+  FID := lpembeli.ID;
+  edKode.Text := lPembeli.Kode;
+  edNama.Text := lPembeli.Nama;
+  memAlamat.Text := lPembeli.Alamat;
 end;
 
 procedure TfrmPembeli.edKodeKeyDown(Sender: TObject; var Key: Word; Shift:
@@ -160,16 +121,12 @@ var
   lPembeli: TPembeli;
 begin
   if Key = VK_RETURN then begin
-    try
     lPembeli := TPembeli.Create;
     lPembeli.LoadbyKode(edKode.Text);
 
     FID            := lPembeli.ID;
     edNama.Text    := lPembeli.Nama;
     memAlamat.Text := lPembeli.Alamat;
-    finally
-      lPembeli.Free;
-    end;
   end;
 end;
 
@@ -182,6 +139,7 @@ begin
     lblInputNamaWarning.Visible := False;
   end;
 end;
+
 procedure TfrmPembeli.FormShow(Sender: TObject);
 begin
   LoadDataPembeli;
@@ -205,7 +163,8 @@ begin
     str := str + 'Alamat belum diisi.';
     memAlamat.SetFocus;
   end;
-  str := StringReplace(StringReplace(str, '', ' ', [rfReplaceAll]), #13, ' ', [rfReplaceAll]);
+  str := StringReplace(StringReplace(str, '', ' ',
+    [rfReplaceAll]), #13, ' ', [rfReplaceAll]);
 
   if str <> '' then begin
     showMessage(str);
@@ -221,18 +180,16 @@ var
   sSQL: string;
   i: Integer;
 begin
-  sSQL := 'select * from tpembeli order by kode';
+  sSQL := 'select * from tpembeli order by id';
   lcds := TConnection.OpenQuery(sSQL, Self);
-  try
-    DSPembeli.DataSet := lcds;
-    for I := 0 to lcds.FieldCount - 1 do begin
-      if lcds.FieldDefs[i].DisplayName = 'id' then begin
-        DBGridPembeli.columns[i].Visible := False;
-      end;
-    end;
-  finally
-//  lcds.Free;
+
+  DSPembeli.DataSet := lcds;
+  for I := 0 to lcds.FieldCount - 1 do begin
+
+    if lcds.FieldDefs[i].DisplayName = 'id' then
+      DBGridPembeli.columns[i].Visible := False;
   end;
+
 end;
 
 end.

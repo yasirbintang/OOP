@@ -7,10 +7,10 @@ uses
 type
   TPembeli = class
   private
+    FAlamat: String;
     FID: Integer;
     FKode: String;
     FNama: String;
-    FAlamat: String;
   public
     constructor Create; reintroduce;
     function Hapus: Boolean;
@@ -18,10 +18,10 @@ type
     procedure LoadByID(AID : Integer);
     procedure LoadbyKode(AKode : String);
     function Simpan: Boolean;
+    property Alamat: String read FAlamat write FAlamat;
     property ID: Integer read FID write FID;
     property Kode: String read FKode write FKode;
     property Nama: String read FNama write FNama;
-    property Alamat: String read FAlamat write FAlamat;
   end;
 
 implementation
@@ -33,6 +33,25 @@ constructor TPembeli.Create;
 begin
   inherited;
   Self.ID := 0;
+end;
+
+function TPembeli.Hapus: Boolean;
+var
+  sSQL: string;
+begin
+  Result := False;
+
+  sSQL := 'delete tpembeli where id = ' + IntToStr(id);
+
+  FDConnection.StartTransaction;
+  try
+    if TConnection.ExecuteSQL(sSQL) then begin
+      FDConnection.Commit;
+      Result := True;
+    end;
+  except
+    FDConnection.Rollback;
+  end;
 end;
 
 function TPembeli.IsKodeSudahAda(aKode : String; aID : Integer): Boolean;
@@ -53,25 +72,6 @@ begin
     lcds.Free;
   end;
   Result := True;
-end;
-
-function TPembeli.Hapus: Boolean;
-var
-  sSQL: string;
-begin
-  Result := False;
-
-  sSQL := 'delete tpembeli where id = ' + IntToStr(id);
-
-  FDConnection.StartTransaction;
-  try
-    if TConnection.ExecuteSQL(sSQL) then begin
-      FDConnection.Commit;
-      Result := True;
-    end;
-  except
-    FDConnection.Rollback;
-  end;
 end;
 
 procedure TPembeli.LoadByID(AID : Integer);
@@ -122,8 +122,8 @@ var
   sSQL: string;
 begin
   Result := False;
-  // data baru
-  if ID = 0 then begin
+
+  if ID = 0 then begin // Data Baru
     sSQL := 'select max(id) AS ID_TERAKHIR from tpembeli';
     with TConnection.OpenQuery(sSQL, nil) do begin
       try
@@ -141,7 +141,7 @@ begin
           QuotedStr(Kode) + ',' +
           QuotedStr(Nama) + ',' +
           QuotedStr(Alamat) + ')';
-  end else begin // update
+  end else begin // update Data
     sSQL:= 'update tpembeli set ' +
            ' kode = ' + QuotedStr(Kode) + ',' +
            ' nama = ' + QuotedStr(Nama) + ',' +
