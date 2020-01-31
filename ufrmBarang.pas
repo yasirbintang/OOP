@@ -103,7 +103,7 @@ var
   lBarang: TBarang;
   s: string;
 begin
-  s := DBGridBarang.Fields[1].Value;
+  s := DBGridBarang.DataSource.DataSet.FieldByName('kode').AsString;
 
   lBarang := TBarang.Create;
   lBarang.LoadbyKode(s);
