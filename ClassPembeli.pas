@@ -16,7 +16,7 @@ type
     function Hapus: Boolean;
     function IsKodeSudahAda(aKode : String; aID : Integer): Boolean;
     procedure LoadByID(AID : Integer);
-    procedure LoadbyKode(AKode : String);
+    function LoadbyKode(AKode : String): Boolean;
     function Simpan: Boolean;
     property ID: Integer read FID write FID;
     property Kode: String read FKode write FKode;
@@ -97,7 +97,7 @@ begin
 
 end;
 
-procedure TPembeli.LoadbyKode(AKode : String);
+function TPembeli.LoadbyKode(AKode : String): Boolean;
 var
   lcds: TClientDataSet;
   sSQL: string;

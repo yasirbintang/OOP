@@ -176,8 +176,8 @@ end;
 
 procedure TfrmBarang.edKodeKeyPress(Sender: TObject; var Key: Char);
 begin
-    if not (key in['0'..'9', #8, #13]) then
-    ShowMessage('data harus angka');
+//    if not (key in['0'..'9', #8, #13]) then
+//    ShowMessage('data harus angka');
     //edKode.Clear;
     //key:= #0;
     //edKode.SetFocus;

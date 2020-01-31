@@ -2,10 +2,10 @@ unit SDIMAIN;
 
 interface
 
-uses Windows, Classes, Graphics, Forms, Controls, Menus,
+uses Windows, Classes, Graphics, Forms, Controls, Menus, IWCompLabel,
   Dialogs, StdCtrls, Buttons, ExtCtrls, ComCtrls, ImgList, StdActns,
   ActnList, ToolWin, uADGUIxIntf, uADGUIxFormsWait, uADStanIntf,
-  uADCompGUIx, uConnection, FrmSetKoneksi, ufrmPembeli, ufrmBarang, ufrmpembelian;
+  uADCompGUIx, uConnection, FrmSetKoneksi, ufrmPembeli, ufrmBarang, ufrmpembelian, SysUtils;
 
 type
   TSDIAppForm = class(TForm)
@@ -33,7 +33,8 @@ type
     Barang1: TMenuItem;
     ransaksi1: TMenuItem;
     Pembelian1: TMenuItem;
-    lblStatus: TLabel;
+    lblstatus : TLabel;
+
     adgxwtcrsr1: TADGUIxWaitCursor;
     procedure Barang1Click(Sender: TObject);
     procedure FormCreate(Sender: TObject);
@@ -70,7 +71,7 @@ procedure TSDIAppForm.FormCreate(Sender: TObject);
 begin
   if TConnection.ConnectDB('belajar', 'MSSQL', '192.168.0.62','belajar_oop', 'sa', 'it@3Serangkai', '1433') then
   begin
-    lblStatus.Caption := 'Koneksi berhasil'
+    //lblStatus.Caption := 'Koneksi berhasil'
   end else begin
     Form2 := TForm2.Create(Self);
     Form2.Show;

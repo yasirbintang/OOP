@@ -2,8 +2,8 @@ object SDIAppForm: TSDIAppForm
   Left = 197
   Top = 111
   Caption = 'SDI Application'
-  ClientHeight = 389
-  ClientWidth = 716
+  ClientHeight = 313
+  ClientWidth = 701
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -18,9 +18,9 @@ object SDIAppForm: TSDIAppForm
   object lblStatus: TLabel
     AlignWithMargins = True
     Left = 3
-    Top = 369
-    Width = 710
-    Height = 17
+    Top = 294
+    Width = 695
+    Height = 16
     Align = alBottom
     Alignment = taRightJustify
     Caption = '-'
@@ -30,7 +30,7 @@ object SDIAppForm: TSDIAppForm
     Font.Name = 'Century Gothic'
     Font.Style = []
     ParentFont = False
-    ExplicitLeft = 709
+    ExplicitLeft = 694
     ExplicitWidth = 4
   end
   object MainMenu1: TMainMenu
@@ -44,7 +44,9 @@ object SDIAppForm: TSDIAppForm
         Caption = '-'
       end
       object FileExitItem: TMenuItem
-        Action = FileExit1
+        Caption = 'E&xit'
+        Hint = 'Exit|Exit application'
+        OnClick = FileExit1Execute
       end
     end
     object Edit1: TMenuItem
@@ -148,7 +150,7 @@ object SDIAppForm: TSDIAppForm
     Left = 72
     Top = 152
     Bitmap = {
-      494C01010F0013002C0010001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C01010F001300340010001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000400000004000000001002000000000000040
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000
